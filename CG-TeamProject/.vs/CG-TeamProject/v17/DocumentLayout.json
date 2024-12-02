@@ -5,6 +5,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\\uC18C\uC2A4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\vertex.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\fragment.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\fragment.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,13 +38,37 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "vertex.glsl",
+              "DocumentMoniker": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl",
+              "RelativeDocumentMoniker": "CG-TeamProject\\vertex.glsl",
+              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl",
+              "RelativeToolTip": "CG-TeamProject\\vertex.glsl",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-02T08:47:41.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "fragment.glsl",
+              "DocumentMoniker": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\fragment.glsl",
+              "RelativeDocumentMoniker": "CG-TeamProject\\fragment.glsl",
+              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\fragment.glsl",
+              "RelativeToolTip": "CG-TeamProject\\fragment.glsl",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-02T08:47:37.911Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "\uC18C\uC2A4.cpp",
               "DocumentMoniker": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
               "RelativeDocumentMoniker": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ViewState": "AQIAAMMAAAAAAAAAAAAAAOQAAAAHAAAA",
+              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp*",
+              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp*",
+              "ViewState": "AQIAAMMBAAAAAAAAAADwv90BAABWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-01T17:29:21.266Z",
               "EditorCaption": ""
