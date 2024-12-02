@@ -353,7 +353,7 @@ GLvoid drawScene() {
         glm::radians(45.0f),
         (float)window_Width / (float)window_Height,
         0.1f,
-        100.0f
+        10000.0f
     );
 
     GLint projMatrixLocation = glGetUniformLocation(shaderProgramID, "projectionTransform");
