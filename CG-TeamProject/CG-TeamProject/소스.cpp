@@ -107,6 +107,7 @@ void InitBuffer(GLuint& vao, GLuint* vbo, const std::vector<Vertex>& vertices, c
     glBindVertexArray(0);  // VAO 바인드 해제
 }
 
+// 맵
 void InitBottom() {
     read_obj_file("Map/bottom.obj", modelBottom);  // OBJ 파일 읽기
 
@@ -249,78 +250,6 @@ void InitPoint() {
     }
 
     InitBuffer(vaoPoint, vboPoint, expandedVertices, indices);  // InitBuffer 호출
-}
-
-void InitCharacter1() {
-    read_obj_file("pikachu.obj", modelCharacter1);  // OBJ 파일 읽기
-
-    std::vector<Vertex> expandedVertices;
-    std::vector<unsigned int> indices;
-
-    glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f);
-
-    for (size_t i = 0; i < modelCharacter1.faces.size(); ++i) {
-        Vertex v1 = { modelCharacter1.vertices[modelCharacter1.faces[i].v1].x,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v1].y,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v1].z,
-                     color };
-
-        Vertex v2 = { modelCharacter1.vertices[modelCharacter1.faces[i].v2].x,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v2].y,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v2].z,
-                     color };
-
-        Vertex v3 = { modelCharacter1.vertices[modelCharacter1.faces[i].v3].x,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v3].y,
-                     modelCharacter1.vertices[modelCharacter1.faces[i].v3].z,
-                     color };
-
-        expandedVertices.push_back(v1);
-        expandedVertices.push_back(v2);
-        expandedVertices.push_back(v3);
-
-        indices.push_back(expandedVertices.size() - 3);
-        indices.push_back(expandedVertices.size() - 2);
-        indices.push_back(expandedVertices.size() - 1);
-    }
-
-    InitBuffer(vaoCharacter1, vboCharacter1, expandedVertices, indices);  // InitBuffer 호출
-}
-
-void InitCharacter2() {
-    read_obj_file("prettygirl.obj", modelCharacter2);  // OBJ 파일 읽기
-
-    std::vector<Vertex> expandedVertices;
-    std::vector<unsigned int> indices;
-
-    glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f);
-
-    for (size_t i = 0; i < modelCharacter2.faces.size(); ++i) {
-        Vertex v1 = { modelCharacter2.vertices[modelCharacter2.faces[i].v1].x,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v1].y,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v1].z,
-                     color };
-
-        Vertex v2 = { modelCharacter2.vertices[modelCharacter2.faces[i].v2].x,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v2].y,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v2].z,
-                     color };
-
-        Vertex v3 = { modelCharacter2.vertices[modelCharacter2.faces[i].v3].x,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v3].y,
-                     modelCharacter2.vertices[modelCharacter2.faces[i].v3].z,
-                     color };
-
-        expandedVertices.push_back(v1);
-        expandedVertices.push_back(v2);
-        expandedVertices.push_back(v3);
-
-        indices.push_back(expandedVertices.size() - 3);
-        indices.push_back(expandedVertices.size() - 2);
-        indices.push_back(expandedVertices.size() - 1);
-    }
-
-    InitBuffer(vaoCharacter2, vboCharacter2, expandedVertices, indices);  // InitBuffer 호출
 }
 
 void main(int argc, char** argv) {
@@ -469,23 +398,23 @@ GLvoid drawScene() {
     glDrawElements(GL_TRIANGLES, modelPoint.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    //피카츄
-    glm::mat4 Character1ModelMatrix = glm::mat4(1.0f);
-    Character1ModelMatrix = glm::translate(Character1ModelMatrix, glm::vec3(-2.0, -1.75, -5.0f));
-    Character1ModelMatrix = glm::rotate(Character1ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1ModelMatrix));
-    glBindVertexArray(vaoCharacter1);
-    glDrawElements(GL_TRIANGLES, modelCharacter1.faces.size() * 3, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    ////피카츄
+    //glm::mat4 Character1ModelMatrix = glm::mat4(1.0f);
+    //Character1ModelMatrix = glm::translate(Character1ModelMatrix, glm::vec3(-2.0, -1.75, -5.0f));
+    //Character1ModelMatrix = glm::rotate(Character1ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1ModelMatrix));
+    //glBindVertexArray(vaoCharacter1);
+    //glDrawElements(GL_TRIANGLES, modelCharacter1.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    //glBindVertexArray(0);
 
-    //소녀
-    glm::mat4 Character2ModelMatrix = glm::mat4(1.0f);
-    Character2ModelMatrix = glm::translate(Character2ModelMatrix, glm::vec3(-4.0, -0.75, -5.0f));
-    Character2ModelMatrix = glm::rotate(Character2ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2ModelMatrix));
-    glBindVertexArray(vaoCharacter2);
-    glDrawElements(GL_TRIANGLES, modelCharacter2.faces.size() * 3, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    ////소녀
+    //glm::mat4 Character2ModelMatrix = glm::mat4(1.0f);
+    //Character2ModelMatrix = glm::translate(Character2ModelMatrix, glm::vec3(-4.0, -0.75, -5.0f));
+    //Character2ModelMatrix = glm::rotate(Character2ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2ModelMatrix));
+    //glBindVertexArray(vaoCharacter2);
+    //glDrawElements(GL_TRIANGLES, modelCharacter2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    //glBindVertexArray(0);
     glutSwapBuffers();
 }
 
