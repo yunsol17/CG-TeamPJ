@@ -28,7 +28,7 @@ vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], vboC
 GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
-Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint,modelCharacter1Body, modelCharacter1BackPatter, modelCharacter1Blusher, modelCharacter1Eye, modelCharacter1Face, 
+Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint,modelCharacter1Body, modelCharacter1BackPattern, modelCharacter1Blusher, modelCharacter1Eye, modelCharacter1Face, 
 modelCharacter1LeftArm, modelCharacter1RightArm, modelCharacter1LeftLeg, modelCharacter1RightLeg,modelCharacter2;
 
 GLfloat cameraX = 0.0f;
@@ -69,10 +69,21 @@ char* filetobuf(const char* file) {
 void make_vertexShaders();
 void make_fragmentShaders();
 void InitBuffer();
+
 void InitBottom();
 void InitArrowAndPillar();
 void InitEndPoint();
 void InitPoint();
+
+void InitCharacter1Body();
+void InitCharacter1BackPattern();
+void InitCharacter1Blusher();
+void InitCharacter1Eye();
+void InitCharacter1Face();
+void InitCharacter1LeftArm();
+void InitCharacter1RightArm();
+void InitCharacter1LeftLeg();
+void InitCharacter1RightLeg();
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -252,6 +263,331 @@ void InitPoint() {
     InitBuffer(vaoPoint, vboPoint, expandedVertices, indices);  // InitBuffer 호출
 }
 
+// 캐릭터1
+void InitCharacter1Body() {
+    read_obj_file("Character1/body.obj", modelCharacter1Body);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1Body.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v1].x,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v1].y,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v2].x,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v2].y,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v3].x,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v3].y,
+                     modelCharacter1Body.vertices[modelCharacter1Body.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1Body, vboCharacter1Body, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1BackPattern() {
+    read_obj_file("Character1/backPattern.obj", modelCharacter1BackPattern);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1BackPattern.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v1].x,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v1].y,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v2].x,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v2].y,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v3].x,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v3].y,
+                     modelCharacter1BackPattern.vertices[modelCharacter1BackPattern.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1BackPattern, vboCharacter1BackPattern, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1Blusher() {
+    read_obj_file("Character1/blusher.obj", modelCharacter1Blusher);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1Blusher.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v1].x,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v1].y,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v2].x,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v2].y,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v3].x,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v3].y,
+                     modelCharacter1Blusher.vertices[modelCharacter1Blusher.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1Blusher, vboCharacter1Blusher, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1Eye() {
+    read_obj_file("Character1/eye.obj", modelCharacter1Eye);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1Eye.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v1].x,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v1].y,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v2].x,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v2].y,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v3].x,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v3].y,
+                     modelCharacter1Eye.vertices[modelCharacter1Eye.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1Eye, vboCharacter1Eye, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1Face() {
+    read_obj_file("Character1/face.obj", modelCharacter1Face);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    for (size_t i = 0; i < modelCharacter1Face.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v1].x,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v1].y,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v2].x,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v2].y,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v3].x,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v3].y,
+                     modelCharacter1Face.vertices[modelCharacter1Face.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1Face, vboCharacter1Face, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1LeftArm() {
+    read_obj_file("Character1/leftArm.obj", modelCharacter1LeftArm);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1LeftArm.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v1].x,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v1].y,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v2].x,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v2].y,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v3].x,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v3].y,
+                     modelCharacter1LeftArm.vertices[modelCharacter1LeftArm.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1LeftArm, vboCharacter1LeftArm, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1RightArm() {
+    read_obj_file("Character1/rightArm.obj", modelCharacter1RightArm);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1RightArm.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v1].x,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v1].y,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v2].x,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v2].y,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v3].x,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v3].y,
+                     modelCharacter1RightArm.vertices[modelCharacter1RightArm.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1RightArm, vboCharacter1RightArm, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1LeftLeg() {
+    read_obj_file("Character1/leftLeg.obj", modelCharacter1LeftLeg);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1LeftLeg.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v1].x,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v1].y,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v2].x,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v2].y,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v3].x,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v3].y,
+                     modelCharacter1LeftLeg.vertices[modelCharacter1LeftLeg.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1LeftLeg, vboCharacter1LeftLeg, expandedVertices, indices);  // InitBuffer 호출
+}
+
+void InitCharacter1RightLeg() {
+    read_obj_file("Character1/rightLeg.obj", modelCharacter1RightLeg);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelCharacter1RightLeg.faces.size(); ++i) {
+        Vertex v1 = { modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v1].x,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v1].y,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v2].x,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v2].y,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v3].x,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v3].y,
+                     modelCharacter1RightLeg.vertices[modelCharacter1RightLeg.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoCharacter1RightLeg, vboCharacter1RightLeg, expandedVertices, indices);  // InitBuffer 호출
+}
+
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -267,8 +603,15 @@ void main(int argc, char** argv) {
     InitArrowAndPillar();
     InitEndPoint();
     InitPoint();
-    //InitCharacter1();
-    //InitCharacter2();
+    InitCharacter1Body();
+    InitCharacter1BackPattern();
+    InitCharacter1Blusher();
+    InitCharacter1Eye();
+    InitCharacter1Face();
+    InitCharacter1LeftArm();
+    InitCharacter1RightArm();
+    InitCharacter1LeftLeg();
+    InitCharacter1RightLeg();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -365,9 +708,15 @@ GLvoid drawScene() {
     GLint projMatrixLocation = glGetUniformLocation(shaderProgramID, "projectionTransform");
     glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-    // 바닥
-    glm::mat4 bottomModelMatrix = glm::mat4(1.0f);
+    // 맵    ---------------------------------------------------------------------------------------------
+    // 베이스 변환
+    glm::mat4 baseMapModelMatrix = glm::mat4(1.0f);
     GLint modelMatrixLocation = glGetUniformLocation(shaderProgramID, "modelTransform");
+    baseMapModelMatrix = glm::translate(baseMapModelMatrix, glm::vec3(0.0f, 1.7f, 5.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseMapModelMatrix));
+
+    // 바닥
+    glm::mat4 bottomModelMatrix = baseMapModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bottomModelMatrix));
 
     glBindVertexArray(vaoBottom);
@@ -375,7 +724,7 @@ GLvoid drawScene() {
     glBindVertexArray(0);
 
     // 화살표와 기둥
-    glm::mat4 arrowAndPillarModelMatrix = glm::mat4(1.0f);
+    glm::mat4 arrowAndPillarModelMatrix = baseMapModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(arrowAndPillarModelMatrix));
 
     glBindVertexArray(vaoArrowAndPillar);
@@ -383,7 +732,7 @@ GLvoid drawScene() {
     glBindVertexArray(0);
 
     // 결승점
-    glm::mat4 endPointModelMatrix = glm::mat4(1.0f);
+    glm::mat4 endPointModelMatrix = baseMapModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(endPointModelMatrix));
 
     glBindVertexArray(vaoEndPoint);
@@ -391,30 +740,90 @@ GLvoid drawScene() {
     glBindVertexArray(0);
 
     // 포인트
-    glm::mat4 pointModelMatrix = glm::mat4(1.0f);
+    glm::mat4 pointModelMatrix = baseMapModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(pointModelMatrix));
 
     glBindVertexArray(vaoPoint);
     glDrawElements(GL_TRIANGLES, modelPoint.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+    // ------------------------------------------------------------------------------------------------------
+    // 피카츄
+    // 베이스 변환
+    glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
 
-    ////피카츄
-    //glm::mat4 Character1ModelMatrix = glm::mat4(1.0f);
-    //Character1ModelMatrix = glm::translate(Character1ModelMatrix, glm::vec3(-2.0, -1.75, -5.0f));
-    //Character1ModelMatrix = glm::rotate(Character1ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1ModelMatrix));
-    //glBindVertexArray(vaoCharacter1);
-    //glDrawElements(GL_TRIANGLES, modelCharacter1.faces.size() * 3, GL_UNSIGNED_INT, 0);
-    //glBindVertexArray(0);
+    // 몸
+    glm::mat4 character1BodyModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1BodyModelMatrix));
 
-    ////소녀
-    //glm::mat4 Character2ModelMatrix = glm::mat4(1.0f);
-    //Character2ModelMatrix = glm::translate(Character2ModelMatrix, glm::vec3(-4.0, -0.75, -5.0f));
-    //Character2ModelMatrix = glm::rotate(Character2ModelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2ModelMatrix));
-    //glBindVertexArray(vaoCharacter2);
-    //glDrawElements(GL_TRIANGLES, modelCharacter2.faces.size() * 3, GL_UNSIGNED_INT, 0);
-    //glBindVertexArray(0);
+    glBindVertexArray(vaoCharacter1Body);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Body.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 뒤에 패턴
+    glm::mat4 character1BackPatternModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1BackPatternModelMatrix));
+
+    glBindVertexArray(vaoCharacter1BackPattern);
+    glDrawElements(GL_TRIANGLES, modelCharacter1BackPattern.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 블러셔
+    glm::mat4 character1BlusherModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1BlusherModelMatrix));
+
+    glBindVertexArray(vaoCharacter1Blusher);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Blusher.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 눈
+    glm::mat4 character1EyeModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1EyeModelMatrix));
+
+    glBindVertexArray(vaoCharacter1Eye);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Eye.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 얼굴
+    glm::mat4 character1FaceModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1FaceModelMatrix));
+
+    glBindVertexArray(vaoCharacter1Face);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 왼쪽 팔
+    glm::mat4 character1LeftArmModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1LeftArmModelMatrix));
+
+    glBindVertexArray(vaoCharacter1LeftArm);
+    glDrawElements(GL_TRIANGLES, modelCharacter1LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 오른쪽 팔
+    glm::mat4 character1RightArmModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1RightArmModelMatrix));
+
+    glBindVertexArray(vaoCharacter1RightArm);
+    glDrawElements(GL_TRIANGLES, modelCharacter1RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 왼쪽 다리
+    glm::mat4 character1LeftLegModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1LeftLegModelMatrix));
+
+    glBindVertexArray(vaoCharacter1LeftLeg);
+    glDrawElements(GL_TRIANGLES, modelCharacter1LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // 오른쪽 다리
+    glm::mat4 character1RightLegModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(character1RightLegModelMatrix));
+
+    glBindVertexArray(vaoCharacter1RightLeg);
+    glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
     glutSwapBuffers();
 }
 
