@@ -1,128 +1,143 @@
 ﻿  소스.cpp
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(138,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(138,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(138,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(138,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(138,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(139,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(139,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(139,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(139,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(139,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(140,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(140,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(140,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(140,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(140,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(174,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(174,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(174,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(174,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(174,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(175,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(175,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(175,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(175,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(175,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(176,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(176,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(176,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(176,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(176,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(210,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(210,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(210,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(210,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(210,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(211,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(211,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(211,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(211,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(211,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(212,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(212,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(212,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(212,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(212,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(246,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(246,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(246,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(246,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(246,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(247,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(247,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(247,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(247,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(247,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(248,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(248,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(248,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(248,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(248,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(255,34): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(262,28): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(263,23): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(263,48): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(264,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(264,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(265,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(265,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(268,23): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(268,48): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(269,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(269,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(270,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(270,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(273,23): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(273,48): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(274,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(274,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(275,22): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(275,47): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(282,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(282,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(282,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(282,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(282,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(283,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(283,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(283,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(283,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(283,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(284,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(284,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(284,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(284,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(284,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,16): error C2065: 'vaoCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,31): error C2065: 'vboCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(318,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(318,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(318,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(318,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(318,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(319,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(319,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(319,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(319,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(319,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(320,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(320,51): warning C4267:         with
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(320,51): warning C4267:         [
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(320,51): warning C4267:             _Ty=unsigned int
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(320,51): warning C4267:         ]
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(326,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(445,59): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(453,67): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(461,61): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(469,58): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(477,23): error C2065: 'vaoCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(478,34): error C2065: 'modelCharacter1': 선언되지 않은 식별자입니다.
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(478,5): error C2660: 'glDrawElements': 함수는 3개의 인수를 사용하지 않습니다.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\gl\glew.h(915,23):
-  'glDrawElements' 선언을 참조하십시오.
-  C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(478,5):
-  인수 목록 '(int, int, int)'을(를) 일치시키는 동안
-  
-C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(487,63): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(142,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(142,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(142,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(142,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(142,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(143,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(143,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(143,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(143,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(143,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(144,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(144,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(144,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(144,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(144,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(178,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(178,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(178,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(178,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(178,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(179,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(179,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(179,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(179,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(179,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(180,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(180,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(180,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(180,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(180,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(214,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(214,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(214,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(214,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(214,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(215,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(215,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(215,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(215,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(215,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(216,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(216,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(216,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(216,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(216,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(250,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(250,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(250,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(250,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(250,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(251,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(251,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(251,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(251,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(251,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(252,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(252,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(252,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(252,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(252,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(287,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(288,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(288,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(288,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(288,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(288,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(289,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(289,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(289,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(289,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(289,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(322,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(322,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(322,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(322,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(322,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(324,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(324,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(324,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(324,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(324,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(357,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(357,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(357,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(357,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(357,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(358,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(358,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(358,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(358,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(358,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(359,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(359,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(359,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(359,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(359,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(392,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(392,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(392,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(392,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(392,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(393,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(393,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(393,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(393,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(393,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(394,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(394,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(394,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(394,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(394,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(427,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(427,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(427,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(427,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(427,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(428,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(428,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(428,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(428,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(428,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(429,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(429,51): warning C4267:         with
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(429,51): warning C4267:         [
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(429,51): warning C4267:             _Ty=unsigned int
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(429,51): warning C4267:         ]
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(435,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(554,59): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(562,67): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(570,61): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(578,58): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CG-TeamProject.vcxproj -> C:\Users\yunso\Desktop\컴그\텀프로젝트\project\CG-TeamPJ\CG-TeamProject\x64\Debug\CG-TeamProject.exe

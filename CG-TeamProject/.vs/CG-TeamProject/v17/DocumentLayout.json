@@ -54,34 +54,6 @@
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 0,
-              "Title": "\uC18C\uC2A4.cpp",
-              "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "RelativeDocumentMoniker": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp*",
-              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp*",
-              "ViewState": "AgIAANUBAAAAAAAAAAAAAOIBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-02T10:23:47.769Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "\uD5E4\uB354.h",
-              "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uD5E4\uB354.h",
-              "RelativeDocumentMoniker": "CG-TeamProject\\\uD5E4\uB354.h",
-              "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uD5E4\uB354.h",
-              "RelativeToolTip": "CG-TeamProject\\\uD5E4\uB354.h",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAnwBkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-03T05:35:38.923Z"
-            },
-            {
-              "$type": "Document",
-=======
->>>>>>> 0e8f3e80ed9d95a287a7dd67e4420a0bebb54c0d
               "DocumentIndex": 2,
               "Title": "vertex.glsl",
               "DocumentMoniker": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl",
@@ -110,9 +82,9 @@
               "Title": "\uC18C\uC2A4.cpp",
               "DocumentMoniker": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
               "RelativeDocumentMoniker": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ViewState": "AQIAAMEBAAAAAAAAAAAAAN8BAAAAAAAA",
+              "ToolTip": "C:\\Users\\yunso\\Desktop\\\uCEF4\uADF8\\\uD140\uD504\uB85C\uC81D\uD2B8\\project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp*",
+              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp*",
+              "ViewState": "AQIAAJEBAAAAAAAAAAAqwK8BAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-01T17:29:21.266Z",
               "EditorCaption": ""
