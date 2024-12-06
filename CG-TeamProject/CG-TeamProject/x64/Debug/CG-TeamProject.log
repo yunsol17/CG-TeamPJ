@@ -1,4 +1,5 @@
 ﻿  소스.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(135,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(135,51): warning C4267:         with
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(135,51): warning C4267:         [
@@ -74,11 +75,6 @@ C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamPr
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(281,51): warning C4267:         [
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(281,51): warning C4267:             _Ty=unsigned int
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(281,51): warning C4267:         ]
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(314,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(314,51): warning C4267:         with
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(314,51): warning C4267:         [
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(314,51): warning C4267:             _Ty=unsigned int
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(314,51): warning C4267:         ]
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(315,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(315,51): warning C4267:         with
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(315,51): warning C4267:         [
@@ -89,11 +85,16 @@ C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamPr
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(316,51): warning C4267:         [
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(316,51): warning C4267:             _Ty=unsigned int
 C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(316,51): warning C4267:         ]
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(321,6): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(440,59): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(448,67): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(456,61): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(464,58): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(473,63): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(482,63): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(317,51): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(317,51): warning C4267:         with
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(317,51): warning C4267:         [
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(317,51): warning C4267:             _Ty=unsigned int
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(317,51): warning C4267:         ]
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(323,6): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(442,59): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(450,67): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(458,61): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(466,58): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(475,63): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\CG-TeamProject\소스.cpp(484,63): warning C4267: '인수': 'size_t'에서 'GLsizei'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   CG-TeamProject.vcxproj -> C:\Users\juhwan\OneDrive\Desktop\team_project\CG-TeamPJ\CG-TeamProject\x64\Debug\CG-TeamProject.exe

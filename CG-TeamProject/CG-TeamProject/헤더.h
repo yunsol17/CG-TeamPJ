@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <filesystem>
 
 struct Vertex {
     GLfloat x, y, z;

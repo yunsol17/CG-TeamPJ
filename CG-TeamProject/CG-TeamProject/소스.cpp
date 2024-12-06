@@ -21,12 +21,15 @@ struct AABB {
 
 AABB block1Box, block2Box, block3Box, robotBox, cubeFaceBoxes[6];
 
-GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint, vaoCharacter1, vaoCharacter2;
-GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2], vboCharacter1[2], vboCharacter2[2];
+GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint, vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, 
+vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg, vaoCharacter2;
+GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2], vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], 
+vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], vboCharacter1RightLeg[2], vboCharacter2[2];
 GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
-Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint,modelCharacter1,modelCharacter2;
+Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint,modelCharacter1Body, modelCharacter1BackPatter, modelCharacter1Blusher, modelCharacter1Eye, modelCharacter1Face, 
+modelCharacter1LeftArm, modelCharacter1RightArm, modelCharacter1LeftLeg, modelCharacter1RightLeg,modelCharacter2;
 
 GLfloat cameraX = 0.0f;
 GLfloat cameraY = 0.0f;
@@ -105,43 +108,7 @@ void InitBuffer(GLuint& vao, GLuint* vbo, const std::vector<Vertex>& vertices, c
 }
 
 void InitBottom() {
-    read_obj_file("arrowAndPillar.obj", modelArrowAndPillar);  // OBJ 파일 읽기
-
-    std::vector<Vertex> expandedVertices;
-    std::vector<unsigned int> indices;
-
-    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
-
-    for (size_t i = 0; i < modelArrowAndPillar.faces.size(); ++i) {
-        Vertex v1 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].x,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].y,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].z,
-                     color };
-
-        Vertex v2 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].x,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].y,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].z,
-                     color };
-
-        Vertex v3 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].x,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].y,
-                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].z,
-                     color };
-
-        expandedVertices.push_back(v1);
-        expandedVertices.push_back(v2);
-        expandedVertices.push_back(v3);
-
-        indices.push_back(expandedVertices.size() - 3);
-        indices.push_back(expandedVertices.size() - 2);
-        indices.push_back(expandedVertices.size() - 1);
-    }
-
-    InitBuffer(vaoArrowAndPillar, vboArrowAndPillar, expandedVertices, indices);  // InitBuffer 호출
-}
-
-void InitArrowAndPillar() {
-    read_obj_file("bottom.obj", modelBottom);  // OBJ 파일 읽기
+    read_obj_file("Map/bottom.obj", modelBottom);  // OBJ 파일 읽기
 
     std::vector<Vertex> expandedVertices;
     std::vector<unsigned int> indices;
@@ -176,8 +143,44 @@ void InitArrowAndPillar() {
     InitBuffer(vaoBottom, vboBottom, expandedVertices, indices);  // InitBuffer 호출
 }
 
+void InitArrowAndPillar() {
+    read_obj_file("Map/arrowAndPillar.obj", modelArrowAndPillar);  // OBJ 파일 읽기
+
+    std::vector<Vertex> expandedVertices;
+    std::vector<unsigned int> indices;
+
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 0.0f);
+
+    for (size_t i = 0; i < modelArrowAndPillar.faces.size(); ++i) {
+        Vertex v1 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].x,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].y,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v1].z,
+                     color };
+
+        Vertex v2 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].x,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].y,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v2].z,
+                     color };
+
+        Vertex v3 = { modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].x,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].y,
+                     modelArrowAndPillar.vertices[modelArrowAndPillar.faces[i].v3].z,
+                     color };
+
+        expandedVertices.push_back(v1);
+        expandedVertices.push_back(v2);
+        expandedVertices.push_back(v3);
+
+        indices.push_back(expandedVertices.size() - 3);
+        indices.push_back(expandedVertices.size() - 2);
+        indices.push_back(expandedVertices.size() - 1);
+    }
+
+    InitBuffer(vaoArrowAndPillar, vboArrowAndPillar, expandedVertices, indices);  // InitBuffer 호출
+}
+
 void InitEndPoint() {
-    read_obj_file("endPoint.obj", modelEndPoint);  // OBJ 파일 읽기
+    read_obj_file("Map/endPoint.obj", modelEndPoint);  // OBJ 파일 읽기
 
     std::vector<Vertex> expandedVertices;
     std::vector<unsigned int> indices;
@@ -213,7 +216,7 @@ void InitEndPoint() {
 }
 
 void InitPoint() {
-    read_obj_file("point.obj", modelPoint);  // OBJ 파일 읽기
+    read_obj_file("Map/point.obj", modelPoint);  // OBJ 파일 읽기
 
     std::vector<Vertex> expandedVertices;
     std::vector<unsigned int> indices;
@@ -283,6 +286,7 @@ void InitCharacter1() {
 
     InitBuffer(vaoCharacter1, vboCharacter1, expandedVertices, indices);  // InitBuffer 호출
 }
+
 void InitCharacter2() {
     read_obj_file("prettygirl.obj", modelCharacter2);  // OBJ 파일 읽기
 
@@ -318,6 +322,7 @@ void InitCharacter2() {
 
     InitBuffer(vaoCharacter2, vboCharacter2, expandedVertices, indices);  // InitBuffer 호출
 }
+
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -333,8 +338,8 @@ void main(int argc, char** argv) {
     InitArrowAndPillar();
     InitEndPoint();
     InitPoint();
-    InitCharacter1();
-    InitCharacter2();
+    //InitCharacter1();
+    //InitCharacter2();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
