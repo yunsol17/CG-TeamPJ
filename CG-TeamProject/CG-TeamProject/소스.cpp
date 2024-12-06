@@ -704,7 +704,6 @@ GLvoid drawScene() {
     //¼Ò³à
     //base
     glm::mat4 baseCharacter2ModelMatrix = glm::mat4(1.0f);
-    baseCharacter2ModelMatrix = glm::translate(baseCharacter2ModelMatrix, glm::vec3(-2.0f, 0.0, -5.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
     //acc
     glm::mat4 Character2AccModelMatrix = baseCharacter2ModelMatrix;
