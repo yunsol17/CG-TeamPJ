@@ -34,6 +34,9 @@ GLuint vaoCharacter2Acc, vaoCharacter2Body, vaoCharacter2Clothes, vaoCharacter2H
 GLuint vboCharacter2Acc[2], vboCharacter2Body[2], vboCharacter2Clothes[2], vboCharacter2Hair[2], vboCharacter2LeftLeg[2], vboCharacter2RightLeg[2], vboCharacter2LeftArm[2], vboCharacter2RightArm[2], vboCharacter2Eye[2], vboCharacter2Face[2];
 Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharacter2Clothes, modelCharacter2LeftLeg, modelCharacter2RightLeg, modelCharacter2LeftArm, modelCharacter2RightArm, modelCharacter2Eye, modelCharacter2Face;
 
+//checkbox
+GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
+
 GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
@@ -243,6 +246,265 @@ void InitCharacter2Face() {
     InitPart("Character2/face.obj", modelCharacter2Face, vaoCharacter2Face, vboCharacter2Face, glm::vec3(1.0f, 1.0, 0.941f));
 }
 
+// ¸Ê Ãæµ¹¹Ú½º
+std::vector<float> CheckBoxVerticesMap1 = {
+    // Bottom
+    -22.5f, -2.0f,  0.0f,
+    -22.5f,  0.0f,  0.0f,
+    -22.5f, -2.0f, -80.0f,
+    -22.5f,  0.0f, -80.0f,
+
+    // Top
+    22.5f, -2.0f,  0.0f,
+    22.5f,  0.0f,  0.0f,
+    22.5f, -2.0f, -80.0f,
+    22.5f,  0.0f, -80.0f,
+
+    // Front
+    -22.5f, -2.0f, -80.0f,
+    22.5f, -2.0f, -80.0f,
+    22.5f,  0.0f, -80.0f,
+    -22.5f,  0.0f, -80.0f,
+
+    // Back face
+    -22.5f, -2.0f,  0.0f,
+    22.5f, -2.0f,  0.0f,
+    22.5f,  0.0f,  0.0f,
+    -22.5f,  0.0f,  0.0f,
+
+    // Left face
+    -22.5f, -2.0f,  0.0f,
+    -22.5f, -2.0f, -80.0f,
+    -22.5f,  0.0f, -80.0f,
+    -22.5f,  0.0f,  0.0f,
+
+    // Right face
+    22.5f, -2.0f,  0.0f,
+    22.5f, -2.0f, -80.0f,
+    22.5f,  0.0f, -80.0f,
+    22.5f,  0.0f,  0.0f
+};
+std::vector<float> CheckBoxVerticesMap2 = {
+    // Bottom
+    -16.0f, -2.3f, -79.0f,
+    -16.0f, -0.3f, -79.0f,
+    -16.0f, -2.3f, -121.0f,
+    -16.0f, -0.3f, -121.0f,
+
+    // Top
+    16.0f, -2.3f, -79.0f,
+    16.0f, -0.3f, -79.0f,
+    16.0f, -2.3f, -121.0f,
+    16.0f, -0.3f, -121.0f,
+
+    // Front
+    -16.0f, -2.3f, -121.0f,
+    16.0f, -2.3f, -121.0f,
+    16.0f, -0.3f, -121.0f,
+    -16.0f, -0.3f, -121.0f,
+
+    // Back face
+    -16.0f, -2.3f, -79.0f,
+    16.0f, -2.3f, -79.0f,
+    16.0f, -0.3f, -79.0f,
+    -16.0f, -0.3f, -79.0f,
+
+    // Left face
+    -16.0f, -2.3f, -79.0f,
+    -16.0f, -2.3f, -121.0f,
+    -16.0f, -0.3f, -121.0f,
+    -16.0f, -0.3f, -79.0f,
+
+    // Right face
+    16.0f, -2.3f, -79.0f,
+    16.0f, -2.3f, -121.0f,
+    16.0f, -0.3f, -121.0f,
+    16.0f, -0.3f, -79.0f
+};
+std::vector<float> CheckBoxVerticesMap3 = {
+    // Bottom
+    -13.0f, -2.6f, -120.0f,
+    -13.0f, -0.6f, -120.0f,
+    -13.0f, -2.6f, -146.0f,
+    -13.0f, -0.6f, -146.0f,
+
+    // Top
+    13.0f, -2.6f, -120.0f,
+    13.0f, -0.6f, -120.0f,
+    13.0f, -2.6f, -146.0f,
+    13.0f, -0.6f, -146.0f,
+
+    // Front
+    -13.0f, -2.6f, -146.0f,
+    13.0f, -2.6f, -146.0f,
+    13.0f, -0.6f, -146.0f,
+    -13.0f, -0.6f, -146.0f,
+
+    // Back face
+    -13.0f, -2.6f, -120.0f,
+    13.0f, -2.6f, -120.0f,
+    13.0f, -0.6f, -120.0f,
+    -13.0f, -0.6f, -120.0f,
+
+    // Left face
+    -13.0f, -2.6f, -120.0f,
+    -13.0f, -2.6f, -146.0f,
+    -13.0f, -0.6f, -146.0f,
+    -13.0f, -0.6f, -120.0f,
+
+    // Right face
+    13.0f, -2.6f, -120.0f,
+    13.0f, -2.6f, -146.0f,
+    13.0f, -0.6f, -146.0f,
+    13.0f, -0.6f, -120.0f
+};
+std::vector<float> CheckBoxVerticesMap4 = {
+    // Bottom
+    -10.6f, -2.8f, -143.0f,
+    -10.6f, -0.8f, -143.0f,
+    -10.6f, -2.8f, -165.0f,
+    -10.6f, -0.8f, -165.0f,
+
+    // Top
+    10.6f, -2.8f, -143.0f,
+    10.6f, -0.8f, -143.0f,
+    10.6f, -2.8f, -165.0f,
+    10.6f, -0.8f, -165.0f,
+
+    // Front
+    -10.6f, -2.8f, -165.0f,
+    10.6f, -2.8f, -165.0f,
+    10.6f, -0.8f, -165.0f,
+    -10.6f, -0.8f, -165.0f,
+
+    // Back face
+    -10.6f, -2.8f, -143.0f,
+    10.6f, -2.8f, -143.0f,
+    10.6f, -0.8f, -143.0f,
+    -10.6f, -0.8f, -143.0f,
+
+    // Left face
+    -10.6f, -2.8f, -143.0f,
+    -10.6f, -2.8f, -165.0f,
+    -10.6f, -0.8f, -165.0f,
+    -10.6f, -0.8f, -143.0f,
+
+    // Right face
+    10.6f, -2.8f, -143.0f,
+    10.6f, -2.8f, -165.0f,
+    10.6f, -0.8f, -165.0f,
+    10.6f, -0.8f, -143.0f
+};
+std::vector<float> CheckBoxVerticesMap5 = {
+    // Bottom
+     -10.6f, -28.5f, -165.0f,
+     -10.6f, -26.5f, -165.0f,
+     -10.6f, -28.5f, -245.0f,
+     -10.6f, -26.5f, -245.0f,
+
+     // Top
+     10.6f, -28.5f, -165.0f,
+     10.6f, -26.5f, -165.0f,
+     10.6f, -28.5f, -245.0f,
+     10.6f, -26.5f, -245.0f,
+
+     // Front
+     -10.6f, -28.5f, -245.0f,
+     10.6f, -28.5f, -245.0f,
+     10.6f, -26.5f, -245.0f,
+     -10.6f, -26.5f, -245.0f,
+
+     // Back face
+     -10.6f, -28.5f, -165.0f,
+     10.6f, -28.5f, -165.0f,
+     10.6f, -26.5f, -165.0f,
+     -10.6f, -26.5f, -165.0f,
+
+     // Left face
+     -10.6f, -28.5f, -165.0f,
+     -10.6f, -28.5f, -245.0f,
+     -10.6f, -26.5f, -245.0f,
+     -10.6f, -26.5f, -165.0f,
+
+     // Right face
+     10.6f, -28.5f, -165.0f,
+     10.6f, -28.5f, -245.0f,
+     10.6f, -26.5f, -245.0f,
+     10.6f, -26.5f, -165.0f
+};
+
+void InitCheckBoxMap1() {
+    glGenVertexArrays(1, &vaoCheckBoxMap1);
+    glBindVertexArray(vaoCheckBoxMap1);
+
+    glGenBuffers(1, vboCheckBoxMap1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCheckBoxMap1[0]);
+    glBufferData(GL_ARRAY_BUFFER, CheckBoxVerticesMap1.size() * sizeof(float), CheckBoxVerticesMap1.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+void InitCheckBoxMap2() {
+    glGenVertexArrays(1, &vaoCheckBoxMap2);
+    glBindVertexArray(vaoCheckBoxMap2);
+
+    glGenBuffers(1, vboCheckBoxMap2);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCheckBoxMap2[0]);
+    glBufferData(GL_ARRAY_BUFFER, CheckBoxVerticesMap2.size() * sizeof(float), CheckBoxVerticesMap2.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+void InitCheckBoxMap3() {
+    glGenVertexArrays(1, &vaoCheckBoxMap3);
+    glBindVertexArray(vaoCheckBoxMap3);
+
+    glGenBuffers(1, vboCheckBoxMap3);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCheckBoxMap3[0]);
+    glBufferData(GL_ARRAY_BUFFER, CheckBoxVerticesMap3.size() * sizeof(float), CheckBoxVerticesMap3.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+void InitCheckBoxMap4() {
+    glGenVertexArrays(1, &vaoCheckBoxMap4);
+    glBindVertexArray(vaoCheckBoxMap4);
+
+    glGenBuffers(1, vboCheckBoxMap4);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCheckBoxMap4[0]);
+    glBufferData(GL_ARRAY_BUFFER, CheckBoxVerticesMap4.size() * sizeof(float), CheckBoxVerticesMap4.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+void InitCheckBoxMap5() {
+    glGenVertexArrays(1, &vaoCheckBoxMap5);
+    glBindVertexArray(vaoCheckBoxMap5);
+
+    glGenBuffers(1, vboCheckBoxMap5);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCheckBoxMap5[0]);
+    glBufferData(GL_ARRAY_BUFFER, CheckBoxVerticesMap5.size() * sizeof(float), CheckBoxVerticesMap5.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+
+
 // ¸Ê ±×¸®±â
 void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     // ¹Ù´Ú
@@ -425,6 +687,53 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glBindVertexArray(0);
 }
 
+void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    glm::mat4 checkBoxModelMatrix1 = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix1));
+    glBindVertexArray(vaoCheckBoxMap1);
+    for (int i = 0; i < 6; ++i) {
+        glDrawArrays(GL_QUADS, i * 4, 4); 
+    }
+    glBindVertexArray(0);
+
+    glm::mat4 checkBoxModelMatrix2 = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix2));
+    glBindVertexArray(vaoCheckBoxMap2);
+    for (int i = 0; i < 6; ++i) {
+        glDrawArrays(GL_QUADS, i * 4, 4);
+    }
+    glBindVertexArray(0);
+
+    glm::mat4 checkBoxModelMatrix3 = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix3));
+    glBindVertexArray(vaoCheckBoxMap3);
+    for (int i = 0; i < 6; ++i) {
+        glDrawArrays(GL_QUADS, i * 4, 4);
+    }
+    glBindVertexArray(0);
+
+    glm::mat4 checkBoxModelMatrix4 = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix4));
+    glBindVertexArray(vaoCheckBoxMap4);
+    for (int i = 0; i < 6; ++i) {
+        glDrawArrays(GL_QUADS, i * 4, 4);
+    }
+    glBindVertexArray(0);
+
+    glm::mat4 checkBoxModelMatrix5 = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix5));
+    glBindVertexArray(vaoCheckBoxMap5);
+    for (int i = 0; i < 6; ++i) {
+        glDrawArrays(GL_QUADS, i * 4, 4);
+    }
+    glBindVertexArray(0);
+
+
+
+}
+
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -465,6 +774,13 @@ void main(int argc, char** argv) {
     InitCharacter2RightArm();
     InitCharacter2Eye();
     InitCharacter2Face();
+
+    //mapcheckbox
+    InitCheckBoxMap1();
+    InitCheckBoxMap2();
+    InitCheckBoxMap3();
+    InitCheckBoxMap4();
+    InitCheckBoxMap5();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -566,7 +882,7 @@ GLvoid drawScene() {
     DrawMap(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
-
+    DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
     glutSwapBuffers();
 }
 
@@ -597,6 +913,26 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
     case 'Y':
         isCameraYmoveReverse = !isCameraYmoveReverse;
         break;
+    case 'w':
+        cameraZ -= 0.1f;
+        break;
+    case 's':
+        cameraZ += 0.1f;
+        break;
+    case 'a':
+        cameraX -= 0.1f;
+        break;
+    case 'd':
+        cameraX += 0.1f;
+        break;
+    case '1':
+        cameraY -= 0.1f;
+        break;
+    case '2':
+        cameraY += 0.1f;
+        break;
+
+
     }
 
     glutPostRedisplay();
