@@ -689,45 +689,34 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
 void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     glm::mat4 checkBoxModelMatrix1 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix1));
     glBindVertexArray(vaoCheckBoxMap1);
-    for (int i = 0; i < 6; ++i) {
-        glDrawArrays(GL_QUADS, i * 4, 4); 
-    }
+        glDrawArrays(GL_QUADS, 0, 24); 
     glBindVertexArray(0);
 
     glm::mat4 checkBoxModelMatrix2 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix2));
     glBindVertexArray(vaoCheckBoxMap2);
-    for (int i = 0; i < 6; ++i) {
-        glDrawArrays(GL_QUADS, i * 4, 4);
-    }
+    glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
 
     glm::mat4 checkBoxModelMatrix3 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix3));
     glBindVertexArray(vaoCheckBoxMap3);
-    for (int i = 0; i < 6; ++i) {
-        glDrawArrays(GL_QUADS, i * 4, 4);
-    }
+    glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
 
     glm::mat4 checkBoxModelMatrix4 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix4));
     glBindVertexArray(vaoCheckBoxMap4);
-    for (int i = 0; i < 6; ++i) {
-        glDrawArrays(GL_QUADS, i * 4, 4);
-    }
+    glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
 
     glm::mat4 checkBoxModelMatrix5 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix5));
     glBindVertexArray(vaoCheckBoxMap5);
-    for (int i = 0; i < 6; ++i) {
-        glDrawArrays(GL_QUADS, i * 4, 4);
-    }
+    glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
 
 
