@@ -195,6 +195,21 @@ void InitCharacter1Blusher() {
 void InitCharacter1Eye() {
     InitPart("Character1/eye.obj", modelCharacter1Eye, vaoCharacter1Eye, vboCharacter1Eye, glm::vec3(0.0f, 0.0f, 0.0f));
 }
+void InitCharacter1Face() {
+    InitPart("Character1/face.obj", modelCharacter1Face, vaoCharacter1Face, vboCharacter1Face, glm::vec3(1.0f, 1.0f, 1.0f));
+}
+void InitCharacter1LeftArm() {
+    InitPart("Character1/leftArm.obj", modelCharacter1LeftArm, vaoCharacter1LeftArm, vboCharacter1LeftArm, glm::vec3(1.0f, 1.0f, 0.0f));
+}
+void InitCharacter1RightArm() {
+    InitPart("Character1/rightArm.obj", modelCharacter1RightArm, vaoCharacter1RightArm, vboCharacter1RightArm, glm::vec3(1.0f, 1.0f, 0.0f));
+}
+void InitCharacter1LeftLeg() {
+    InitPart("Character1/leftLeg.obj", modelCharacter1LeftLeg, vaoCharacter1LeftLeg, vboCharacter1LeftLeg, glm::vec3(1.0f, 1.0f, 0.0f));
+}
+void InitCharacter1RightLeg() {
+    InitPart("Character1/rightLeg.obj", modelCharacter1RightLeg, vaoCharacter1RightLeg, vboCharacter1RightLeg, glm::vec3(1.0f, 1.0f, 0.0f));
+}
 
 // Ä³¸¯ÅÍ2
 void InitCharacter2Acc() {
@@ -260,6 +275,76 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 
     glBindVertexArray(vaoPoint);
     glDrawElements(GL_TRIANGLES, modelPoint.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+// Ä³¸¯ÅÍ1 ±×¸®±â
+void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
+    glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
+    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(-5.0f, 0.0f, -5.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
+
+    // ¸ö
+    glm::mat4 Character1BodyModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BodyModelMatrix));
+    glBindVertexArray(vaoCharacter1Body);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Body.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // µî¿¡ °ËÀº ÁÙ
+    glm::mat4 Character1BackPatternModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BackPatternModelMatrix));
+    glBindVertexArray(vaoCharacter1BackPattern);
+    glDrawElements(GL_TRIANGLES, modelCharacter1BackPattern.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºí·¯¼Å
+    glm::mat4 Character1BlusherModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BlusherModelMatrix));
+    glBindVertexArray(vaoCharacter1Blusher);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Blusher.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ´«
+    glm::mat4 Character1EyeModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1EyeModelMatrix));
+    glBindVertexArray(vaoCharacter1Eye);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Eye.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ¾ó±¼
+    glm::mat4 Character1FaceModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1FaceModelMatrix));
+    glBindVertexArray(vaoCharacter1Face);
+    glDrawElements(GL_TRIANGLES, modelCharacter1Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ¿ÞÆÈ
+    glm::mat4 Character1LeftArmModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftArmModelMatrix));
+    glBindVertexArray(vaoCharacter1LeftArm);
+    glDrawElements(GL_TRIANGLES, modelCharacter1LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ¿À¸¥ÆÈ
+    glm::mat4 Character1RightArmModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightArmModelMatrix));
+    glBindVertexArray(vaoCharacter1RightArm);
+    glDrawElements(GL_TRIANGLES, modelCharacter1RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ¿Þ´Ù¸®
+    glm::mat4 Character1LeftLegModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftLegModelMatrix));
+    glBindVertexArray(vaoCharacter1LeftLeg);
+    glDrawElements(GL_TRIANGLES, modelCharacter1LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ¿À¸¥´Ù¸®
+    glm::mat4 Character1RightLegModelMatrix = baseCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightLegModelMatrix));
+    glBindVertexArray(vaoCharacter1RightLeg);
+    glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -357,6 +442,17 @@ void main(int argc, char** argv) {
     InitArrowAndPillar();
     InitEndPoint();
     InitPoint();
+
+    // Ä³¸¯ÅÍ1
+    InitCharacter1Body();
+    InitCharacter1BackPattern();
+    InitCharacter1Blusher();
+    InitCharacter1Eye();
+    InitCharacter1Face();
+    InitCharacter1LeftArm();
+    InitCharacter1RightArm();
+    InitCharacter1LeftLeg();
+    InitCharacter1RightLeg();
 
     // Ä³¸¯ÅÍ2
     InitCharacter2Acc();
@@ -468,7 +564,7 @@ GLvoid drawScene() {
     GLint modelMatrixLocation = glGetUniformLocation(shaderProgramID, "modelTransform");
 
     DrawMap(shaderProgramID, modelMatrixLocation);
-
+    DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
 
     glutSwapBuffers();
