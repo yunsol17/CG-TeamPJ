@@ -1,9 +1,9 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef CHARACTER2_H
+#define CHARACTER2_H
 
 #include <vector>
 #include <gl/glew.h>
-#include <glm/glm.hpp>
+#include <gl/glm/glm.hpp>
 #include "헤더.h" // 필요한 경우에만 포함
 
 // 캐릭터 초기화 함수 선언

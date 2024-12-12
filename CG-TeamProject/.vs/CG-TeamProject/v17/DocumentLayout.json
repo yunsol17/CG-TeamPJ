@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\\uC18C\uC2A4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uD5E4\uB354.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\\uD5E4\uB354.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\character2.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|solutionrelative:CG-TeamProject\\character2.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F967ABA3-F00B-4FB2-97AC-8E257D72ABC3}|CG-TeamProject\\CG-TeamProject.vcxproj|C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -26,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,52 +50,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "\uC18C\uC2A4.cpp",
-              "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "RelativeDocumentMoniker": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "RelativeToolTip": "CG-TeamProject\\\uC18C\uC2A4.cpp",
-              "ViewState": "AgIAANwCAAAAAAAAAAAkwPMCAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-02T10:23:47.769Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "\uD5E4\uB354.h",
               "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uD5E4\uB354.h",
               "RelativeDocumentMoniker": "CG-TeamProject\\\uD5E4\uB354.h",
               "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\\uD5E4\uB354.h",
               "RelativeToolTip": "CG-TeamProject\\\uD5E4\uB354.h",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAnwBkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAEwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-03T05:35:38.923Z"
+              "WhenOpened": "2024-12-03T05:35:38.923Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "character2.h",
+              "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\character2.h",
+              "RelativeDocumentMoniker": "CG-TeamProject\\character2.h",
+              "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\character2.h",
+              "RelativeToolTip": "CG-TeamProject\\character2.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-12T12:52:21.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\main.cpp",
+              "RelativeDocumentMoniker": "CG-TeamProject\\main.cpp",
+              "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\main.cpp",
+              "RelativeToolTip": "CG-TeamProject\\main.cpp",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAkwKMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-02T10:23:47.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "vertex.glsl",
               "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl",
               "RelativeDocumentMoniker": "CG-TeamProject\\vertex.glsl",
               "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\vertex.glsl",
               "RelativeToolTip": "CG-TeamProject\\vertex.glsl",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-02T10:23:47.581Z"
+              "WhenOpened": "2024-12-02T10:23:47.581Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "fragment.glsl",
               "DocumentMoniker": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\fragment.glsl",
               "RelativeDocumentMoniker": "CG-TeamProject\\fragment.glsl",
               "ToolTip": "C:\\Users\\juhwan\\OneDrive\\Desktop\\team_project\\CG-TeamPJ\\CG-TeamProject\\CG-TeamProject\\fragment.glsl",
               "RelativeToolTip": "CG-TeamProject\\fragment.glsl",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-02T10:23:47.644Z"
+              "WhenOpened": "2024-12-02T10:23:47.644Z",
+              "EditorCaption": ""
             }
           ]
         }
