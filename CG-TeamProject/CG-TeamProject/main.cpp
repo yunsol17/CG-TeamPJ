@@ -46,11 +46,17 @@ GLfloat cameraY = 0.0f;
 GLfloat cameraZ = 30.0f;
 GLfloat moveSpeed = 0.05f;
 GLfloat character1RotationAngle = 0.0f;
+GLfloat character2RotationAngle = 0.0f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 character1Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character1Position = glm::vec3(-5.0f, 0.0f, -5.0f);
 glm::vec3 character1InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
+glm::mat4 character2ModelMatrix = glm::mat4(1.0f);
+glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
+glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 bool isCameraXmove = false;
 bool isCameraXmoveReverse = false;
@@ -59,6 +65,7 @@ bool isCameraYmoveReverse = false;
 bool isCameraZmove = false;
 bool isCameraZmoveReverse = false;
 bool moveKeyStates[256] = { false }; // 이동 키 상태
+bool arrowKeyStates[256] = { false };
 bool commandKeyStates[256] = { false }; // 명령 키 상태
 
 bool checkCollision(const AABB& box1, const AABB& box2) {
@@ -123,6 +130,8 @@ GLvoid drawScene();
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid KeyboardUp(unsigned char key, int x, int y);
+void SpecialKey(int key, int x, int y);
+void SpecialKeyUp(int key, int x, int y);
 GLvoid Timer(int value);
 
 int window_Width = 800;
@@ -627,73 +636,76 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glm::mat4 baseCharacter2ModelMatrix = glm::mat4(1.0f);
     baseCharacter2ModelMatrix = glm::translate(baseCharacter2ModelMatrix, glm::vec3(5.0f, 0.0f, -5.0f));
+
+    // character2ModelMatrix를 결합
+    glm::mat4 finalCharacter2ModelMatrix = baseCharacter2ModelMatrix * character2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
 
     //acc
-    glm::mat4 Character2AccModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2AccModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2AccModelMatrix));
     glBindVertexArray(vaoCharacter2Acc);
     glDrawElements(GL_TRIANGLES, modelCharacter2Acc.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //body
-    glm::mat4 Character2BodyModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2BodyModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2BodyModelMatrix));
     glBindVertexArray(vaoCharacter2Body);
     glDrawElements(GL_TRIANGLES, modelCharacter2Body.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //hair
-    glm::mat4 Character2HairModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2HairModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2HairModelMatrix));
     glBindVertexArray(vaoCharacter2Hair);
     glDrawElements(GL_TRIANGLES, modelCharacter2Hair.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //leftLeg
-    glm::mat4 Character2LeftLegModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2LeftLegModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2LeftLegModelMatrix));
     glBindVertexArray(vaoCharacter2LeftLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter2LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //leftArm
-    glm::mat4 Character2LeftArmModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2LeftArmModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2LeftArmModelMatrix));
     glBindVertexArray(vaoCharacter2LeftArm);
     glDrawElements(GL_TRIANGLES, modelCharacter2LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //RightLeg
-    glm::mat4 Character2RightLegModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2RightLegModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2RightLegModelMatrix));
     glBindVertexArray(vaoCharacter2RightLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter2RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //RightArm
-    glm::mat4 Character2RightArmModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2RightArmModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2RightArmModelMatrix));
     glBindVertexArray(vaoCharacter2RightArm);
     glDrawElements(GL_TRIANGLES, modelCharacter2RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //Clothes
-    glm::mat4 Character2ClothesModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2ClothesModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2ClothesModelMatrix));
     glBindVertexArray(vaoCharacter2Clothes);
     glDrawElements(GL_TRIANGLES, modelCharacter2Clothes.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //Eye
-    glm::mat4 Character2EyeModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2EyeModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2EyeModelMatrix));
     glBindVertexArray(vaoCharacter2Eye);
     glDrawElements(GL_TRIANGLES, modelCharacter2Eye.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     //Face
-    glm::mat4 Character2FaceModelMatrix = baseCharacter2ModelMatrix;
+    glm::mat4 Character2FaceModelMatrix = finalCharacter2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2FaceModelMatrix));
     glBindVertexArray(vaoCharacter2Face);
     glDrawElements(GL_TRIANGLES, modelCharacter2Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -784,7 +796,9 @@ void main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
     glutKeyboardFunc(Keyboard);
-    glutKeyboardUpFunc(KeyboardUp); // 키 뗄 때
+    glutKeyboardUpFunc(KeyboardUp);
+    glutSpecialFunc(SpecialKey);
+    glutSpecialUpFunc(SpecialKeyUp);
     glutTimerFunc(16, Timer, 0);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -896,12 +910,12 @@ GLvoid Reshape(int w, int h) {
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = true; // 이동 키 상태 설정
+        moveKeyStates[key] = true;
     }
     else {
         switch (key) {
         case 'q':
-            glutLeaveMainLoop(); // 프로그램 종료
+            glutLeaveMainLoop();
             break;
         case 'z':
             isCameraZmove = !isCameraZmove;
@@ -928,9 +942,22 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 
 void KeyboardUp(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = false; // 이동 키 상태 해제
+        moveKeyStates[key] = false;
     }
 }
+
+void SpecialKey(int key, int x, int y) {
+    if (key == GLUT_KEY_UP || key == GLUT_KEY_DOWN || key == GLUT_KEY_LEFT || key == GLUT_KEY_RIGHT) {
+        arrowKeyStates[key] = true;
+    }
+}
+
+void SpecialKeyUp(int key, int x, int y) {
+    if (key == GLUT_KEY_UP || key == GLUT_KEY_DOWN || key == GLUT_KEY_LEFT || key == GLUT_KEY_RIGHT) {
+        arrowKeyStates[key] = false;
+    }
+}
+
 
 GLvoid Timer(int value) {
     if (isCameraXmove) {
@@ -982,12 +1009,34 @@ GLvoid Timer(int value) {
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
     }
 
-    // 캐릭터 위치 업데이트
     character1Position += character1Direction;
-
-    // 모델 매트릭스 업데이트
     character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
     character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    // 캐릭터2 이동 처리
+    if (arrowKeyStates[GLUT_KEY_UP]) {
+        character2Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
+        character2RotationAngle = 0.0f;
+    }
+    else if (arrowKeyStates[GLUT_KEY_DOWN]) {
+        character2Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
+        character2RotationAngle = 180.0f;
+    }
+    else if (arrowKeyStates[GLUT_KEY_LEFT]) {
+        character2Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
+        character2RotationAngle = 90.0f;
+    }
+    else if (arrowKeyStates[GLUT_KEY_RIGHT]) {
+        character2Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
+        character2RotationAngle = -90.0f;
+    }
+    else {
+        character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+
+    character2Position += character2Direction;
+    character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
+    character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
     // 화면 갱신
     glutPostRedisplay();
