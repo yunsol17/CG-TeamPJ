@@ -190,6 +190,7 @@ void InitPart(const std::string& filePath, Model& model, GLuint& vao, GLuint* vb
     InitBuffer(vao, vbo, expandedVertices, indices);
 }
 
+
 // 맵
 void InitBottom() {
     InitPart("Map/bottom.obj", modelBottom, vaoBottom, vboBottom, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -524,6 +525,29 @@ void InitCheckBoxMap5() {
     glBindVertexArray(0);
 }
 
+//맵 AABB값
+AABB map1 = {
+    glm::vec3(-22.5f, -2.0f, -80.0f), // min
+    glm::vec3(22.5f,  0.0f,  0.0f)   // max
+};
+AABB map2 = {
+    glm::vec3(-16.0f, -2.3f, -121.0f), // min
+    glm::vec3(16.0f, -0.3f, -79.0f)    // max
+};
+AABB map3 = {
+    glm::vec3(-13.0f, -2.6f, -146.0f), // min
+    glm::vec3(13.0f, -0.6f, -120.0f)   // max
+};
+AABB map4 = {
+    glm::vec3(-10.6f, -2.8f, -165.0f), // min
+    glm::vec3(10.6f, -0.8f, -143.0f)   // max
+};
+AABB map5 = {
+    glm::vec3(-10.6f, -28.5f, -245.0f), // min
+    glm::vec3(10.6f, -26.5f, -165.0f)   // max
+};
+
+
 // 맵 그리기
 void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     // 바닥
@@ -636,7 +660,6 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glm::mat4 baseCharacter2ModelMatrix = glm::mat4(1.0f);
     baseCharacter2ModelMatrix = glm::translate(baseCharacter2ModelMatrix, glm::vec3(5.0f, 0.0f, -5.0f));
-
     // character2ModelMatrix를 결합
     glm::mat4 finalCharacter2ModelMatrix = baseCharacter2ModelMatrix * character2ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
@@ -796,6 +819,7 @@ void main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
     glutKeyboardFunc(Keyboard);
+    glutKeyboardUpFunc(KeyboardUp); // 키 뗄 때
     glutKeyboardUpFunc(KeyboardUp);
     glutSpecialFunc(SpecialKey);
     glutSpecialUpFunc(SpecialKeyUp);
@@ -910,12 +934,12 @@ GLvoid Reshape(int w, int h) {
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = true;
+        moveKeyStates[key] = true; // 이동 키 상태 설정
     }
     else {
         switch (key) {
         case 'q':
-            glutLeaveMainLoop();
+            glutLeaveMainLoop(); // 프로그램 종료
             break;
         case 'z':
             isCameraZmove = !isCameraZmove;
@@ -942,7 +966,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 
 void KeyboardUp(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = false;
+        moveKeyStates[key] = false; // 이동 키 상태 해제
     }
 }
 
@@ -957,7 +981,6 @@ void SpecialKeyUp(int key, int x, int y) {
         arrowKeyStates[key] = false;
     }
 }
-
 
 GLvoid Timer(int value) {
     if (isCameraXmove) {
@@ -1009,7 +1032,10 @@ GLvoid Timer(int value) {
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
     }
 
+    // 캐릭터 위치 업데이트
     character1Position += character1Direction;
+
+    // 모델 매트릭스 업데이트
     character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
     character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -1033,7 +1059,6 @@ GLvoid Timer(int value) {
     else {
         character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
     }
-
     character2Position += character2Direction;
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
