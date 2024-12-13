@@ -44,6 +44,13 @@ GLuint fragmentShader;
 GLfloat cameraX = 0.0f;
 GLfloat cameraY = 0.0f;
 GLfloat cameraZ = 30.0f;
+GLfloat moveSpeed = 0.05f;
+GLfloat character1RotationAngle = 0.0f;
+
+glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
+glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character1Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character1InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 bool isCameraXmove = false;
 bool isCameraXmoveReverse = false;
@@ -51,6 +58,8 @@ bool isCameraYmove = false;
 bool isCameraYmoveReverse = false;
 bool isCameraZmove = false;
 bool isCameraZmoveReverse = false;
+bool moveKeyStates[256] = { false }; // 이동 키 상태
+bool commandKeyStates[256] = { false }; // 명령 키 상태
 
 bool checkCollision(const AABB& box1, const AABB& box2) {
     return (box1.max.x > box2.min.x && box1.min.x < box2.max.x &&
@@ -113,6 +122,7 @@ GLuint make_shaderProgram();
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
+GLvoid KeyboardUp(unsigned char key, int x, int y);
 GLvoid Timer(int value);
 
 int window_Width = 800;
@@ -247,6 +257,7 @@ void InitCharacter2Face() {
 }
 
 // 맵 충돌박스
+// 충돌박스를 사각형으로 만들 수 있으니까 바닥만 있으면 됨. 
 std::vector<float> CheckBoxVerticesMap1 = {
     // Bottom
     -22.5f, -2.0f,  0.0f,
@@ -543,66 +554,69 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
     baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(-5.0f, 0.0f, -5.0f));
+
+    // character1ModelMatrix를 결합
+    glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
 
     // 몸
-    glm::mat4 Character1BodyModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1BodyModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BodyModelMatrix));
     glBindVertexArray(vaoCharacter1Body);
     glDrawElements(GL_TRIANGLES, modelCharacter1Body.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 등에 검은 줄
-    glm::mat4 Character1BackPatternModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1BackPatternModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BackPatternModelMatrix));
     glBindVertexArray(vaoCharacter1BackPattern);
     glDrawElements(GL_TRIANGLES, modelCharacter1BackPattern.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 블러셔
-    glm::mat4 Character1BlusherModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1BlusherModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1BlusherModelMatrix));
     glBindVertexArray(vaoCharacter1Blusher);
     glDrawElements(GL_TRIANGLES, modelCharacter1Blusher.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 눈
-    glm::mat4 Character1EyeModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1EyeModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1EyeModelMatrix));
     glBindVertexArray(vaoCharacter1Eye);
     glDrawElements(GL_TRIANGLES, modelCharacter1Eye.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 얼굴
-    glm::mat4 Character1FaceModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1FaceModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1FaceModelMatrix));
     glBindVertexArray(vaoCharacter1Face);
     glDrawElements(GL_TRIANGLES, modelCharacter1Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 왼팔
-    glm::mat4 Character1LeftArmModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1LeftArmModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftArmModelMatrix));
     glBindVertexArray(vaoCharacter1LeftArm);
     glDrawElements(GL_TRIANGLES, modelCharacter1LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 오른팔
-    glm::mat4 Character1RightArmModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1RightArmModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightArmModelMatrix));
     glBindVertexArray(vaoCharacter1RightArm);
     glDrawElements(GL_TRIANGLES, modelCharacter1RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 왼다리
-    glm::mat4 Character1LeftLegModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1LeftLegModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftLegModelMatrix));
     glBindVertexArray(vaoCharacter1LeftLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter1LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // 오른다리
-    glm::mat4 Character1RightLegModelMatrix = baseCharacter1ModelMatrix;
+    glm::mat4 Character1RightLegModelMatrix = finalCharacter1ModelMatrix;
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightLegModelMatrix));
     glBindVertexArray(vaoCharacter1RightLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -770,6 +784,7 @@ void main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
     glutKeyboardFunc(Keyboard);
+    glutKeyboardUpFunc(KeyboardUp); // 키 뗄 때
     glutTimerFunc(16, Timer, 0);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -876,51 +891,41 @@ GLvoid Reshape(int w, int h) {
 }
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
-    switch (key) {
-    case 'q':
-        glutLeaveMainLoop();
-        break;
-    case 'z':
-        isCameraZmove = !isCameraZmove;
-        break;
-    case 'Z':
-        isCameraZmoveReverse = !isCameraZmoveReverse;
-        break;
-    case 'x':
-        isCameraXmove = !isCameraXmove;
-        break;
-    case 'X':
-        isCameraXmoveReverse = !isCameraXmoveReverse;
-        break;
-    case 'y':
-        isCameraYmove = !isCameraYmove;
-        break;
-    case 'Y':
-        isCameraYmoveReverse = !isCameraYmoveReverse;
-        break;
-    case 'w':
-        cameraZ -= 0.1f;
-        break;
-    case 's':
-        cameraZ += 0.1f;
-        break;
-    case 'a':
-        cameraX -= 0.1f;
-        break;
-    case 'd':
-        cameraX += 0.1f;
-        break;
-    case '1':
-        cameraY -= 0.1f;
-        break;
-    case '2':
-        cameraY += 0.1f;
-        break;
-
-
+    if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
+        moveKeyStates[key] = true; // 이동 키 상태 설정
     }
-
+    else {
+        switch (key) {
+        case 'q':
+            glutLeaveMainLoop(); // 프로그램 종료
+            break;
+        case 'z':
+            isCameraZmove = !isCameraZmove;
+            break;
+        case 'Z':
+            isCameraZmoveReverse = !isCameraZmoveReverse;
+            break;
+        case 'x':
+            isCameraXmove = !isCameraXmove;
+            break;
+        case 'X':
+            isCameraXmoveReverse = !isCameraXmoveReverse;
+            break;
+        case 'y':
+            isCameraYmove = !isCameraYmove;
+            break;
+        case 'Y':
+            isCameraYmoveReverse = !isCameraYmoveReverse;
+            break;
+        }
+    }
     glutPostRedisplay();
+}
+
+void KeyboardUp(unsigned char key, int x, int y) {
+    if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
+        moveKeyStates[key] = false; // 이동 키 상태 해제
+    }
 }
 
 GLvoid Timer(int value) {
@@ -951,6 +956,36 @@ GLvoid Timer(int value) {
         }
     }
 
+    // 이동 키 상태 확인
+    if (moveKeyStates['w']) {
+        character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
+        character1RotationAngle = 0.0f;
+    }
+    else if (moveKeyStates['s']) {
+        character1Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
+        character1RotationAngle = 180.0f;
+    }
+    else if (moveKeyStates['a']) {
+        character1Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
+        character1RotationAngle = 90.0f;
+    }
+    else if (moveKeyStates['d']) {
+        character1Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
+        character1RotationAngle = -90.0f;
+    }
+    else {
+        // 키가 눌리지 않은 경우 멈춤
+        character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+
+    // 캐릭터 위치 업데이트
+    character1Position += character1Direction;
+
+    // 모델 매트릭스 업데이트
+    character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
+    character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    // 화면 갱신
     glutPostRedisplay();
     glutTimerFunc(16, Timer, 0);
 }
