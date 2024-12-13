@@ -134,7 +134,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="character2.h" />
     <ClInclude Include="헤더.h" />
   </ItemGroup>
   <ItemGroup>
