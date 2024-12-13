@@ -855,11 +855,15 @@ GLvoid drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(shaderProgramID);
 
+    // 카메라 위치 계산
+    glm::vec3 cameraPosition = character1Position + glm::vec3(-5.0f, 5.0f, 15.0f);
+    glm::vec3 cameraTarget = character1Position + glm::vec3(-5.0f, 0.0f, 0.0f); // 캐릭터를 바라봄
+
     // 뷰 변환
     glm::mat4 viewMatrix = glm::lookAt(
-        glm::vec3(cameraX, cameraY, cameraZ),  // 카메라 위치
-        glm::vec3(0.0f, 0.0f, 0.0f),   // 카메라가 바라보는 지점
-        glm::vec3(0.0f, 1.0f, 0.0f)  // 위쪽 방향
+        cameraPosition,  // 카메라 위치
+        cameraTarget,    // 카메라가 바라보는 지점
+        glm::vec3(0.0f, 1.0f, 0.0f) // 카메라 상향 벡터
     );
 
     // 뷰 행렬을 셰이더에 전달
