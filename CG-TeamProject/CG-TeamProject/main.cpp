@@ -19,8 +19,6 @@ struct AABB {
     glm::vec3 max; // 충돌박스의 최대 좌표 (x, y, z)
 };
 
-AABB character1Box, character2Box;
-
 GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint;
 GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2];
 Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint;
@@ -51,8 +49,8 @@ GLfloat character2RotationAngle = 0.0f;
 GLfloat character1ArmLegSwingAngle = 0.0f;
 GLfloat character2ArmLegSwingAngle = 0.0f;
 GLfloat maxSwingAngle = 30.0f;
-GLfloat character1JumpSpeed = 0.2f;
-GLfloat character2JumpSpeed = 0.2f;
+GLfloat character1JumpSpeed = 0.3f;
+GLfloat character2JumpSpeed = 0.3f;
 GLfloat gravity = 0.01f;
 GLfloat realGravity = 0.1f;
 
@@ -129,8 +127,11 @@ void InitCharacter1LeftArm();
 void InitCharacter1RightArm();
 void InitCharacter1LeftLeg();
 void InitCharacter1RightLeg();
+
 //체크박스 추가
 void InitCharacter1CheckBox();
+void InitCharacter2CheckBox();
+
 // 캐릭터2
 void InitCharacter2Acc();
 void InitCharacter2Body();
@@ -142,8 +143,6 @@ void InitCharacter2RightLeg();
 void InitCharacter2RightArm();
 void InitCharacter2Eye();
 void InitCharacter2Face();
-//체크박스 추가
-void InitCharacter2CheckBox();
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -210,7 +209,6 @@ void InitPart(const std::string& filePath, Model& model, GLuint& vao, GLuint* vb
     InitBuffer(vao, vbo, expandedVertices, indices);
 }
 
-
 // 맵
 void InitBottom() {
     InitPart("Map/bottom.obj", modelBottom, vaoBottom, vboBottom, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -253,6 +251,7 @@ void InitCharacter1LeftLeg() {
 void InitCharacter1RightLeg() {
     InitPart("Character1/rightLeg.obj", modelCharacter1RightLeg, vaoCharacter1RightLeg, vboCharacter1RightLeg, glm::vec3(1.0f, 1.0f, 0.0f));
 }
+
 //체크박스
 std::vector<float> Character1CheckBox = {
     // Bottom
@@ -342,6 +341,7 @@ void InitCharacter2Eye() {
 void InitCharacter2Face() {
     InitPart("Character2/face.obj", modelCharacter2Face, vaoCharacter2Face, vboCharacter2Face, glm::vec3(1.0f, 1.0, 0.941f));
 }
+
 //체크박스
 std::vector<float> Character2CheckBox = {
     // Bottom
@@ -400,7 +400,6 @@ AABB character2 = {
 };
 
 // 맵 충돌박스
-// 충돌박스를 사각형으로 만들 수 있으니까 바닥만 있으면 됨. 
 std::vector<float> CheckBoxVerticesMap1 = {
     // Bottom
     -22.5f, -2.0f,  0.0f,
@@ -680,10 +679,6 @@ AABB map5 = {
     glm::vec3(10.6f, -26.5f, -165.0f)   // max
 };
 
-float ch1x = -5.0f;
-float ch1y = 0.0f;
-float ch1z = -5.0f;
-
 // 맵 그리기
 void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     // 바닥
@@ -722,7 +717,7 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 // 캐릭터1 그리기
 void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
-    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(ch1x, ch1y, ch1z));
+    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(-5.0f, 0.0f, -5.0f));
 
     // character1ModelMatrix를 결합
     glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
@@ -913,6 +908,7 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
+// 체크박스 그리기
 void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glm::mat4 checkBoxModelMatrix1 = glm::mat4(1.0f);
@@ -945,7 +941,6 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 }
 
 void main(int argc, char** argv) {
@@ -1001,7 +996,7 @@ void main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
     glutKeyboardFunc(Keyboard);
-    glutKeyboardUpFunc(KeyboardUp); // 키 뗄 때
+    glutKeyboardUpFunc(KeyboardUp);
     glutKeyboardUpFunc(KeyboardUp);
     glutSpecialFunc(SpecialKey);
     glutSpecialUpFunc(SpecialKeyUp);
@@ -1076,8 +1071,8 @@ GLvoid drawScene() {
     glUseProgram(shaderProgramID);
 
     // 카메라 위치 계산
-    glm::vec3 cameraPosition = character1Position + glm::vec3(-5.0f, 5.0f, 15.0f);
-    glm::vec3 cameraTarget = character1Position + glm::vec3(-5.0f, 0.0f, 0.0f); // 캐릭터를 바라봄
+    glm::vec3 cameraPosition = character1Position + glm::vec3(-5.0f, 10.0f, 15.0f);
+    glm::vec3 cameraTarget = character1Position + glm::vec3(-5.0f, 0.0f, 0.0f);
 
     // 뷰 변환
     glm::mat4 viewMatrix = glm::lookAt(
@@ -1116,20 +1111,20 @@ GLvoid Reshape(int w, int h) {
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = true; // 이동 키 상태 설정
+        moveKeyStates[key] = true;
     }
     else {
         switch (key) {
         case 'q':
-            glutLeaveMainLoop(); // 프로그램 종료
+            glutLeaveMainLoop();
             break;
         case ' ':
-            if (!isCharacter1Jumping && character1Position.y == map1.max.y) {
+            if (!isCharacter1Jumping) {
                 isCharacter1Jumping = true;
             }
             break;
         case 'j':
-            if (!isCharacter2Jumping && character2Position.y == map1.max.y) {
+            if (!isCharacter2Jumping) {
                 isCharacter2Jumping = true;
             }
             break;
@@ -1140,7 +1135,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 
 void KeyboardUp(unsigned char key, int x, int y) {
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        moveKeyStates[key] = false; // 이동 키 상태 해제
+        moveKeyStates[key] = false;
     }
 }
 
@@ -1157,7 +1152,6 @@ void SpecialKeyUp(int key, int x, int y) {
 }
 
 GLvoid Timer(int value) {
-    // 이동 키 상태 확인
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
@@ -1179,37 +1173,37 @@ GLvoid Timer(int value) {
         isCharacter1Swing = true;
     }
     else {
-        // 키가 눌리지 않은 경우 멈춤
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
         isCharacter1Swing = false;
     }
 
-    // 캐릭터1 - 맵 충돌 확인
-    AABB maps[] = { map1, map2, map3, map4, map5 }; // 모든 맵의 충돌박스
-    // 맵 충돌 확인
+    AABB maps[] = { map1, map2, map3, map4, map5 };
     isCharacter1OnMap = false;
     for (const auto& map : maps) {
         if (checkCollision(character1, map)) {
             isCharacter1OnMap = true;
-            // 맵 상단으로 고정
-            ch1y = map.max.y;
             break;
         }
     }
 
-    // 중력 적용
-    if (!isCharacter1OnMap) {
+    // 점프 로직
+    if (isCharacter1Jumping) {
+        character1Position.y += character1JumpSpeed; 
+        character1JumpSpeed -= gravity;
+
+        if (character1JumpSpeed <= 0.0f && isCharacter1OnMap) {
+            isCharacter1Jumping = false;
+            character1JumpSpeed = 0.3f;
+        }
+    }
+    else if (!isCharacter1OnMap) {
         character1Position.y -= realGravity;
     }
 
-    // 캐릭터 위치 업데이트
     character1Position += character1Direction;
-
-    // 모델 매트릭스 업데이트
     character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
     character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    // 캐릭터1 충돌박스 업데이트
     character1.min = character1Position + glm::vec3(-0.47f, 0.0f, -0.48f);
     character1.max = character1Position + glm::vec3(0.47f, 1.84f, 0.42f);
 
@@ -1239,10 +1233,34 @@ GLvoid Timer(int value) {
         isCharacter2Swing = false;
     }
 
+    isCharacter2OnMap = false;
+    for (const auto& map : maps) {
+        if (checkCollision(character2, map)) {
+            isCharacter2OnMap = true;
+            break;
+        }
+    }
+
+    // 점프 로직
+    if (isCharacter2Jumping) {
+        character2Position.y += character2JumpSpeed;
+        character2JumpSpeed -= gravity;
+
+        if (character2JumpSpeed <= 0.0f && isCharacter2OnMap) {
+            isCharacter2Jumping = false;
+            character2JumpSpeed = 0.3f;
+        }
+    }
+    else if (!isCharacter2OnMap) {
+        character2Position.y -= realGravity;
+    }
+
     character2Position += character2Direction;
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
+    character2.min = character2Position + glm::vec3(-0.47f, 0.0f, -0.48f);
+    character2.max = character2Position + glm::vec3(0.47f, 1.84f, 0.42f);
 
     // 팔 흔들림 업데이트
     if (isCharacter1Swing) {
@@ -1285,28 +1303,6 @@ GLvoid Timer(int value) {
         else if (character2ArmLegSwingAngle < 0.0f) {
             character2ArmLegSwingAngle += 2.0f;
             if (character2ArmLegSwingAngle > 0.0f) character2ArmLegSwingAngle = 0.0f;
-        }
-    }
-
-    if (isCharacter1Jumping) {
-        character1Position.y += character1JumpSpeed;
-        character1JumpSpeed -= gravity;
-
-        if (character1Position.y <= 0.0f) {
-            character1Position.y = 0.0f;
-            isCharacter1Jumping = false;
-            character1JumpSpeed = 0.2f;
-        }
-    }
-
-    if (isCharacter2Jumping) {
-        character2Position.y += character2JumpSpeed;
-        character2JumpSpeed -= gravity;
-
-        if (character2Position.y <= 0.0f) {
-            character2Position.y = 0.0f;
-            isCharacter2Jumping = false;
-            character2JumpSpeed = 0.2f;
         }
     }
 
