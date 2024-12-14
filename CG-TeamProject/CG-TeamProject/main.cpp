@@ -35,6 +35,16 @@ Model modelBong1;
 GLuint vaoBong2, vboBong2[2];
 Model modelBong2;
 
+glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
+glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
+glm::vec3 BongGroup1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
+glm::vec3 BongGroup1Direction = glm::vec3(1.0f, 0.0f, 0.0f); // 초기 이동 방향 (오른쪽)
+GLfloat BongMove = 0.1f; // 이동 속도
+GLfloat MaxBongMove = 1.5f; // 최대 이동 거리
+glm::vec3 BongGroup2Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 BongGroup2Direction = glm::vec3(-1.0f, 0.0f, 0.0f);
+
+
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
 GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
 vboCharacter1RightLeg[2], vboCharacter2[2];
@@ -238,28 +248,28 @@ void InitBong2() {
 }
 
 AABB bong1 = {
-    glm::vec3(-15.74f, 0.0f, -33.25f), // min
-    glm::vec3(-13.74f,  3.6f,  -31.25f)  // max
+    glm::vec3(-15.74f + BongGroup1Position.x, 0.0f, -33.25f), // min
+    glm::vec3(-13.74f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong2 = {
-    glm::vec3(-9.47f, 0.0f, -33.25f), // min
-    glm::vec3(-7.47f,  3.6f,  -31.25f)  // max
+    glm::vec3(-9.47f + BongGroup2Position.x, 0.0f, -33.25f), // min
+    glm::vec3(-7.47f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong3 = {
-    glm::vec3(-3.169f, 0.0f, -33.25f), // min
-    glm::vec3(-1.169f,  3.6f,  -31.25f)  // max
+    glm::vec3(-3.169f + BongGroup1Position.x, 0.0f, -33.25f), // min
+    glm::vec3(-1.169f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong4 = {
-    glm::vec3(3.045f, 0.0f, -33.25f), // min
-    glm::vec3(5.045f,  3.6f,  -31.25f)  // max
+    glm::vec3(3.045f + BongGroup2Position.x, 0.0f, -33.25f), // min
+    glm::vec3(5.045f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong5 = {
-    glm::vec3(9.27f, 0.0f, -33.25f), // min
-    glm::vec3(11.27f,  3.6f,  -31.25f)  // max
+    glm::vec3(9.27f + BongGroup1Position.x, 0.0f, -33.25f), // min
+    glm::vec3(11.27f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong6 = {
-    glm::vec3(14.945f, 0.0f, -33.25f), // min
-    glm::vec3(16.945f,  3.6f,  -31.25f)  // max
+    glm::vec3(14.945f + BongGroup2Position.x, 0.0f, -33.25f), // min
+    glm::vec3(16.945f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
 };
 
 // 캐릭터1
@@ -985,16 +995,16 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
 //장애물 그리기
 void DrawObstacleBong1(GLuint shaderPRogramID, GLint modelMatrixLocation) {
-    glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bong1ModelMatrix));
+    glm::mat4 finalBong1ModelMatrix = bong1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalBong1ModelMatrix));
 
     glBindVertexArray(vaoBong1);
     glDrawElements(GL_TRIANGLES, modelBong1.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 void DrawObstacleBong2(GLuint shaderPRogramID, GLint modelMatrixLocation) {
-    glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bong2ModelMatrix));
+    glm::mat4 finalBong2ModelMatrix = bong2ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalBong2ModelMatrix));
 
     glBindVertexArray(vaoBong2);
     glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -1409,6 +1419,27 @@ GLvoid Timer(int value) {
     // 이동 처리
     character1Position += character1Direction;
     character2Position += character2Direction;
+
+    //봉 움직이기
+    bong1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
+    BongGroup1Position.x += BongGroup1Direction.x * BongMove;
+
+    if (BongGroup1Position.x >= MaxBongMove) {
+        BongGroup1Direction.x = -1; // 왼쪽으로 이동
+    }
+    else if (BongGroup1Position.x <= -MaxBongMove) {
+        BongGroup1Direction.x = 1;  // 오른쪽으로 이동
+    }
+
+    // 봉 그룹 2 움직이기 (반대 방향)
+    bong2ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
+    BongGroup2Position.x += BongGroup2Direction.x * BongMove;
+    if (BongGroup2Position.x >= MaxBongMove) {
+        BongGroup2Direction.x = -1;
+    }
+    else if (BongGroup2Position.x <= -MaxBongMove) {
+        BongGroup2Direction.x = 1;
+    }
 
     // 화면 갱신
     glutPostRedisplay();
