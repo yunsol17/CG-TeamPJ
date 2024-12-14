@@ -32,7 +32,7 @@ Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint;
 
 // 캐릭터1
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
-GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
+GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2],
 vboCharacter1RightLeg[2], vboCharacter2[2];
 Model modelCharacter1Body, modelCharacter1BackPattern, modelCharacter1Blusher, modelCharacter1Eye, modelCharacter1Face, modelCharacter1LeftArm, modelCharacter1RightArm, modelCharacter1LeftLeg, modelCharacter1RightLeg;
 
@@ -42,9 +42,9 @@ GLuint vboCharacter2Acc[2], vboCharacter2Body[2], vboCharacter2Clothes[2], vboCh
 Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharacter2Clothes, modelCharacter2LeftLeg, modelCharacter2RightLeg, modelCharacter2LeftArm, modelCharacter2RightArm, modelCharacter2Eye, modelCharacter2Face;
 
 //장애물
-GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple;
-GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2];
-Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple;
+GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple, vaoDoorOut, vaoLeftdoor, vaoRightdoor;
+GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2], vboDoorOut[2], vboLeftdoor[2], vboRightdoor[2];
+Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, modelDoorOut, modelLeftdoor, modelRightdoor;
 
 //checkbox
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
@@ -67,6 +67,8 @@ GLfloat realGravity = 0.1f;
 GLfloat BongMove = 0.1f; // 이동 속도
 GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
 GLfloat obstacleRotation = 0.0f;
+GLfloat DoorMove = 0.05f;
+GLfloat MaxDoorMove = 1.7f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -84,6 +86,13 @@ glm::vec3 BongGroup1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
 glm::vec3 BongGroup1Direction = glm::vec3(1.0f, 0.0f, 0.0f); // 초기 이동 방향 (오른쪽)
 glm::vec3 BongGroup2Position = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 BongGroup2Direction = glm::vec3(-1.0f, 0.0f, 0.0f);
+
+glm::mat4 LeftdoorModelMatrix = glm::mat4(1.0f);
+glm::mat4 RightdoorModelMatrix = glm::mat4(1.0f);
+glm::vec3 LeftdoorGroupPosition = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
+glm::vec3 LeftdoorGroupDirection = glm::vec3(-1.0f, 0.0f, 0.0f); // 초기 이동 방향 (왼쪽)
+glm::vec3 RightdoorGroupPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 RightdoorGroupDirection = glm::vec3(1.0f, 0.0f, 0.0f);
 
 bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
@@ -282,6 +291,15 @@ void InitHorizontalFanPink() {
 void InitHorizontalFanPurple() {
     InitPart("horizontalFan/purple.obj", modelHorizontalFanPurple, vaoHorizontalFanPurple, vboHorizontalFanPurple, glm::vec3(0.5f, 0.0f, 0.5f));
 }
+void InitDoorOut() {
+    InitPart("frogDoor/outsidegroup.obj", modelDoorOut, vaoDoorOut, vboDoorOut, glm::vec3(0.576f, 0.078f, 1.0f));
+}
+void InitDoorLeft() {
+    InitPart("frogDoor/leftdoorgroup.obj", modelLeftdoor, vaoLeftdoor, vboLeftdoor, glm::vec3(1.0f, 0.078f, 0.576f));
+}
+void InitDoorRight() {
+    InitPart("frogDoor/rightdoorgroup.obj", modelRightdoor, vaoRightdoor, vboRightdoor, glm::vec3(1.0f, 0.078f, 0.576f));
+}
 
 // 봉
 AABB bong1 = {
@@ -307,6 +325,32 @@ AABB bong5 = {
 AABB bong6 = {
     glm::vec3(14.945f + BongGroup2Position.x, 0.0f, -33.25f), // min
     glm::vec3(16.945f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
+};
+
+// 문
+AABB leftdoor1 = {
+    glm::vec3(-8.475f, -0.76f, -159.129f), // min
+    glm::vec3(-6.4f,  2.4f,  -158.53f)   // max
+};
+AABB leftdoor2 = {
+    glm::vec3(-2.168f, -0.76f, -159.129f), // min
+    glm::vec3(-0.09f,  2.4f,  -158.53f)   // max
+};
+AABB leftdoor3 = {
+    glm::vec3(4.227f, -0.76f, -159.129f), // min
+    glm::vec3(6.297f,  2.4f,  -158.53f)   // max
+};
+AABB rightdoor1 = {
+    glm::vec3(6.408f, -0.76f, -159.129f), // min
+    glm::vec3(4.38f,  2.4f,  -158.53f)   // max
+};
+AABB rightdoor2 = {
+    glm::vec3(-0.1f, -0.76f, -159.129f), // min
+    glm::vec3(1.926f,  2.4f,  -158.53f)   // max
+};
+AABB rightdoor3 = {
+    glm::vec3(6.294f, -0.76f, -159.129f), // min
+    glm::vec3(8.322f,  2.4f,  -158.53f)   // max
 };
 
 // 캐릭터1
@@ -999,7 +1043,7 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-// 봉 그리기
+// 장애물 그리기
 void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 finalBong1ModelMatrix = bong1ModelMatrix;
     bong1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
@@ -1017,8 +1061,6 @@ void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
-
-// 가로팬 그리기
 void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 HorizontalFanPink1ModelMatrix = glm::mat4(1.0f);
     HorizontalFanPink1ModelMatrix = glm::translate(HorizontalFanPink1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
@@ -1072,6 +1114,30 @@ void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation
 
     glBindVertexArray(vaoHorizontalFanPurple);
     glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+void DrawObstacleDoor(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::mat4 DooroutModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(DooroutModelMatrix));
+
+    glBindVertexArray(vaoDoorOut);
+    glDrawElements(GL_TRIANGLES, modelDoorOut.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 finalLeftdoorModelMatrix = LeftdoorModelMatrix;
+    LeftdoorModelMatrix = glm::translate(glm::mat4(1.0f), LeftdoorGroupPosition);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalLeftdoorModelMatrix));
+
+    glBindVertexArray(vaoLeftdoor);
+    glDrawElements(GL_TRIANGLES, modelLeftdoor.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 finalRightdoorModelMatrix = RightdoorModelMatrix;
+    RightdoorModelMatrix = glm::translate(glm::mat4(1.0f), RightdoorGroupPosition);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalRightdoorModelMatrix));
+
+    glBindVertexArray(vaoRightdoor);
+    glDrawElements(GL_TRIANGLES, modelRightdoor.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -1130,6 +1196,9 @@ void main(int argc, char** argv) {
     InitBong2();
     InitHorizontalFanPink();
     InitHorizontalFanPurple();
+    InitDoorOut();
+    InitDoorLeft();
+    InitDoorRight();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -1164,7 +1233,6 @@ void make_vertexShaders() {
         return;
     }
 }
-
 void make_fragmentShaders() {
     GLchar* fragmentSource;
 
@@ -1185,7 +1253,6 @@ void make_fragmentShaders() {
         return;
     }
 }
-
 GLuint make_shaderProgram() {
     make_vertexShaders();
     make_fragmentShaders();
@@ -1242,6 +1309,7 @@ GLvoid drawScene() {
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
+    DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
 
     glutSwapBuffers();
 }
@@ -1508,6 +1576,24 @@ GLvoid Timer(int value) {
 
     if (isObstacleRotate) {
         obstacleRotation += 2.0f;
+    }
+
+    // 문짝 움직이기
+    LeftdoorGroupPosition.x += LeftdoorGroupDirection.x * DoorMove;
+
+    if (LeftdoorGroupPosition.x >= 0.0) {
+        LeftdoorGroupDirection.x = -1; // 왼쪽으로 이동
+    }
+    else if (LeftdoorGroupPosition.x <= -MaxDoorMove) {
+        LeftdoorGroupDirection.x = 1;  // 오른쪽으로 이동
+    }
+
+    RightdoorGroupPosition.x += RightdoorGroupDirection.x * DoorMove;
+    if (RightdoorGroupPosition.x >= MaxDoorMove) {
+        RightdoorGroupDirection.x = -1;
+    }
+    else if (RightdoorGroupPosition.x <= -0.0) {
+        RightdoorGroupDirection.x = 1;
     }
 
     // 화면 갱신
