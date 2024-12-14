@@ -25,24 +25,26 @@ struct AABB {
     }
 };
 
+// 맵
 GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint;
 GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2];
 Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint;
 
-//장애물
-GLuint vaoBong1, vboBong1[2];
-Model modelBong1;
-GLuint vaoBong2, vboBong2[2];
-Model modelBong2;
-
+// 캐릭터1
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
 GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
 vboCharacter1RightLeg[2], vboCharacter2[2];
 Model modelCharacter1Body, modelCharacter1BackPattern, modelCharacter1Blusher, modelCharacter1Eye, modelCharacter1Face, modelCharacter1LeftArm, modelCharacter1RightArm, modelCharacter1LeftLeg, modelCharacter1RightLeg;
 
+// 캐릭터2
 GLuint vaoCharacter2Acc, vaoCharacter2Body, vaoCharacter2Clothes, vaoCharacter2Hair, vaoCharacter2LeftLeg, vaoCharacter2RightLeg, vaoCharacter2LeftArm, vaoCharacter2RightArm, vaoCharacter2Eye, vaoCharacter2Face;
 GLuint vboCharacter2Acc[2], vboCharacter2Body[2], vboCharacter2Clothes[2], vboCharacter2Hair[2], vboCharacter2LeftLeg[2], vboCharacter2RightLeg[2], vboCharacter2LeftArm[2], vboCharacter2RightArm[2], vboCharacter2Eye[2], vboCharacter2Face[2];
 Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharacter2Clothes, modelCharacter2LeftLeg, modelCharacter2RightLeg, modelCharacter2LeftArm, modelCharacter2RightArm, modelCharacter2Eye, modelCharacter2Face;
+
+//장애물
+GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple;
+GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2];
+Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple;
 
 //checkbox
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
@@ -52,9 +54,6 @@ GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
 
-GLfloat cameraX = 0.0f;
-GLfloat cameraY = 0.0f;
-GLfloat cameraZ = 30.0f;
 GLfloat moveSpeed = 0.5f;
 GLfloat character1RotationAngle = 0.0f;
 GLfloat character2RotationAngle = 0.0f;
@@ -67,6 +66,7 @@ GLfloat gravity = 0.01f;
 GLfloat realGravity = 0.1f;
 GLfloat BongMove = 0.1f; // 이동 속도
 GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
+GLfloat obstacleRotation = 0.0f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -94,6 +94,7 @@ bool isCharacter2OnMap = false;
 bool moveKeyStates[256] = { false }; // 이동 키 상태
 bool arrowKeyStates[256] = { false };
 bool commandKeyStates[256] = { false }; // 명령 키 상태
+bool isObstacleRotate = true;
 
 int character1SwingDirection = 1;
 int character2SwingDirection = 1;
@@ -158,6 +159,13 @@ void InitCharacter2RightLeg();
 void InitCharacter2RightArm();
 void InitCharacter2Eye();
 void InitCharacter2Face();
+
+// 봉
+void InitBong1();
+void InitBong2();
+// 세로팬
+void InitHorizontalFanPink();
+void InitHorizontalFanPurple();
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -238,14 +246,44 @@ void InitPoint() {
     InitPart("Map/point.obj", modelPoint, vaoPoint, vboPoint, glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
-//장애물
+// 맵
+AABB map1 = {
+    glm::vec3(-22.5f, 0.0f, -80.0f), // min
+    glm::vec3(22.5f,  0.0f,  3.0f)   // max
+};
+AABB map2 = {
+    glm::vec3(-18.0f, -2.3f, -121.0f), // min
+    glm::vec3(18.0f, -0.2f, -79.0f)    // max
+};
+AABB map3 = {
+    glm::vec3(-14.0f, -2.0f, -146.0f), // min
+    glm::vec3(14.0f, -0.3f, -120.0f)   // max
+};
+AABB map4 = {
+    glm::vec3(-11.6f, -2.0f, -165.0f), // min
+    glm::vec3(11.6f, -0.4f, -143.0f)   // max
+};
+AABB map5 = {
+    glm::vec3(-10.6f, -28.5f, -245.0f), // min
+    glm::vec3(10.6f, -26.5f, -165.0f)   // max
+};
+
+// 봉
 void InitBong1() {
     InitPart("bong/bonggroup1.obj", modelBong1, vaoBong1, vboBong1, glm::vec3(1.0f, 0.078f, 0.576f));
 }
 void InitBong2() {
     InitPart("bong/bonggroup2.obj", modelBong2, vaoBong2, vboBong2, glm::vec3(1.0f, 0.078f, 0.576f));
 }
+// 가로팬
+void InitHorizontalFanPink() {
+    InitPart("horizontalFan/pink.obj", modelHorizontalFanPink, vaoHorizontalFanPink, vboHorizontalFanPink, glm::vec3(1.0f, 0.7f, 0.75f));
+}
+void InitHorizontalFanPurple() {
+    InitPart("horizontalFan/purple.obj", modelHorizontalFanPurple, vaoHorizontalFanPurple, vboHorizontalFanPurple, glm::vec3(0.5f, 0.0f, 0.5f));
+}
 
+// 봉
 AABB bong1 = {
     glm::vec3(-15.74f + BongGroup1Position.x, 0.0f, -33.25f), // min
     glm::vec3(-13.74f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
@@ -353,6 +391,7 @@ void InitCharacter1CheckBox() {
 
     glBindVertexArray(0);
 }
+// 캐릭터
 AABB character1 = {
     character1Position + glm::vec3(-0.70f, 0.0f, -0.72f),
     character1Position + glm::vec3(0.70f, 1.84f, 0.63f)
@@ -705,28 +744,6 @@ void InitCheckBoxMap5() {
     glBindVertexArray(0);
 }
 
-//맵 AABB값
-AABB map1 = {
-    glm::vec3(-22.5f, 0.0f, -80.0f), // min
-    glm::vec3(22.5f,  0.0f,  3.0f)   // max
-};
-AABB map2 = {
-    glm::vec3(-18.0f, -2.3f, -121.0f), // min
-    glm::vec3(18.0f, -0.2f, -79.0f)    // max
-};
-AABB map3 = {
-    glm::vec3(-14.0f, -2.0f, -146.0f), // min
-    glm::vec3(14.0f, -0.3f, -120.0f)   // max
-};
-AABB map4 = {
-    glm::vec3(-11.6f, -2.0f, -165.0f), // min
-    glm::vec3(11.6f, -0.4f, -143.0f)   // max
-};
-AABB map5 = {
-    glm::vec3(-10.6f, -28.5f, -245.0f), // min
-    glm::vec3(10.6f, -26.5f, -165.0f)   // max
-};
-
 // 맵 그리기
 void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     // 바닥
@@ -764,12 +781,7 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 
 // 캐릭터1 그리기
 void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
-    // character1ModelMatrix를 바로 사용하여 위치 계산
     glm::mat4 finalCharacter1ModelMatrix = character1ModelMatrix;
-
-    //// character1ModelMatrix를 결합
-    //glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
-    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
 
     // 몸
     glm::mat4 Character1BodyModelMatrix = finalCharacter1ModelMatrix;
@@ -858,12 +870,7 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
 // 캐릭터2 그리기
 void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
-    // character1ModelMatrix를 바로 사용하여 위치 계산
     glm::mat4 finalCharacter2ModelMatrix = character2ModelMatrix;
-
-    //// character2ModelMatrix를 결합
-    //glm::mat4 finalCharacter2ModelMatrix = baseCharacter2ModelMatrix * character2ModelMatrix;
-    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
 
     //acc
     glm::mat4 Character2AccModelMatrix = finalCharacter2ModelMatrix;
@@ -992,7 +999,7 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-//장애물 그리기
+// 봉 그리기
 void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 finalBong1ModelMatrix = bong1ModelMatrix;
     bong1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
@@ -1008,6 +1015,63 @@ void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 
     glBindVertexArray(vaoBong2);
     glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+// 가로팬 그리기
+void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::mat4 HorizontalFanPink1ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPink1ModelMatrix = glm::translate(HorizontalFanPink1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
+    HorizontalFanPink1ModelMatrix = glm::rotate(HorizontalFanPink1ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink1ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPink);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPink.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 HorizontalFanPurple1ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPurple1ModelMatrix = glm::translate(HorizontalFanPurple1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
+    HorizontalFanPurple1ModelMatrix = glm::rotate(HorizontalFanPurple1ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple1ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPurple);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 HorizontalFanPink2ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPink2ModelMatrix = glm::translate(HorizontalFanPink2ModelMatrix, glm::vec3(7.0f, 0.0f, -115.0f));
+    HorizontalFanPink2ModelMatrix = glm::rotate(HorizontalFanPink2ModelMatrix, glm::radians(-obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink2ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPink);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPink.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 HorizontalFanPurple2ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPurple2ModelMatrix = glm::translate(HorizontalFanPurple2ModelMatrix, glm::vec3(7.0f, 0.0f, -115.0f));
+    HorizontalFanPurple2ModelMatrix = glm::rotate(HorizontalFanPurple2ModelMatrix, glm::radians(-obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple2ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPurple);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 HorizontalFanPink3ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPink3ModelMatrix = glm::translate(HorizontalFanPink3ModelMatrix, glm::vec3(-7.0f, 0.0f, -115.0f));
+    HorizontalFanPink3ModelMatrix = glm::rotate(HorizontalFanPink3ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink3ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPink);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPink.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 HorizontalFanPurple3ModelMatrix = glm::mat4(1.0f);
+    HorizontalFanPurple3ModelMatrix = glm::translate(HorizontalFanPurple3ModelMatrix, glm::vec3(-7.0f, 0.0f, -115.0f));
+    HorizontalFanPurple3ModelMatrix = glm::rotate(HorizontalFanPurple3ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple3ModelMatrix));
+
+    glBindVertexArray(vaoHorizontalFanPurple);
+    glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -1064,6 +1128,8 @@ void main(int argc, char** argv) {
     //장애물
     InitBong1();
     InitBong2();
+    InitHorizontalFanPink();
+    InitHorizontalFanPurple();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -1175,6 +1241,8 @@ GLvoid drawScene() {
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
+    DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
+
     glutSwapBuffers();
 }
 
@@ -1436,6 +1504,10 @@ GLvoid Timer(int value) {
     }
     else if (BongGroup2Position.x <= -MaxBongMove) {
         BongGroup2Direction.x = 1;
+    }
+
+    if (isObstacleRotate) {
+        obstacleRotation += 2.0f;
     }
 
     // 화면 갱신
