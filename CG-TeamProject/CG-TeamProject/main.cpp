@@ -23,6 +23,12 @@ GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint;
 GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2];
 Model modelBottom, modelArrowAndPillar, modelEndPoint, modelPoint;
 
+//장애물
+GLuint vaoBong1, vboBong1[2];
+Model modelBong1;
+GLuint vaoBong2, vboBong2[2];
+Model modelBong2;
+
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
 GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
 vboCharacter1RightLeg[2], vboCharacter2[2];
@@ -216,6 +222,39 @@ void InitEndPoint() {
 void InitPoint() {
     InitPart("Map/point.obj", modelPoint, vaoPoint, vboPoint, glm::vec3(1.0f, 0.0f, 0.0f));
 }
+
+//장애물
+void InitBong1() {
+    InitPart("obstacle/bonggroup1.obj", modelBong1, vaoBong1, vboBong1, glm::vec3(1.0f, 0.078f, 0.576f));
+}
+void InitBong2() {
+    InitPart("obstacle/bonggroup2.obj", modelBong2, vaoBong2, vboBong2, glm::vec3(1.0f, 0.078f, 0.576f));
+}
+
+AABB bong1 = {
+    glm::vec3(-15.74f, 0.0f, -33.25f), // min
+    glm::vec3(-13.74f,  3.6f,  -31.25f)  // max
+};
+AABB bong2 = {
+    glm::vec3(-9.47f, 0.0f, -33.25f), // min
+    glm::vec3(-7.47f,  3.6f,  -31.25f)  // max
+};
+AABB bong3 = {
+    glm::vec3(-3.169f, 0.0f, -33.25f), // min
+    glm::vec3(-1.169f,  3.6f,  -31.25f)  // max
+};
+AABB bong4 = {
+    glm::vec3(3.045f, 0.0f, -33.25f), // min
+    glm::vec3(5.045f,  3.6f,  -31.25f)  // max
+};
+AABB bong5 = {
+    glm::vec3(9.27f, 0.0f, -33.25f), // min
+    glm::vec3(11.27f,  3.6f,  -31.25f)  // max
+};
+AABB bong6 = {
+    glm::vec3(14.945f, 0.0f, -33.25f), // min
+    glm::vec3(16.945f,  3.6f,  -31.25f)  // max
+};
 
 // 캐릭터1
 void InitCharacter1Body() {
@@ -653,8 +692,8 @@ void InitCheckBoxMap5() {
 
 //맵 AABB값
 AABB map1 = {
-    glm::vec3(-22.5f, -2.0f, -80.0f), // min
-    glm::vec3(22.5f,  0.0f,  0.0f)   // max
+    glm::vec3(-22.5f, 0.0f, -80.0f), // min
+    glm::vec3(26.5f,  0.0f,  3.0f)   // max
 };
 AABB map2 = {
     glm::vec3(-16.0f, -2.3f, -121.0f), // min
@@ -937,6 +976,24 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
+//장애물 그리기
+void DrawObstacleBong1(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bong1ModelMatrix));
+
+    glBindVertexArray(vaoBong1);
+    glDrawElements(GL_TRIANGLES, modelBong1.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+void DrawObstacleBong2(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bong2ModelMatrix));
+
+    glBindVertexArray(vaoBong2);
+    glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -986,6 +1043,10 @@ void main(int argc, char** argv) {
     InitCheckBoxMap3();
     InitCheckBoxMap4();
     InitCheckBoxMap5();
+
+    //장애물
+    InitBong1();
+    InitBong2();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -1093,6 +1154,8 @@ GLvoid drawScene() {
     GLint modelMatrixLocation = glGetUniformLocation(shaderProgramID, "modelTransform");
 
     DrawMap(shaderProgramID, modelMatrixLocation);
+    DrawObstacleBong1(shaderProgramID, modelMatrixLocation);
+    DrawObstacleBong2(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
