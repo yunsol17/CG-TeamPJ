@@ -36,6 +36,7 @@ Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharact
 
 //checkbox
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
+GLuint vaoCharacter1CheckBox, vboCharacter1CheckBox[2], vaoCharacter2CheckBox, vboCharacter2CheckBox[2];
 
 GLuint shaderProgramID;
 GLuint vertexShader;
@@ -126,7 +127,8 @@ void InitCharacter1LeftArm();
 void InitCharacter1RightArm();
 void InitCharacter1LeftLeg();
 void InitCharacter1RightLeg();
-
+//체크박스 추가
+void InitCharacter1CheckBox();
 // 캐릭터2
 void InitCharacter2Acc();
 void InitCharacter2Body();
@@ -138,6 +140,8 @@ void InitCharacter2RightLeg();
 void InitCharacter2RightArm();
 void InitCharacter2Eye();
 void InitCharacter2Face();
+//체크박스 추가
+void InitCharacter2CheckBox();
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -247,6 +251,63 @@ void InitCharacter1LeftLeg() {
 void InitCharacter1RightLeg() {
     InitPart("Character1/rightLeg.obj", modelCharacter1RightLeg, vaoCharacter1RightLeg, vboCharacter1RightLeg, glm::vec3(1.0f, 1.0f, 0.0f));
 }
+//체크박스
+std::vector<float> Character1CheckBox = {
+    // Bottom
+ -0.47f, 0.f, 0.42f,
+ -0.47f, 0.f, -0.48f,
+ 0.47f, 0.f, -0.48f,
+ 0.47f, 0.f, 0.42f,
+
+ // Top
+ -0.47f, 1.84f, 0.42f,
+ -0.47f, 1.84f, -0.48f,
+ 0.47f, 1.84f, -0.48f,
+ 0.47f, 1.84f, 0.42f,
+
+ // Front
+ -0.47f, 0.f, -0.48f,
+ -0.47f, 1.84f, -0.48f,
+ 0.47f, 1.84f, -0.48f,
+ 0.47f, 0.f, -0.48f,
+
+ // Back face
+ -0.47f, 0.f, 0.42f,
+ -0.47f, 1.84f, 0.42f,
+ 0.47f, 1.84f, 0.42f,
+ 0.47f, 0.f, 0.42f,
+
+ // Left face
+ -0.47f, 0.f, 0.42f,
+ -0.47f, 0.f, -0.48f,
+ -0.47f, 1.84f, -0.48f,
+ -0.47f, 1.84f, 0.42f,
+
+ // Right face
+ 0.47f, 0.f, 0.42f,
+ 0.47f, 0.f, -0.48f,
+ 0.47f, 1.84f, -0.48f,
+ 0.47f, 1.84f, 0.42f,
+
+};
+void InitCharacter1CheckBox() {
+    glGenVertexArrays(1, &vaoCharacter1CheckBox);
+    glBindVertexArray(vaoCharacter1CheckBox);
+
+    glGenBuffers(1, vboCharacter1CheckBox);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCharacter1CheckBox[0]);
+    glBufferData(GL_ARRAY_BUFFER, Character1CheckBox.size() * sizeof(float), Character1CheckBox.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+AABB character1 = {
+    glm::vec3(-0.47f, 0.0f, -0.48f), // min
+    glm::vec3(0.47f,  1.84f,  0.42f)  // max
+};
 
 // 캐릭터2
 void InitCharacter2Acc() {
@@ -279,6 +340,62 @@ void InitCharacter2Eye() {
 void InitCharacter2Face() {
     InitPart("Character2/face.obj", modelCharacter2Face, vaoCharacter2Face, vboCharacter2Face, glm::vec3(1.0f, 1.0, 0.941f));
 }
+//체크박스
+std::vector<float> Character2CheckBox = {
+    // Bottom
+-0.47f, 0.f, 0.42f,
+-0.47f, 0.f, -0.48f,
+0.47f, 0.f, -0.48f,
+0.47f, 0.f, 0.42f,
+
+// Top
+-0.47f, 1.84f, 0.42f,
+-0.47f, 1.84f, -0.48f,
+0.47f, 1.84f, -0.48f,
+0.47f, 1.84f, 0.42f,
+
+// Front
+-0.47f, 0.f, -0.48f,
+-0.47f, 1.84f, -0.48f,
+0.47f, 1.84f, -0.48f,
+0.47f, 0.f, -0.48f,
+
+// Back face
+-0.47f, 0.f, 0.42f,
+-0.47f, 1.84f, 0.42f,
+0.47f, 1.84f, 0.42f,
+0.47f, 0.f, 0.42f,
+
+// Left face
+-0.47f, 0.f, 0.42f,
+-0.47f, 0.f, -0.48f,
+-0.47f, 1.84f, -0.48f,
+-0.47f, 1.84f, 0.42f,
+
+// Right face
+0.47f, 0.f, 0.42f,
+0.47f, 0.f, -0.48f,
+0.47f, 1.84f, -0.48f,
+0.47f, 1.84f, 0.42f,
+};
+void InitCharacter2CheckBox() {
+    glGenVertexArrays(1, &vaoCharacter2CheckBox);
+    glBindVertexArray(vaoCharacter2CheckBox);
+
+    glGenBuffers(1, vboCharacter2CheckBox);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCharacter2CheckBox[0]);
+    glBufferData(GL_ARRAY_BUFFER, Character2CheckBox.size() * sizeof(float), Character2CheckBox.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+}
+AABB character2 = {
+    glm::vec3(-0.47f, 0.0f, -0.48f), // min
+    glm::vec3(0.47f,  1.84f,  0.42f)  // max
+};
 
 // 맵 충돌박스
 // 충돌박스를 사각형으로 만들 수 있으니까 바닥만 있으면 됨. 
@@ -680,6 +797,15 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glBindVertexArray(vaoCharacter1RightLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    //checkbox
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glm::mat4 Character1CheckBox = finalCharacter1ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1CheckBox));
+    glBindVertexArray(vaoCharacter1CheckBox);
+    glDrawArrays(GL_QUADS, 0, 24);
+    glBindVertexArray(0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 // 캐릭터2 그리기
@@ -771,13 +897,23 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glBindVertexArray(vaoCharacter2Face);
     glDrawElements(GL_TRIANGLES, modelCharacter2Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    //checkbox
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glm::mat4 Character2CheckBox = finalCharacter2ModelMatrix;
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2CheckBox));
+    glBindVertexArray(vaoCharacter2CheckBox);
+    glDrawArrays(GL_QUADS, 0, 24);
+    glBindVertexArray(0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glm::mat4 checkBoxModelMatrix1 = glm::mat4(1.0f);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(checkBoxModelMatrix1));
     glBindVertexArray(vaoCheckBoxMap1);
-    glDrawArrays(GL_QUADS, 0, 24); 
+    glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
 
     glm::mat4 checkBoxModelMatrix2 = glm::mat4(1.0f);
@@ -803,6 +939,7 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glBindVertexArray(vaoCheckBoxMap5);
     glDrawArrays(GL_QUADS, 0, 24);
     glBindVertexArray(0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 }
 
@@ -846,6 +983,8 @@ void main(int argc, char** argv) {
     InitCharacter2RightArm();
     InitCharacter2Eye();
     InitCharacter2Face();
+    InitCharacter1CheckBox();
+    InitCharacter2CheckBox();
 
     //mapcheckbox
     InitCheckBoxMap1();
@@ -1062,27 +1201,22 @@ GLvoid Timer(int value) {
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
-        isCharacter1Swing = true;
     }
     else if (moveKeyStates['s']) {
         character1Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
         character1RotationAngle = 180.0f;
-        isCharacter1Swing = true;
     }
     else if (moveKeyStates['a']) {
         character1Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = 90.0f;
-        isCharacter1Swing = true;
     }
     else if (moveKeyStates['d']) {
         character1Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = -90.0f;
-        isCharacter1Swing = true;
     }
     else {
         // 키가 눌리지 않은 경우 멈춤
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-        isCharacter1Swing = false;
     }
 
     // 캐릭터 위치 업데이트
@@ -1120,6 +1254,7 @@ GLvoid Timer(int value) {
     character2Position += character2Direction;
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
 
     // 팔 흔들림 업데이트
     if (isCharacter1Swing) {
