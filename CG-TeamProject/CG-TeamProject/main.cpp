@@ -54,7 +54,7 @@ GLfloat maxSwingAngle = 30.0f;
 GLfloat character1JumpSpeed = 0.2f;
 GLfloat character2JumpSpeed = 0.2f;
 GLfloat gravity = 0.01f;
-GLfloat groundLevel = 0.0f;
+GLfloat realGravity = 0.1f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -76,6 +76,8 @@ bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
 bool isCharacter1Jumping = false;
 bool isCharacter2Jumping = false;
+bool isCharacter1OnMap = false;
+bool isCharacter2OnMap = false;
 bool moveKeyStates[256] = { false }; // 이동 키 상태
 bool arrowKeyStates[256] = { false };
 bool commandKeyStates[256] = { false }; // 명령 키 상태
@@ -1118,31 +1120,13 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
         case 'q':
             glutLeaveMainLoop(); // 프로그램 종료
             break;
-        case 'z':
-            isCameraZmove = !isCameraZmove;
-            break;
-        case 'Z':
-            isCameraZmoveReverse = !isCameraZmoveReverse;
-            break;
-        case 'x':
-            isCameraXmove = !isCameraXmove;
-            break;
-        case 'X':
-            isCameraXmoveReverse = !isCameraXmoveReverse;
-            break;
-        case 'y':
-            isCameraYmove = !isCameraYmove;
-            break;
-        case 'Y':
-            isCameraYmoveReverse = !isCameraYmoveReverse;
-            break;
         case ' ':
-            if (!isCharacter1Jumping && character1Position.y == groundLevel) {
+            if (!isCharacter1Jumping && character1Position.y == map1.max.y) {
                 isCharacter1Jumping = true;
             }
             break;
         case 'j':
-            if (!isCharacter2Jumping && character2Position.y == groundLevel) {
+            if (!isCharacter2Jumping && character2Position.y == map1.max.y) {
                 isCharacter2Jumping = true;
             }
             break;
@@ -1170,53 +1154,49 @@ void SpecialKeyUp(int key, int x, int y) {
 }
 
 GLvoid Timer(int value) {
-    if (isCameraXmove) {
-        if (isCameraXmoveReverse) {
-            cameraX -= 0.1f;
-        }
-        else {
-            cameraX += 0.1f;
-        }
-    }
-
-    if (isCameraYmove) {
-        if (isCameraYmoveReverse) {
-            cameraY -= 0.1f;
-        }
-        else {
-            cameraY += 0.1f;
-        }
-    }
-
-    if (isCameraZmove) {
-        if (isCameraZmoveReverse) {
-            cameraZ -= 0.1f;
-        }
-        else {
-            cameraZ += 0.1f;
-        }
-    }
-
     // 이동 키 상태 확인
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['s']) {
         character1Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
         character1RotationAngle = 180.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['a']) {
         character1Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = 90.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['d']) {
         character1Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = -90.0f;
+        isCharacter1Swing = true;
     }
     else {
         // 키가 눌리지 않은 경우 멈춤
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+        isCharacter1Swing = false;
+    }
+
+    // 캐릭터1 - 맵 충돌 확인
+    AABB maps[] = { map1, map2, map3, map4, map5 }; // 모든 맵의 충돌박스
+    // 맵 충돌 확인
+    isCharacter1OnMap = false;
+    for (const auto& map : maps) {
+        if (checkCollision(character1, map)) {
+            isCharacter1OnMap = true;
+            // 맵 상단으로 고정
+            character1Position.y = map.max.y;
+            break;
+        }
+    }
+
+    // 중력 적용
+    if (!isCharacter1OnMap) {
+        character1Position.y -= realGravity;
     }
 
     // 캐릭터 위치 업데이트
@@ -1225,6 +1205,10 @@ GLvoid Timer(int value) {
     // 모델 매트릭스 업데이트
     character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
     character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    // 캐릭터1 충돌박스 업데이트
+    character1.min = character1Position + glm::vec3(-0.47f, 0.0f, -0.48f);
+    character1.max = character1Position + glm::vec3(0.47f, 1.84f, 0.42f);
 
     // 캐릭터2 이동 처리
     if (arrowKeyStates[GLUT_KEY_UP]) {
@@ -1251,6 +1235,7 @@ GLvoid Timer(int value) {
         character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
         isCharacter2Swing = false;
     }
+
     character2Position += character2Direction;
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -1304,8 +1289,8 @@ GLvoid Timer(int value) {
         character1Position.y += character1JumpSpeed;
         character1JumpSpeed -= gravity;
 
-        if (character1Position.y <= groundLevel) {
-            character1Position.y = groundLevel;
+        if (character1Position.y <= 0.0f) {
+            character1Position.y = 0.0f;
             isCharacter1Jumping = false;
             character1JumpSpeed = 0.2f;
         }
@@ -1315,8 +1300,8 @@ GLvoid Timer(int value) {
         character2Position.y += character2JumpSpeed;
         character2JumpSpeed -= gravity;
 
-        if (character2Position.y <= groundLevel) {
-            character2Position.y = groundLevel;
+        if (character2Position.y <= 0.0f) {
+            character2Position.y = 0.0f;
             isCharacter2Jumping = false;
             character2JumpSpeed = 0.2f;
         }
