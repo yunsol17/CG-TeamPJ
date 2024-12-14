@@ -64,12 +64,6 @@ glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
 glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
-bool isCameraXmove = false;
-bool isCameraXmoveReverse = false;
-bool isCameraYmove = false;
-bool isCameraYmoveReverse = false;
-bool isCameraZmove = false;
-bool isCameraZmoveReverse = false;
 bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
 bool isCharacter1Jumping = false;
