@@ -19,7 +19,7 @@ struct AABB {
     glm::vec3 max; // 충돌박스의 최대 좌표 (x, y, z)
 };
 
-AABB block1Box, block2Box, block3Box, robotBox, cubeFaceBoxes[6];
+AABB character1Box, character2Box;
 
 GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint;
 GLuint vboBottom[2], vboArrowAndPillar[2], vboEndPoint[2], vboPoint[2];
