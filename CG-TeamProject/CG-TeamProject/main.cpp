@@ -35,16 +35,6 @@ Model modelBong1;
 GLuint vaoBong2, vboBong2[2];
 Model modelBong2;
 
-glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
-glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
-glm::vec3 BongGroup1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
-glm::vec3 BongGroup1Direction = glm::vec3(1.0f, 0.0f, 0.0f); // 초기 이동 방향 (오른쪽)
-GLfloat BongMove = 0.1f; // 이동 속도
-GLfloat MaxBongMove = 1.5f; // 최대 이동 거리
-glm::vec3 BongGroup2Position = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 BongGroup2Direction = glm::vec3(-1.0f, 0.0f, 0.0f);
-
-
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
 GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
 vboCharacter1RightLeg[2], vboCharacter2[2];
@@ -75,6 +65,8 @@ GLfloat character1JumpSpeed = 0.3f;
 GLfloat character2JumpSpeed = 0.3f;
 GLfloat gravity = 0.01f;
 GLfloat realGravity = 0.1f;
+GLfloat BongMove = 0.1f; // 이동 속도
+GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -85,6 +77,13 @@ glm::mat4 character2ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
 glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
+glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
+glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
+glm::vec3 BongGroup1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
+glm::vec3 BongGroup1Direction = glm::vec3(1.0f, 0.0f, 0.0f); // 초기 이동 방향 (오른쪽)
+glm::vec3 BongGroup2Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 BongGroup2Direction = glm::vec3(-1.0f, 0.0f, 0.0f);
 
 bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
@@ -241,10 +240,10 @@ void InitPoint() {
 
 //장애물
 void InitBong1() {
-    InitPart("obstacle/bonggroup1.obj", modelBong1, vaoBong1, vboBong1, glm::vec3(1.0f, 0.078f, 0.576f));
+    InitPart("bong/bonggroup1.obj", modelBong1, vaoBong1, vboBong1, glm::vec3(1.0f, 0.078f, 0.576f));
 }
 void InitBong2() {
-    InitPart("obstacle/bonggroup2.obj", modelBong2, vaoBong2, vboBong2, glm::vec3(1.0f, 0.078f, 0.576f));
+    InitPart("bong/bonggroup2.obj", modelBong2, vaoBong2, vboBong2, glm::vec3(1.0f, 0.078f, 0.576f));
 }
 
 AABB bong1 = {
@@ -994,16 +993,17 @@ void DrawMapCheckBox(GLuint shaderProgramID, GLint modelMatrixLocation) {
 }
 
 //장애물 그리기
-void DrawObstacleBong1(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 finalBong1ModelMatrix = bong1ModelMatrix;
+    bong1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalBong1ModelMatrix));
 
     glBindVertexArray(vaoBong1);
     glDrawElements(GL_TRIANGLES, modelBong1.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
-}
-void DrawObstacleBong2(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+
     glm::mat4 finalBong2ModelMatrix = bong2ModelMatrix;
+    bong2ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalBong2ModelMatrix));
 
     glBindVertexArray(vaoBong2);
@@ -1171,8 +1171,7 @@ GLvoid drawScene() {
     GLint modelMatrixLocation = glGetUniformLocation(shaderProgramID, "modelTransform");
 
     DrawMap(shaderProgramID, modelMatrixLocation);
-    DrawObstacleBong1(shaderProgramID, modelMatrixLocation);
-    DrawObstacleBong2(shaderProgramID, modelMatrixLocation);
+    DrawObstacleBong(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
@@ -1421,7 +1420,6 @@ GLvoid Timer(int value) {
     character2Position += character2Direction;
 
     //봉 움직이기
-    bong1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
     BongGroup1Position.x += BongGroup1Direction.x * BongMove;
 
     if (BongGroup1Position.x >= MaxBongMove) {
@@ -1432,7 +1430,6 @@ GLvoid Timer(int value) {
     }
 
     // 봉 그룹 2 움직이기 (반대 방향)
-    bong2ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
     BongGroup2Position.x += BongGroup2Direction.x * BongMove;
     if (BongGroup2Position.x >= MaxBongMove) {
         BongGroup2Direction.x = -1;
