@@ -50,6 +50,10 @@ GLfloat character2RotationAngle = 0.0f;
 GLfloat character1ArmLegSwingAngle = 0.0f;
 GLfloat character2ArmLegSwingAngle = 0.0f;
 GLfloat maxSwingAngle = 30.0f;
+GLfloat character1JumpSpeed = 0.2f;
+GLfloat character2JumpSpeed = 0.2f;
+GLfloat gravity = 0.01f;
+GLfloat groundLevel = 0.0f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -69,6 +73,8 @@ bool isCameraZmove = false;
 bool isCameraZmoveReverse = false;
 bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
+bool isCharacter1Jumping = false;
+bool isCharacter2Jumping = false;
 bool moveKeyStates[256] = { false }; // 이동 키 상태
 bool arrowKeyStates[256] = { false };
 bool commandKeyStates[256] = { false }; // 명령 키 상태
@@ -991,6 +997,16 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
         case 'Y':
             isCameraYmoveReverse = !isCameraYmoveReverse;
             break;
+        case ' ':
+            if (!isCharacter1Jumping && character1Position.y == groundLevel) {
+                isCharacter1Jumping = true;
+            }
+            break;
+        case 'j':
+            if (!isCharacter2Jumping && character2Position.y == groundLevel) {
+                isCharacter2Jumping = true;
+            }
+            break;
         }
     }
     glutPostRedisplay();
@@ -1146,6 +1162,28 @@ GLvoid Timer(int value) {
         else if (character2ArmLegSwingAngle < 0.0f) {
             character2ArmLegSwingAngle += 2.0f;
             if (character2ArmLegSwingAngle > 0.0f) character2ArmLegSwingAngle = 0.0f;
+        }
+    }
+
+    if (isCharacter1Jumping) {
+        character1Position.y += character1JumpSpeed;
+        character1JumpSpeed -= gravity;
+
+        if (character1Position.y <= groundLevel) {
+            character1Position.y = groundLevel;
+            isCharacter1Jumping = false;
+            character1JumpSpeed = 0.2f;
+        }
+    }
+
+    if (isCharacter2Jumping) {
+        character2Position.y += character2JumpSpeed;
+        character2JumpSpeed -= gravity;
+
+        if (character2Position.y <= groundLevel) {
+            character2Position.y = groundLevel;
+            isCharacter2Jumping = false;
+            character2JumpSpeed = 0.2f;
         }
     }
 
