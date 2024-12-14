@@ -47,6 +47,9 @@ GLfloat cameraZ = 30.0f;
 GLfloat moveSpeed = 0.05f;
 GLfloat character1RotationAngle = 0.0f;
 GLfloat character2RotationAngle = 0.0f;
+GLfloat character1ArmLegSwingAngle = 0.0f;
+GLfloat character2ArmLegSwingAngle = 0.0f;
+GLfloat maxSwingAngle = 30.0f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -64,9 +67,14 @@ bool isCameraYmove = false;
 bool isCameraYmoveReverse = false;
 bool isCameraZmove = false;
 bool isCameraZmoveReverse = false;
+bool isCharacter1Swing = false;
+bool isCharacter2Swing = false;
 bool moveKeyStates[256] = { false }; // 이동 키 상태
 bool arrowKeyStates[256] = { false };
 bool commandKeyStates[256] = { false }; // 명령 키 상태
+
+int character1SwingDirection = 1;
+int character2SwingDirection = 1;
 
 bool checkCollision(const AABB& box1, const AABB& box2) {
     return (box1.max.x > box2.min.x && box1.min.x < box2.max.x &&
@@ -629,6 +637,9 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     // 왼팔
     glm::mat4 Character1LeftArmModelMatrix = finalCharacter1ModelMatrix;
+    Character1LeftArmModelMatrix = glm::translate(Character1LeftArmModelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
+    Character1LeftArmModelMatrix = glm::rotate(Character1LeftArmModelMatrix, glm::radians(character1ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character1LeftArmModelMatrix = glm::translate(Character1LeftArmModelMatrix, glm::vec3(0.0f, -1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftArmModelMatrix));
     glBindVertexArray(vaoCharacter1LeftArm);
     glDrawElements(GL_TRIANGLES, modelCharacter1LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -636,6 +647,9 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     // 오른팔
     glm::mat4 Character1RightArmModelMatrix = finalCharacter1ModelMatrix;
+    Character1RightArmModelMatrix = glm::translate(Character1RightArmModelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
+    Character1RightArmModelMatrix = glm::rotate(Character1RightArmModelMatrix, glm::radians(-character1ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character1RightArmModelMatrix = glm::translate(Character1RightArmModelMatrix, glm::vec3(0.0f, -1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightArmModelMatrix));
     glBindVertexArray(vaoCharacter1RightArm);
     glDrawElements(GL_TRIANGLES, modelCharacter1RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -643,6 +657,9 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     // 왼다리
     glm::mat4 Character1LeftLegModelMatrix = finalCharacter1ModelMatrix;
+    Character1LeftLegModelMatrix = glm::translate(Character1LeftLegModelMatrix, glm::vec3(0.0f, 0.5f, 0.0f));
+    Character1LeftLegModelMatrix = glm::rotate(Character1LeftLegModelMatrix, glm::radians(-character1ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character1LeftLegModelMatrix = glm::translate(Character1LeftLegModelMatrix, glm::vec3(0.0f, -0.5f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1LeftLegModelMatrix));
     glBindVertexArray(vaoCharacter1LeftLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter1LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -650,6 +667,9 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     // 오른다리
     glm::mat4 Character1RightLegModelMatrix = finalCharacter1ModelMatrix;
+    Character1RightLegModelMatrix = glm::translate(Character1RightLegModelMatrix, glm::vec3(0.0f, 0.5f, 0.0f));
+    Character1RightLegModelMatrix = glm::rotate(Character1RightLegModelMatrix, glm::radians(character1ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character1RightLegModelMatrix = glm::translate(Character1RightLegModelMatrix, glm::vec3(0.0f, -0.5f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1RightLegModelMatrix));
     glBindVertexArray(vaoCharacter1RightLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -687,6 +707,9 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     //leftLeg
     glm::mat4 Character2LeftLegModelMatrix = finalCharacter2ModelMatrix;
+    Character2LeftLegModelMatrix = glm::translate(Character2LeftLegModelMatrix, glm::vec3(0.0f, 0.5f, 0.0f));
+    Character2LeftLegModelMatrix = glm::rotate(Character2LeftLegModelMatrix, glm::radians(-character2ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character2LeftLegModelMatrix = glm::translate(Character2LeftLegModelMatrix, glm::vec3(0.0f, -0.5f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2LeftLegModelMatrix));
     glBindVertexArray(vaoCharacter2LeftLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter2LeftLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -694,6 +717,9 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     //leftArm
     glm::mat4 Character2LeftArmModelMatrix = finalCharacter2ModelMatrix;
+    Character2LeftArmModelMatrix = glm::translate(Character2LeftArmModelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
+    Character2LeftArmModelMatrix = glm::rotate(Character2LeftArmModelMatrix, glm::radians(character2ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character2LeftArmModelMatrix = glm::translate(Character2LeftArmModelMatrix, glm::vec3(0.0f, -1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2LeftArmModelMatrix));
     glBindVertexArray(vaoCharacter2LeftArm);
     glDrawElements(GL_TRIANGLES, modelCharacter2LeftArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -701,6 +727,9 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     //RightLeg
     glm::mat4 Character2RightLegModelMatrix = finalCharacter2ModelMatrix;
+    Character2RightLegModelMatrix = glm::translate(Character2RightLegModelMatrix, glm::vec3(0.0f, 0.5f, 0.0f));
+    Character2RightLegModelMatrix = glm::rotate(Character2RightLegModelMatrix, glm::radians(character2ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character2RightLegModelMatrix = glm::translate(Character2RightLegModelMatrix, glm::vec3(0.0f, -0.5f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2RightLegModelMatrix));
     glBindVertexArray(vaoCharacter2RightLeg);
     glDrawElements(GL_TRIANGLES, modelCharacter2RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -708,6 +737,9 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
     //RightArm
     glm::mat4 Character2RightArmModelMatrix = finalCharacter2ModelMatrix;
+    Character2RightArmModelMatrix = glm::translate(Character2RightArmModelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
+    Character2RightArmModelMatrix = glm::rotate(Character2RightArmModelMatrix, glm::radians(-character2ArmLegSwingAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    Character2RightArmModelMatrix = glm::translate(Character2RightArmModelMatrix, glm::vec3(0.0f, -1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2RightArmModelMatrix));
     glBindVertexArray(vaoCharacter2RightArm);
     glDrawElements(GL_TRIANGLES, modelCharacter2RightArm.faces.size() * 3, GL_UNSIGNED_INT, 0);
@@ -1014,22 +1046,27 @@ GLvoid Timer(int value) {
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['s']) {
         character1Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
         character1RotationAngle = 180.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['a']) {
         character1Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = 90.0f;
+        isCharacter1Swing = true;
     }
     else if (moveKeyStates['d']) {
         character1Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
         character1RotationAngle = -90.0f;
+        isCharacter1Swing = true;
     }
     else {
         // 키가 눌리지 않은 경우 멈춤
         character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+        isCharacter1Swing = false;
     }
 
     // 캐릭터 위치 업데이트
@@ -1043,25 +1080,74 @@ GLvoid Timer(int value) {
     if (arrowKeyStates[GLUT_KEY_UP]) {
         character2Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character2RotationAngle = 0.0f;
+        isCharacter2Swing = true;
     }
     else if (arrowKeyStates[GLUT_KEY_DOWN]) {
         character2Direction = glm::vec3(0.0f, 0.0f, moveSpeed);
         character2RotationAngle = 180.0f;
+        isCharacter2Swing = true;
     }
     else if (arrowKeyStates[GLUT_KEY_LEFT]) {
         character2Direction = glm::vec3(-moveSpeed, 0.0f, 0.0f);
         character2RotationAngle = 90.0f;
+        isCharacter2Swing = true;
     }
     else if (arrowKeyStates[GLUT_KEY_RIGHT]) {
         character2Direction = glm::vec3(moveSpeed, 0.0f, 0.0f);
         character2RotationAngle = -90.0f;
+        isCharacter2Swing = true;
     }
     else {
         character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+        isCharacter2Swing = false;
     }
     character2Position += character2Direction;
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    // 팔 흔들림 업데이트
+    if (isCharacter1Swing) {
+        character1ArmLegSwingAngle += character1SwingDirection * 2.0f;
+        if (character1ArmLegSwingAngle >= maxSwingAngle) {
+            character1SwingDirection = -1; // 방향 반전
+        }
+        else if (character1ArmLegSwingAngle <= -maxSwingAngle) {
+            character1SwingDirection = 1; // 방향 반전
+        }
+    }
+    else {
+        // 흔들림 비활성화 시 초기 상태로 복구
+        if (character1ArmLegSwingAngle > 0.0f) {
+            character1ArmLegSwingAngle -= 2.0f;
+            if (character1ArmLegSwingAngle < 0.0f) character1ArmLegSwingAngle = 0.0f;
+        }
+        else if (character1ArmLegSwingAngle < 0.0f) {
+            character1ArmLegSwingAngle += 2.0f;
+            if (character1ArmLegSwingAngle > 0.0f) character1ArmLegSwingAngle = 0.0f;
+        }
+    }
+
+    // 팔 흔들림 업데이트
+    if (isCharacter2Swing) {
+        character2ArmLegSwingAngle += character2SwingDirection * 2.0f;
+        if (character2ArmLegSwingAngle >= maxSwingAngle) {
+            character2SwingDirection = -1; // 방향 반전
+        }
+        else if (character2ArmLegSwingAngle <= -maxSwingAngle) {
+            character2SwingDirection = 1; // 방향 반전
+        }
+    }
+    else {
+        // 흔들림 비활성화 시 초기 상태로 복구
+        if (character2ArmLegSwingAngle > 0.0f) {
+            character2ArmLegSwingAngle -= 2.0f;
+            if (character2ArmLegSwingAngle < 0.0f) character2ArmLegSwingAngle = 0.0f;
+        }
+        else if (character2ArmLegSwingAngle < 0.0f) {
+            character2ArmLegSwingAngle += 2.0f;
+            if (character2ArmLegSwingAngle > 0.0f) character2ArmLegSwingAngle = 0.0f;
+        }
+    }
 
     // 화면 갱신
     glutPostRedisplay();
