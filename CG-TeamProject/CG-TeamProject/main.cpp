@@ -34,6 +34,13 @@ GLuint vaoBong1, vboBong1[2];
 Model modelBong1;
 GLuint vaoBong2, vboBong2[2];
 Model modelBong2;
+GLuint vaoDoorOut, vboDoorOut[2];
+Model modelDoorOut;
+GLuint vaoLeftdoor, vboLeftdoor[2];
+Model modelLeftdoor;
+GLuint vaoRightdoor, vboRightdoor[2];
+Model modelRightdoor;
+
 
 GLuint vaoCharacter1Body, vaoCharacter1BackPattern, vaoCharacter1Blusher, vaoCharacter1Eye, vaoCharacter1Face, vaoCharacter1LeftArm, vaoCharacter1RightArm, vaoCharacter1LeftLeg, vaoCharacter1RightLeg;
 GLuint vboCharacter1Body[2], vboCharacter1BackPattern[2], vboCharacter1Blusher[2], vboCharacter1Eye[2], vboCharacter1Face[2], vboCharacter1LeftArm[2], vboCharacter1RightArm[2], vboCharacter1LeftLeg[2], 
@@ -67,7 +74,8 @@ GLfloat gravity = 0.01f;
 GLfloat realGravity = 0.1f;
 GLfloat BongMove = 0.1f; // 이동 속도
 GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
-
+GLfloat DoorMove = 0.05f;
+GLfloat MaxDoorMove = 1.7f;
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character1Position = glm::vec3(-5.0f, 0.0f, -5.0f);
@@ -84,6 +92,13 @@ glm::vec3 BongGroup1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
 glm::vec3 BongGroup1Direction = glm::vec3(1.0f, 0.0f, 0.0f); // 초기 이동 방향 (오른쪽)
 glm::vec3 BongGroup2Position = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 BongGroup2Direction = glm::vec3(-1.0f, 0.0f, 0.0f);
+
+glm::mat4 LeftdoorModelMatrix = glm::mat4(1.0f);
+glm::mat4 RightdoorModelMatrix = glm::mat4(1.0f);
+glm::vec3 LeftdoorGroupPosition = glm::vec3(0.0f, 0.0f, 0.0f); // 초기 위치
+glm::vec3 LeftdoorGroupDirection = glm::vec3(-1.0f, 0.0f, 0.0f); // 초기 이동 방향 (왼쪽)
+glm::vec3 RightdoorGroupPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 RightdoorGroupDirection = glm::vec3(1.0f, 0.0f, 0.0f);
 
 bool isCharacter1Swing = false;
 bool isCharacter2Swing = false;
@@ -270,6 +285,16 @@ AABB bong6 = {
     glm::vec3(14.945f + BongGroup2Position.x, 0.0f, -33.25f), // min
     glm::vec3(16.945f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
 };
+
+void InitDoorOut() {
+    InitPart("frogDoor/outsidegroup.obj", modelDoorOut, vaoDoorOut, vboDoorOut, glm::vec3(0.576f, 0.078f, 1.0f));
+}
+void InitDoorLeft() {
+    InitPart("frogDoor/leftdoorgroup.obj", modelLeftdoor, vaoLeftdoor, vboLeftdoor, glm::vec3(1.0f, 0.078f, 0.576f));
+}
+void InitDoorRight() {
+    InitPart("frogDoor/rightdoorgroup.obj", modelRightdoor, vaoRightdoor, vboRightdoor, glm::vec3(1.0f, 0.078f, 0.576f));
+}
 
 // 캐릭터1
 void InitCharacter1Body() {
@@ -1010,6 +1035,31 @@ void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+void DrawObstacleDoor(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+
+    glm::mat4 DooroutModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(DooroutModelMatrix));
+
+    glBindVertexArray(vaoDoorOut);
+    glDrawElements(GL_TRIANGLES, modelDoorOut.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 finalLeftdoorModelMatrix = LeftdoorModelMatrix;
+    LeftdoorModelMatrix = glm::translate(glm::mat4(1.0f), LeftdoorGroupPosition);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalLeftdoorModelMatrix));
+
+    glBindVertexArray(vaoLeftdoor);
+    glDrawElements(GL_TRIANGLES, modelLeftdoor.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 finalRightdoorModelMatrix = RightdoorModelMatrix;
+    RightdoorModelMatrix = glm::translate(glm::mat4(1.0f), RightdoorGroupPosition);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(finalRightdoorModelMatrix));
+
+    glBindVertexArray(vaoRightdoor);
+    glDrawElements(GL_TRIANGLES, modelRightdoor.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
 
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
@@ -1064,6 +1114,10 @@ void main(int argc, char** argv) {
     //장애물
     InitBong1();
     InitBong2();
+    InitDoorOut();
+    InitDoorLeft();
+    InitDoorRight();
+
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -1172,6 +1226,7 @@ GLvoid drawScene() {
 
     DrawMap(shaderProgramID, modelMatrixLocation);
     DrawObstacleBong(shaderProgramID, modelMatrixLocation);
+    DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
@@ -1436,6 +1491,24 @@ GLvoid Timer(int value) {
     }
     else if (BongGroup2Position.x <= -MaxBongMove) {
         BongGroup2Direction.x = 1;
+    }
+
+    // 문짝 움직이기
+    LeftdoorGroupPosition.x += LeftdoorGroupDirection.x * DoorMove;
+
+    if (LeftdoorGroupPosition.x >= 0.0) {
+        LeftdoorGroupDirection.x = -1; // 왼쪽으로 이동
+    }
+    else if (LeftdoorGroupPosition.x <= -MaxDoorMove) {
+        LeftdoorGroupDirection.x = 1;  // 오른쪽으로 이동
+    }
+
+    RightdoorGroupPosition.x += RightdoorGroupDirection.x * DoorMove;
+    if (RightdoorGroupPosition.x >= MaxDoorMove) {
+        RightdoorGroupDirection.x = -1;
+    }
+    else if (RightdoorGroupPosition.x <= -0.0) {
+        RightdoorGroupDirection.x = 1;
     }
 
     // 화면 갱신
