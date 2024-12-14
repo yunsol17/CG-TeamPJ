@@ -1061,6 +1061,32 @@ void DrawObstacleDoor(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glBindVertexArray(0);
 }
 
+AABB leftdoor1 = {
+    glm::vec3(-8.475f, -0.76f, -159.129f), // min
+    glm::vec3(-6.4f,  2.4f,  -158.53f)   // max
+};
+AABB leftdoor2 = {
+    glm::vec3(-2.168f, -0.76f, -159.129f), // min
+    glm::vec3(-0.09f,  2.4f,  -158.53f)   // max
+};
+AABB leftdoor3 = {
+    glm::vec3(4.227f, -0.76f, -159.129f), // min
+    glm::vec3(6.297f,  2.4f,  -158.53f)   // max
+};
+
+AABB rightdoor1 = {
+    glm::vec3(6.408f, -0.76f, -159.129f), // min
+    glm::vec3(4.38f,  2.4f,  -158.53f)   // max
+};
+AABB rightdoor2 = {
+    glm::vec3(-0.1f, -0.76f, -159.129f), // min
+    glm::vec3(1.926f,  2.4f,  -158.53f)   // max
+};
+AABB rightdoor3 = {
+    glm::vec3(6.294f, -0.76f, -159.129f), // min
+    glm::vec3(8.322f,  2.4f,  -158.53f)   // max
+};
+
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
