@@ -45,7 +45,7 @@ GLuint fragmentShader;
 GLfloat cameraX = 0.0f;
 GLfloat cameraY = 0.0f;
 GLfloat cameraZ = 30.0f;
-GLfloat moveSpeed = 0.05f;
+GLfloat moveSpeed = 0.5f;
 GLfloat character1RotationAngle = 0.0f;
 GLfloat character2RotationAngle = 0.0f;
 GLfloat character1ArmLegSwingAngle = 0.0f;
@@ -665,21 +665,24 @@ AABB map1 = {
 };
 AABB map2 = {
     glm::vec3(-16.0f, -2.3f, -121.0f), // min
-    glm::vec3(16.0f, -0.3f, -79.0f)    // max
+    glm::vec3(16.0f, -0.2f, -79.0f)    // max
 };
 AABB map3 = {
-    glm::vec3(-13.0f, -2.6f, -146.0f), // min
-    glm::vec3(13.0f, -0.6f, -120.0f)   // max
+    glm::vec3(-13.0f, -2.0f, -146.0f), // min
+    glm::vec3(13.0f, -0.3f, -120.0f)   // max
 };
 AABB map4 = {
-    glm::vec3(-10.6f, -2.8f, -165.0f), // min
-    glm::vec3(10.6f, -0.8f, -143.0f)   // max
+    glm::vec3(-10.6f, -2.0f, -165.0f), // min
+    glm::vec3(10.6f, -0.4f, -143.0f)   // max
 };
 AABB map5 = {
     glm::vec3(-10.6f, -28.5f, -245.0f), // min
     glm::vec3(10.6f, -26.5f, -165.0f)   // max
 };
 
+float ch1x = -5.0f;
+float ch1y = 0.0f;
+float ch1z = -5.0f;
 
 // 맵 그리기
 void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
@@ -719,7 +722,7 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 // 캐릭터1 그리기
 void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
-    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(-5.0f, 0.0f, -5.0f));
+    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(ch1x, ch1y, ch1z));
 
     // character1ModelMatrix를 결합
     glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
@@ -1189,7 +1192,7 @@ GLvoid Timer(int value) {
         if (checkCollision(character1, map)) {
             isCharacter1OnMap = true;
             // 맵 상단으로 고정
-            character1Position.y = map.max.y;
+            ch1y = map.max.y;
             break;
         }
     }
