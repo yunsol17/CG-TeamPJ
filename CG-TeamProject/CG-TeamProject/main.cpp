@@ -42,9 +42,9 @@ GLuint vboCharacter2Acc[2], vboCharacter2Body[2], vboCharacter2Clothes[2], vboCh
 Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharacter2Clothes, modelCharacter2LeftLeg, modelCharacter2RightLeg, modelCharacter2LeftArm, modelCharacter2RightArm, modelCharacter2Eye, modelCharacter2Face;
 
 //장애물
-GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple, vaoDoorOut, vaoLeftdoor, vaoRightdoor;
-GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2], vboDoorOut[2], vboLeftdoor[2], vboRightdoor[2];
-Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, modelDoorOut, modelLeftdoor, modelRightdoor;
+GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple, vaoDoorOut, vaoLeftdoor, vaoRightdoor, vaoJumpBarCenter, vaoJumpBarbargroup1, vaoJumpBarbargroup2;
+GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2], vboDoorOut[2], vboLeftdoor[2], vboRightdoor[2],vboJumpBarCenter[2], vboJumpBarbargroup1[2], vboJumpBarbargroup2[2];
+Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, modelDoorOut, modelLeftdoor, modelRightdoor, modelJumpBarCenter, modelJumpBarbargroup1, modelJumpBarbargroup2;
 
 //checkbox
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
@@ -175,6 +175,11 @@ void InitBong2();
 // 세로팬
 void InitHorizontalFanPink();
 void InitHorizontalFanPurple();
+// 점프바
+void InitJumpbarCenter();
+void InitJumpbarbargroup1();
+void InitJumpbarbargroup2();
+
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -291,6 +296,7 @@ void InitHorizontalFanPink() {
 void InitHorizontalFanPurple() {
     InitPart("horizontalFan/purple.obj", modelHorizontalFanPurple, vaoHorizontalFanPurple, vboHorizontalFanPurple, glm::vec3(0.5f, 0.0f, 0.5f));
 }
+// 개구리문
 void InitDoorOut() {
     InitPart("frogDoor/outsidegroup.obj", modelDoorOut, vaoDoorOut, vboDoorOut, glm::vec3(0.576f, 0.078f, 1.0f));
 }
@@ -299,6 +305,16 @@ void InitDoorLeft() {
 }
 void InitDoorRight() {
     InitPart("frogDoor/rightdoorgroup.obj", modelRightdoor, vaoRightdoor, vboRightdoor, glm::vec3(1.0f, 0.078f, 0.576f));
+}
+// 점프바
+void InitJumpbarCenter() {
+    InitPart("jumpBong/centergroup.obj", modelJumpBarCenter, vaoJumpBarCenter, vboJumpBarCenter, glm::vec3(0.576f, 0.078f, 1.0f));
+}
+void InitJumpbarbargroup1() {
+    InitPart("jumpBong/bargroup1.obj", modelJumpBarbargroup1, vaoJumpBarbargroup1, vboJumpBarbargroup1, glm::vec3(0.576f, 0.078f, 1.0f));
+}
+void InitJumpbarbargroup2() {
+    InitPart("jumpBong/bargroup2.obj", modelJumpBarbargroup2, vaoJumpBarbargroup2, vboJumpBarbargroup2, glm::vec3(0.576f, 0.078f, 1.0f));
 }
 
 // 봉
@@ -1140,6 +1156,28 @@ void DrawObstacleDoor(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelRightdoor.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+void DrawObstacleJumpbar(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::mat4 JumpBarCenterModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarCenterModelMatrix));
+
+    glBindVertexArray(vaoJumpBarCenter);
+    glDrawElements(GL_TRIANGLES, modelJumpBarCenter.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 JumpBarbargroup1ModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarbargroup1ModelMatrix));
+
+    glBindVertexArray(vaoJumpBarbargroup1);
+    glDrawElements(GL_TRIANGLES, modelJumpBarbargroup1.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 JumpBarbargroup2ModelMatrix = glm::mat4(1.0f);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarbargroup2ModelMatrix));
+
+    glBindVertexArray(vaoJumpBarbargroup2);
+    glDrawElements(GL_TRIANGLES, modelJumpBarbargroup2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
 
 void main(int argc, char** argv) {
     glutInit(&argc, argv);
@@ -1199,6 +1237,9 @@ void main(int argc, char** argv) {
     InitDoorOut();
     InitDoorLeft();
     InitDoorRight();
+    InitJumpbarCenter();
+    InitJumpbarbargroup1();
+    InitJumpbarbargroup2();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -1310,6 +1351,7 @@ GLvoid drawScene() {
     DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
     DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
+    DrawObstacleJumpbar(shaderProgramID, modelMatrixLocation);
 
     glutSwapBuffers();
 }
