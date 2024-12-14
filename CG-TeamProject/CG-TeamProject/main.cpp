@@ -17,6 +17,12 @@
 struct AABB {
     glm::vec3 min; // 충돌박스의 최소 좌표 (x, y, z)
     glm::vec3 max; // 충돌박스의 최대 좌표 (x, y, z)
+
+    // AABB 갱신 메서드
+    void update(const glm::vec3& position, const glm::vec3& offsetMin, const glm::vec3& offsetMax) {
+        min = position + offsetMin;
+        max = position + offsetMax;
+    }
 };
 
 GLuint vaoBottom, vaoArrowAndPillar, vaoEndPoint, vaoPoint;
@@ -339,8 +345,8 @@ void InitCharacter1CheckBox() {
     glBindVertexArray(0);
 }
 AABB character1 = {
-    character1Position + glm::vec3(-0.47f, 0.0f, -0.48f),
-    character1Position + glm::vec3(0.47f, 1.84f, 0.42f)
+    character1Position + glm::vec3(-0.70f, 0.0f, -0.72f),
+    character1Position + glm::vec3(0.70f, 1.84f, 0.63f)
 };
 
 // 캐릭터2
@@ -428,8 +434,8 @@ void InitCharacter2CheckBox() {
     glBindVertexArray(0);
 }
 AABB character2 = {
-    character2Position + glm::vec3(-0.47f, 0.0f, -0.48f),
-    character2Position + glm::vec3(0.47f, 1.84f, 0.42f)
+    character2Position + glm::vec3(-0.70f, 0.0f, -0.72f),
+    character2Position + glm::vec3(0.70f, 1.84f, 0.63f)
 };
 
 // 맵 충돌박스
@@ -1311,15 +1317,15 @@ GLvoid Timer(int value) {
     character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
     character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    character1.min = character1Position + glm::vec3(-0.47f, 0.0f, -0.48f);
-    character1.max = character1Position + glm::vec3(0.47f, 1.84f, 0.42f);
+    // AABB 업데이트
+    character1.update(character1Position, glm::vec3(-0.7f, 0.0f, -0.72f), glm::vec3(0.7f, 1.84f, 0.63f));
 
     // 캐릭터2 모델 매트릭스 업데이트
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    character2.min = character2Position + glm::vec3(-0.47f, 0.0f, -0.48f);
-    character2.max = character2Position + glm::vec3(0.47f, 1.84f, 0.42f);
+    // AABB 업데이트
+    character2.update(character2Position, glm::vec3(-0.70f, 0.0f, -0.72f), glm::vec3(0.70f, 1.84f, 0.63f));
 
     // 팔 흔들림 업데이트
     if (isCharacter1Swing) {
@@ -1364,16 +1370,45 @@ GLvoid Timer(int value) {
     }
 
     // 캐릭터 간 충돌 검사
-    if (!checkCollision(character1, character2)) {
-        // 충돌하지 않으면 이동
-        character1Position += character1Direction;
-        character2Position += character2Direction;
+    if (checkCollision(character1, character2)) {
+        float overlapX = std::min(character1.max.x, character2.max.x) - std::max(character1.min.x, character2.min.x);
+        float overlapZ = std::min(character1.max.z, character2.max.z) - std::max(character1.min.z, character2.min.z);
+
+        if (overlapX < overlapZ) {
+            if (character1Direction.x > 0.0f && character1.max.x > character2.min.x) {
+                character1Direction.x = 0.0f;
+            }
+            else if (character1Direction.x < 0.0f && character1.min.x < character2.max.x) {
+                character1Direction.x = 0.0f;
+            }
+
+            if (character2Direction.x > 0.0f && character2.max.x > character1.min.x) {
+                character2Direction.x = 0.0f;
+            }
+            else if (character2Direction.x < 0.0f && character2.min.x < character1.max.x) {
+                character2Direction.x = 0.0f;
+            }
+        }
+        else {
+            if (character1Direction.z > 0.0f && character1.max.z > character2.min.z) {
+                character1Direction.z = 0.0f;
+            }
+            else if (character1Direction.z < 0.0f && character1.min.z < character2.max.z) {
+                character1Direction.z = 0.0f;
+            }
+
+            if (character2Direction.z > 0.0f && character2.max.z > character1.min.z) {
+                character2Direction.z = 0.0f;
+            }
+            else if (character2Direction.z < 0.0f && character2.min.z < character1.max.z) {
+                character2Direction.z = 0.0f;
+            }
+        }
     }
-    else {
-        // 충돌 시 이동 취소
-        character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-        character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-    }
+
+    // 이동 처리
+    character1Position += character1Direction;
+    character2Position += character2Direction;
 
     // 화면 갱신
     glutPostRedisplay();
