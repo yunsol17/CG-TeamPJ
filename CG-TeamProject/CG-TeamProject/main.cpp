@@ -56,12 +56,12 @@ GLfloat realGravity = 0.1f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 character1Position = glm::vec3(-5.0f, 0.0f, -5.0f);
+glm::vec3 character1Position = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character1InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 glm::mat4 character2ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
+glm::vec3 character2Position = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 bool isCharacter1Swing = false;
@@ -300,8 +300,8 @@ void InitCharacter1CheckBox() {
     glBindVertexArray(0);
 }
 AABB character1 = {
-    glm::vec3(-0.47f, 0.0f, -0.48f), // min
-    glm::vec3(0.47f,  1.84f,  0.42f)  // max
+    character1Position + glm::vec3(-0.47f, 0.0f, -0.48f),
+    character1Position + glm::vec3(0.47f, 1.84f, 0.42f)
 };
 
 // 캐릭터2
@@ -389,8 +389,8 @@ void InitCharacter2CheckBox() {
     glBindVertexArray(0);
 }
 AABB character2 = {
-    glm::vec3(-0.47f, 0.0f, -0.48f), // min
-    glm::vec3(0.47f,  1.84f,  0.42f)  // max
+    character2Position + glm::vec3(-0.47f, 0.0f, -0.48f),
+    character2Position + glm::vec3(0.47f, 1.84f, 0.42f)
 };
 
 // 맵 충돌박스
@@ -1146,6 +1146,7 @@ void SpecialKeyUp(int key, int x, int y) {
 }
 
 GLvoid Timer(int value) {
+    // 캐릭터1 이동 처리
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
@@ -1182,7 +1183,7 @@ GLvoid Timer(int value) {
 
     // 점프 로직
     if (isCharacter1Jumping) {
-        character1Position.y += character1JumpSpeed; 
+        character1Position.y += character1JumpSpeed;
         character1JumpSpeed -= gravity;
 
         if (character1JumpSpeed <= 0.0f && isCharacter1OnMap) {
@@ -1193,13 +1194,6 @@ GLvoid Timer(int value) {
     else if (!isCharacter1OnMap) {
         character1Position.y -= realGravity;
     }
-
-    character1Position += character1Direction;
-    character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
-    character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    character1.min = character1Position + glm::vec3(-0.47f, 0.0f, -0.48f);
-    character1.max = character1Position + glm::vec3(0.47f, 1.84f, 0.42f);
 
     // 캐릭터2 이동 처리
     if (arrowKeyStates[GLUT_KEY_UP]) {
@@ -1249,7 +1243,14 @@ GLvoid Timer(int value) {
         character2Position.y -= realGravity;
     }
 
-    character2Position += character2Direction;
+    // 캐릭터1 모델 매트릭스 업데이트
+    character1ModelMatrix = glm::translate(glm::mat4(1.0f), character1Position);
+    character1ModelMatrix = glm::rotate(character1ModelMatrix, glm::radians(character1RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    character1.min = character1Position + glm::vec3(-0.47f, 0.0f, -0.48f);
+    character1.max = character1Position + glm::vec3(0.47f, 1.84f, 0.42f);
+
+    // 캐릭터2 모델 매트릭스 업데이트
     character2ModelMatrix = glm::translate(glm::mat4(1.0f), character2Position);
     character2ModelMatrix = glm::rotate(character2ModelMatrix, glm::radians(character2RotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -1278,18 +1279,16 @@ GLvoid Timer(int value) {
         }
     }
 
-    // 팔 흔들림 업데이트
     if (isCharacter2Swing) {
         character2ArmLegSwingAngle += character2SwingDirection * 2.0f;
         if (character2ArmLegSwingAngle >= maxSwingAngle) {
-            character2SwingDirection = -1; // 방향 반전
+            character2SwingDirection = -1;
         }
         else if (character2ArmLegSwingAngle <= -maxSwingAngle) {
-            character2SwingDirection = 1; // 방향 반전
+            character2SwingDirection = 1;
         }
     }
     else {
-        // 흔들림 비활성화 시 초기 상태로 복구
         if (character2ArmLegSwingAngle > 0.0f) {
             character2ArmLegSwingAngle -= 2.0f;
             if (character2ArmLegSwingAngle < 0.0f) character2ArmLegSwingAngle = 0.0f;
@@ -1298,6 +1297,18 @@ GLvoid Timer(int value) {
             character2ArmLegSwingAngle += 2.0f;
             if (character2ArmLegSwingAngle > 0.0f) character2ArmLegSwingAngle = 0.0f;
         }
+    }
+
+    // 캐릭터 간 충돌 검사
+    if (!checkCollision(character1, character2)) {
+        // 충돌하지 않으면 이동
+        character1Position += character1Direction;
+        character2Position += character2Direction;
+    }
+    else {
+        // 충돌 시 이동 취소
+        character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
+        character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
     }
 
     // 화면 갱신
