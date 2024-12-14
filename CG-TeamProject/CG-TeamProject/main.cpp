@@ -62,12 +62,12 @@ GLfloat realGravity = 0.1f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 character1Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character1Position = glm::vec3(-5.0f, 0.0f, -5.0f);
 glm::vec3 character1InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 glm::mat4 character2ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 character2Position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
 glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 bool isCharacter1Swing = false;
@@ -749,12 +749,12 @@ void DrawMap(GLuint shaderPRogramID, GLint modelMatrixLocation) {
 
 // 캐릭터1 그리기
 void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
-    glm::mat4 baseCharacter1ModelMatrix = glm::mat4(1.0f);
-    baseCharacter1ModelMatrix = glm::translate(baseCharacter1ModelMatrix, glm::vec3(-5.0f, 0.0f, -5.0f));
+    // character1ModelMatrix를 바로 사용하여 위치 계산
+    glm::mat4 finalCharacter1ModelMatrix = character1ModelMatrix;
 
-    // character1ModelMatrix를 결합
-    glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
+    //// character1ModelMatrix를 결합
+    //glm::mat4 finalCharacter1ModelMatrix = baseCharacter1ModelMatrix * character1ModelMatrix;
+    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter1ModelMatrix));
 
     // 몸
     glm::mat4 Character1BodyModelMatrix = finalCharacter1ModelMatrix;
@@ -843,11 +843,12 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
 
 // 캐릭터2 그리기
 void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
-    glm::mat4 baseCharacter2ModelMatrix = glm::mat4(1.0f);
-    baseCharacter2ModelMatrix = glm::translate(baseCharacter2ModelMatrix, glm::vec3(5.0f, 0.0f, -5.0f));
-    // character2ModelMatrix를 결합
-    glm::mat4 finalCharacter2ModelMatrix = baseCharacter2ModelMatrix * character2ModelMatrix;
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
+    // character1ModelMatrix를 바로 사용하여 위치 계산
+    glm::mat4 finalCharacter2ModelMatrix = character2ModelMatrix;
+
+    //// character2ModelMatrix를 결합
+    //glm::mat4 finalCharacter2ModelMatrix = baseCharacter2ModelMatrix * character2ModelMatrix;
+    //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(baseCharacter2ModelMatrix));
 
     //acc
     glm::mat4 Character2AccModelMatrix = finalCharacter2ModelMatrix;
@@ -1126,8 +1127,8 @@ GLvoid drawScene() {
     glUseProgram(shaderProgramID);
 
     // 카메라 위치 계산
-    glm::vec3 cameraPosition = character1Position + glm::vec3(-5.0f, 10.0f, 15.0f);
-    glm::vec3 cameraTarget = character1Position + glm::vec3(-5.0f, 0.0f, 0.0f);
+    glm::vec3 cameraPosition = character1Position + glm::vec3(0.0f, 10.0f, 15.0f);
+    glm::vec3 cameraTarget = character1Position;
 
     // 뷰 변환
     glm::mat4 viewMatrix = glm::lookAt(
