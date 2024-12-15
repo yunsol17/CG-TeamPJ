@@ -23,6 +23,40 @@ struct AABB {
         min = position + offsetMin;
         max = position + offsetMax;
     }
+
+    void updateRotatedAABB(const glm::vec3& position, const glm::vec3& offsetMin, const glm::vec3& offsetMax, float rotationAngle, glm::vec3 rotationAxis) {
+        // AABB의 원래 꼭짓점 계산
+        glm::vec3 vertices[8] = {
+            position + offsetMin,                               // min
+            position + glm::vec3(offsetMin.x, offsetMin.y, offsetMax.z),
+            position + glm::vec3(offsetMin.x, offsetMax.y, offsetMin.z),
+            position + glm::vec3(offsetMin.x, offsetMax.y, offsetMax.z),
+            position + glm::vec3(offsetMax.x, offsetMin.y, offsetMin.z),
+            position + glm::vec3(offsetMax.x, offsetMin.y, offsetMax.z),
+            position + glm::vec3(offsetMax.x, offsetMax.y, offsetMin.z),
+            position + offsetMax                                // max
+        };
+
+        glm::mat4 rotationMatrix = glm::translate(glm::mat4(1.0f), position); // 중심으로 이동
+        rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotationAngle), rotationAxis); // 회전
+        rotationMatrix = glm::translate(rotationMatrix, -position); // 다시 원점으로 이동
+        for (int i = 0; i < 8; ++i) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
+            vertices[i] = glm::vec3(rotatedVertex);
+        }
+
+        // 회전된 꼭짓점으로 새로운 min/max 계산
+        glm::vec3 newMin = vertices[0];
+        glm::vec3 newMax = vertices[0];
+        for (int i = 1; i < 8; ++i) {
+            newMin = glm::min(newMin, vertices[i]);
+            newMax = glm::max(newMax, vertices[i]);
+        }
+
+        // AABB 갱신
+        min = newMin;
+        max = newMax;
+    }
 };
 
 // 맵
@@ -53,7 +87,6 @@ GLuint vaoCharacter1CheckBox, vboCharacter1CheckBox[2], vaoCharacter2CheckBox, v
 Model modelBongCheckBox1, modelBongCheckBox2, modelBongCheckBox3, modelBongCheckBox4, modelBongCheckBox5, modelBongCheckBox6;
 GLuint vaoBongCheckBox1, vaoBongCheckBox2, vaoBongCheckBox3, vaoBongCheckBox4, vaoBongCheckBox5, vaoBongCheckBox6;
 GLuint vboBongCheckBox1[2], vboBongCheckBox2[2], vboBongCheckBox3[2], vboBongCheckBox4[2], vboBongCheckBox5[2], vboBongCheckBox6[2];
-
 
 GLuint shaderProgramID;
 GLuint vertexShader;
@@ -178,16 +211,13 @@ void InitCharacter2Face();
 // 봉
 void InitBong1();
 void InitBong2();
-
-// 세로팬
+// 가로팬
 void InitHorizontalFanPink();
 void InitHorizontalFanPurple();
 // 점프바
 void InitJumpbarCenter();
-void InitJumpbarbar1();
-void InitJumpbarbar2();
-void InitJumpbarbar3();
-
+void InitJumpbarbargroup1();
+void InitJumpbarbargroup2();
 
 GLuint make_shaderProgram();
 GLvoid drawScene();
@@ -267,7 +297,6 @@ void InitEndPoint() {
 void InitPoint() {
     InitPart("Map/point.obj", modelPoint, vaoPoint, vboPoint, glm::vec3(1.0f, 0.0f, 0.0f));
 }
-
 // 맵
 AABB map1 = {
     glm::vec3(-22.5f, 0.0f, -80.0f), // min
@@ -310,8 +339,6 @@ void InitAllBongCheckBoxes() {
     InitBongCheckBoxPart("bong/bongcheckbox5.obj", modelBongCheckBox5, vaoBongCheckBox5, vboBongCheckBox5);
     InitBongCheckBoxPart("bong/bongcheckbox6.obj", modelBongCheckBox6, vaoBongCheckBox6, vboBongCheckBox6);
 }
-
-
 // 가로팬
 void InitHorizontalFanPink() {
     InitPart("horizontalFan/pink.obj", modelHorizontalFanPink, vaoHorizontalFanPink, vboHorizontalFanPink, glm::vec3(1.0f, 0.7f, 0.75f));
@@ -333,16 +360,15 @@ void InitDoorRight() {
 void InitJumpbarCenter() {
     InitPart("jumpBong/centergroup.obj", modelJumpBarCenter, vaoJumpBarCenter, vboJumpBarCenter, glm::vec3(0.576f, 0.078f, 1.0f));
 }
-void InitJumpbarbar1() {
-    InitPart("jumpBong/bar1.obj", modelJumpBarbargroup1, vaoJumpBarbargroup1, vboJumpBarbargroup1, glm::vec3(0.576f, 0.078f, 1.0f));
+void InitJumpbarbargroup1() {
+    InitPart("jumpBong/bargroup1.obj", modelJumpBarbargroup1, vaoJumpBarbargroup1, vboJumpBarbargroup1, glm::vec3(0.576f, 0.078f, 1.0f));
 }
-void InitJumpbarbar2() {
-    InitPart("jumpBong/bar2.obj", modelJumpBarbargroup2, vaoJumpBarbargroup2, vboJumpBarbargroup2, glm::vec3(0.576f, 0.078f, 1.0f));
+void InitJumpbarbargroup2() {
+    InitPart("jumpBong/bargroup2.obj", modelJumpBarbargroup2, vaoJumpBarbargroup2, vboJumpBarbargroup2, glm::vec3(0.576f, 0.078f, 1.0f));
 }
 void InitJumpbarbar3() {
     InitPart("jumpBong/bar3.obj", modelJumpBarbargroup3, vaoJumpBarbargroup3, vboJumpBarbargroup3, glm::vec3(0.576f, 0.078f, 1.0f));
 }
-
 
 // 봉
 AABB bong1 = {
@@ -422,6 +448,19 @@ AABB barbar3 = {
     glm::vec3(10.83f,0.0399f,  -88.457f)   // max
 };
 
+// 가로팬
+AABB horizontalFan1 = {
+    glm::vec3(-6.1f, -0.3f, -140.49f),  // min
+    glm::vec3(6.1f, 4.1f, -139.51f)     // max
+};
+AABB horizontalFan2 = {
+    glm::vec3(0.9f, -0.3f, -115.49f),   // min
+    glm::vec3(13.1f, 4.1f, -114.51f)    // max
+};
+AABB horizontalFan3 = {
+    glm::vec3(-13.1f, -0.3f, -115.49f), // min
+    glm::vec3(-0.9f, 4.1f, -114.51f)    // max
+};
 
 // 캐릭터1
 void InitCharacter1Body() {
@@ -1182,10 +1221,10 @@ void DrawBongCheckBoxes(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glBindVertexArray(0);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
-
 void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation) {
+    glm::vec3 horizontalFan1Position = glm::vec3(0.0f, -0.3f, -140.0f);
     glm::mat4 HorizontalFanPink1ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPink1ModelMatrix = glm::translate(HorizontalFanPink1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
+    HorizontalFanPink1ModelMatrix = glm::translate(HorizontalFanPink1ModelMatrix, horizontalFan1Position);
     HorizontalFanPink1ModelMatrix = glm::rotate(HorizontalFanPink1ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink1ModelMatrix));
 
@@ -1194,16 +1233,19 @@ void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation
     glBindVertexArray(0);
 
     glm::mat4 HorizontalFanPurple1ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPurple1ModelMatrix = glm::translate(HorizontalFanPurple1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
+    HorizontalFanPurple1ModelMatrix = glm::translate(HorizontalFanPurple1ModelMatrix, horizontalFan1Position);
     HorizontalFanPurple1ModelMatrix = glm::rotate(HorizontalFanPurple1ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple1ModelMatrix));
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink1ModelMatrix));
 
     glBindVertexArray(vaoHorizontalFanPurple);
     glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
+    horizontalFan1.update(horizontalFan1Position, glm::vec3(-6.1f, -0.3f, -0.49f), glm::vec3(6.1f, 4.4f, 0.49f));
+
+    glm::vec3 horizontalFan2Position = glm::vec3(7.0f, -0.3f, -115.0f);
     glm::mat4 HorizontalFanPink2ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPink2ModelMatrix = glm::translate(HorizontalFanPink2ModelMatrix, glm::vec3(7.0f, 0.0f, -115.0f));
+    HorizontalFanPink2ModelMatrix = glm::translate(HorizontalFanPink2ModelMatrix, horizontalFan2Position);
     HorizontalFanPink2ModelMatrix = glm::rotate(HorizontalFanPink2ModelMatrix, glm::radians(-obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink2ModelMatrix));
 
@@ -1212,7 +1254,7 @@ void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation
     glBindVertexArray(0);
 
     glm::mat4 HorizontalFanPurple2ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPurple2ModelMatrix = glm::translate(HorizontalFanPurple2ModelMatrix, glm::vec3(7.0f, 0.0f, -115.0f));
+    HorizontalFanPurple2ModelMatrix = glm::translate(HorizontalFanPurple2ModelMatrix, horizontalFan2Position);
     HorizontalFanPurple2ModelMatrix = glm::rotate(HorizontalFanPurple2ModelMatrix, glm::radians(-obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple2ModelMatrix));
 
@@ -1220,8 +1262,11 @@ void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation
     glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
+    horizontalFan2.update(horizontalFan2Position, glm::vec3(-6.1f, -0.3f, -0.49f), glm::vec3(6.1f, 4.4f, 0.49f));
+
+    glm::vec3 horizontalFan3Position = glm::vec3(-7.0f, -0.3f, -115.0f);
     glm::mat4 HorizontalFanPink3ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPink3ModelMatrix = glm::translate(HorizontalFanPink3ModelMatrix, glm::vec3(-7.0f, 0.0f, -115.0f));
+    HorizontalFanPink3ModelMatrix = glm::translate(HorizontalFanPink3ModelMatrix, horizontalFan3Position);
     HorizontalFanPink3ModelMatrix = glm::rotate(HorizontalFanPink3ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPink3ModelMatrix));
 
@@ -1230,13 +1275,15 @@ void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation
     glBindVertexArray(0);
 
     glm::mat4 HorizontalFanPurple3ModelMatrix = glm::mat4(1.0f);
-    HorizontalFanPurple3ModelMatrix = glm::translate(HorizontalFanPurple3ModelMatrix, glm::vec3(-7.0f, 0.0f, -115.0f));
+    HorizontalFanPurple3ModelMatrix = glm::translate(HorizontalFanPurple3ModelMatrix, horizontalFan3Position);
     HorizontalFanPurple3ModelMatrix = glm::rotate(HorizontalFanPurple3ModelMatrix, glm::radians(obstacleRotation), glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(HorizontalFanPurple3ModelMatrix));
 
     glBindVertexArray(vaoHorizontalFanPurple);
     glDrawElements(GL_TRIANGLES, modelHorizontalFanPurple.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    horizontalFan3.update(horizontalFan3Position, glm::vec3(-6.1f, -0.3f, -0.49f), glm::vec3(6.1f, 4.4f, 0.49f));
 }
 void DrawObstacleDoor(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 DooroutModelMatrix = glm::mat4(1.0f);
@@ -1363,8 +1410,8 @@ void main(int argc, char** argv) {
     InitDoorLeft();
     InitDoorRight();
     InitJumpbarCenter();
-    InitJumpbarbar1();
-    InitJumpbarbar2();
+    InitJumpbarbargroup1();
+    InitJumpbarbargroup2();
     InitJumpbarbar3();
 
     glutDisplayFunc(drawScene);
@@ -1530,7 +1577,6 @@ void SpecialKeyUp(int key, int x, int y) {
 }
 
 GLvoid Timer(int value) {
-    // 캐릭터1 이동 처리
     if (moveKeyStates['w']) {
         character1Direction = glm::vec3(0.0f, 0.0f, -moveSpeed);
         character1RotationAngle = 0.0f;
@@ -1720,9 +1766,6 @@ GLvoid Timer(int value) {
         }
     }
 
-
-
-
     // 봉과 캐릭터1 충돌 처리
     AABB bongs[] = { bong1, bong2, bong3, bong4, bong5, bong6 };
     for (const auto& bong : bongs) {
@@ -1773,7 +1816,6 @@ GLvoid Timer(int value) {
             }
         }
     }
-
 
     //봉 움직이기
     BongGroup1Position.x += BongGroup1Direction.x * BongMove;
@@ -1924,10 +1966,88 @@ GLvoid Timer(int value) {
         }
     }
 
+    // 장애물 AABB 업데이트
+    horizontalFan1.updateRotatedAABB(
+        glm::vec3(0.0f, -0.3f, -140.0f),  // 장애물의 중심 위치
+        glm::vec3(-6.1f, -0.3f, -0.49f), // 로컬 최소 오프셋
+        glm::vec3(6.1f, 4.4f, 0.49f),    // 로컬 최대 오프셋
+        obstacleRotation,                // 회전 각도
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    horizontalFan2.updateRotatedAABB(
+        glm::vec3(7.0f, -0.3f, -115.0f),  // 장애물의 중심 위치
+        glm::vec3(-6.1f, -0.3f, -0.49f), // 로컬 최소 오프셋
+        glm::vec3(6.1f, 4.4f, 0.49f),    // 로컬 최대 오프셋
+        obstacleRotation,                // 회전 각도
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    horizontalFan3.updateRotatedAABB(
+        glm::vec3(-7.0f, -0.3f, -115.0f), // 장애물의 중심 위치
+        glm::vec3(-6.1f, -0.3f, -0.49f), // 로컬 최소 오프셋
+        glm::vec3(6.1f, 4.4f, 0.49f),    // 로컬 최대 오프셋
+        obstacleRotation,                // 회전 각도
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    // 장애물 AABB 배열 업데이트
+    AABB horizontalFans[] = { horizontalFan1, horizontalFan2, horizontalFan3 };
+
+    // 캐릭터1과 장애물 충돌 체크
+    for (const auto& fan : horizontalFans) {
+        if (checkCollision(character1, fan)) {
+            float overlapX = std::min(character1.max.x, fan.max.x) - std::max(character1.min.x, fan.min.x);
+            float overlapZ = std::min(character1.max.z, fan.max.z) - std::max(character1.min.z, fan.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character1Direction.x > 0.0f && character1.max.x > fan.min.x) {
+                    character1Direction.x = 0.0f;
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < fan.max.x) {
+                    character1Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character1Direction.z > 0.0f && character1.max.z > fan.min.z) {
+                    character1Direction.z = 0.0f;
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < fan.max.z) {
+                    character1Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
+    // 캐릭터2와 장애물 충돌 체크
+    for (const auto& fan : horizontalFans) {
+        if (checkCollision(character2, fan)) {
+            float overlapX = std::min(character2.max.x, fan.max.x) - std::max(character2.min.x, fan.min.x);
+            float overlapZ = std::min(character2.max.z, fan.max.z) - std::max(character2.min.z, fan.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character2Direction.x > 0.0f && character2.max.x > fan.min.x) {
+                    character2Direction.x = 0.0f;
+                }
+                else if (character2Direction.x < 0.0f && character2.min.x < fan.max.x) {
+                    character2Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character2Direction.z > 0.0f && character2.max.z > fan.min.z) {
+                    character2Direction.z = 0.0f;
+                }
+                else if (character2Direction.z < 0.0f && character2.min.z < fan.max.z) {
+                    character2Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
     // 점프바 회전
-    jumpBarRotationAngle += 2.0f; 
+    jumpBarRotationAngle += 2.0f;
     if (jumpBarRotationAngle >= 360.0f) {
-        jumpBarRotationAngle -= 360.0f; 
+        jumpBarRotationAngle -= 360.0f;
     }
     // 점프바1 AABB 업데이트
     {
