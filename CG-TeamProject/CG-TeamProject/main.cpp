@@ -1929,6 +1929,155 @@ GLvoid Timer(int value) {
     if (jumpBarRotationAngle >= 360.0f) {
         jumpBarRotationAngle -= 360.0f; 
     }
+    // 점프바1 AABB 업데이트
+    {
+        glm::vec3 jumpBar1Position = glm::vec3(-9.5f, 0.0f, -94.93f); // 점프바1 위치
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glm::vec3 corners[8] = {
+            jumpBar1Position + glm::vec3(-1.0f, -0.2f, -5.0f),
+            jumpBar1Position + glm::vec3(-1.0f, -0.2f,  5.0f),
+            jumpBar1Position + glm::vec3(-1.0f,  0.2f, -5.0f),
+            jumpBar1Position + glm::vec3(-1.0f,  0.2f,  5.0f),
+            jumpBar1Position + glm::vec3(1.0f, -0.2f, -5.0f),
+            jumpBar1Position + glm::vec3(1.0f, -0.2f,  5.0f),
+            jumpBar1Position + glm::vec3(1.0f,  0.2f, -5.0f),
+            jumpBar1Position + glm::vec3(1.0f,  0.2f,  5.0f),
+        };
+
+        // 각 꼭짓점 회전 적용
+        glm::vec3 newMin = glm::vec3(rotationMatrix * glm::vec4(corners[0], 1.0f));
+        glm::vec3 newMax = newMin;
+
+        for (int i = 1; i < 8; ++i) {
+            glm::vec3 rotatedCorner = glm::vec3(rotationMatrix * glm::vec4(corners[i], 1.0f));
+            newMin = glm::min(newMin, rotatedCorner);
+            newMax = glm::max(newMax, rotatedCorner);
+        }
+
+        // AABB 업데이트
+        barbar1.min = newMin;
+        barbar1.max = newMax;
+    }
+
+    // 점프바2 AABB 업데이트
+    {
+        glm::vec3 jumpBar2Position = glm::vec3(0.6f, 0.0f, -94.93f); // 점프바2 위치
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(-jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glm::vec3 corners[8] = {
+            jumpBar2Position + glm::vec3(-1.0f, -0.2f, -5.0f),
+            jumpBar2Position + glm::vec3(-1.0f, -0.2f,  5.0f),
+            jumpBar2Position + glm::vec3(-1.0f,  0.2f, -5.0f),
+            jumpBar2Position + glm::vec3(-1.0f,  0.2f,  5.0f),
+            jumpBar2Position + glm::vec3(1.0f, -0.2f, -5.0f),
+            jumpBar2Position + glm::vec3(1.0f, -0.2f,  5.0f),
+            jumpBar2Position + glm::vec3(1.0f,  0.2f, -5.0f),
+            jumpBar2Position + glm::vec3(1.0f,  0.2f,  5.0f),
+        };
+
+        // 각 꼭짓점 회전 적용
+        glm::vec3 newMin = glm::vec3(rotationMatrix * glm::vec4(corners[0], 1.0f));
+        glm::vec3 newMax = newMin;
+
+        for (int i = 1; i < 8; ++i) {
+            glm::vec3 rotatedCorner = glm::vec3(rotationMatrix * glm::vec4(corners[i], 1.0f));
+            newMin = glm::min(newMin, rotatedCorner);
+            newMax = glm::max(newMax, rotatedCorner);
+        }
+
+        // AABB 업데이트
+        barbar2.min = newMin;
+        barbar2.max = newMax;
+    }
+
+    // 점프바3 AABB 업데이트
+    {
+        glm::vec3 jumpBar3Position = glm::vec3(10.5f, 0.0f, -94.93f); // 점프바3 위치
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glm::vec3 corners[8] = {
+            jumpBar3Position + glm::vec3(-1.0f, -0.2f, -5.0f),
+            jumpBar3Position + glm::vec3(-1.0f, -0.2f,  5.0f),
+            jumpBar3Position + glm::vec3(-1.0f,  0.2f, -5.0f),
+            jumpBar3Position + glm::vec3(-1.0f,  0.2f,  5.0f),
+            jumpBar3Position + glm::vec3(1.0f, -0.2f, -5.0f),
+            jumpBar3Position + glm::vec3(1.0f, -0.2f,  5.0f),
+            jumpBar3Position + glm::vec3(1.0f,  0.2f, -5.0f),
+            jumpBar3Position + glm::vec3(1.0f,  0.2f,  5.0f),
+        };
+
+        // 각 꼭짓점 회전 적용
+        glm::vec3 newMin = glm::vec3(rotationMatrix * glm::vec4(corners[0], 1.0f));
+        glm::vec3 newMax = newMin;
+
+        for (int i = 1; i < 8; ++i) {
+            glm::vec3 rotatedCorner = glm::vec3(rotationMatrix * glm::vec4(corners[i], 1.0f));
+            newMin = glm::min(newMin, rotatedCorner);
+            newMax = glm::max(newMax, rotatedCorner);
+        }
+
+        // AABB 업데이트
+        barbar3.min = newMin;
+        barbar3.max = newMax;
+    }
+
+
+    // 점프바와 캐릭터1 충돌 처리
+AABB bars[] = { barbar1, barbar2, barbar3 };
+for (const auto& bar : bars) {
+    if (checkCollision(character1, bar)) {
+        float overlapX = std::min(character1.max.x, bar.max.x) - std::max(character1.min.x, bar.min.x);
+        float overlapZ = std::min(character1.max.z, bar.max.z) - std::max(character1.min.z, bar.min.z);
+
+        // 충돌 축을 결정합니다 (X축 또는 Z축 충돌)
+        if (overlapX < overlapZ) {
+            // X축 충돌 처리
+            if (character1Direction.x > 0.0f && character1.max.x > bar.min.x) {
+                character1Position.x -= overlapX; // 왼쪽으로 밀림
+            } else if (character1Direction.x < 0.0f && character1.min.x < bar.max.x) {
+                character1Position.x += overlapX; // 오른쪽으로 밀림
+            }
+        } else {
+            // Z축 충돌 처리
+            if (character1Direction.z > 0.0f && character1.max.z > bar.min.z) {
+                character1Position.z -= overlapZ; // 뒤로 밀림
+            } else if (character1Direction.z < 0.0f && character1.min.z < bar.max.z) {
+                character1Position.z += overlapZ; // 앞으로 밀림
+            }
+        }
+    }
+}
+
+// 점프바와 캐릭터2 충돌 처리
+for (const auto& bar : bars) {
+    if (checkCollision(character2, bar)) {
+        float overlapX = std::min(character2.max.x, bar.max.x) - std::max(character2.min.x, bar.min.x);
+        float overlapZ = std::min(character2.max.z, bar.max.z) - std::max(character2.min.z, bar.min.z);
+
+        // 충돌 축을 결정합니다 (X축 또는 Z축 충돌)
+        if (overlapX < overlapZ) {
+            // X축 충돌 처리
+            if (character2Direction.x > 0.0f && character2.max.x > bar.min.x) {
+                character2Position.x -= overlapX; // 왼쪽으로 밀림
+                std::cout << "ddd" << std::endl;
+            } else if (character2Direction.x < 0.0f && character2.min.x < bar.max.x) {
+                character2Position.x += overlapX; // 오른쪽으로 밀림
+                std::cout << "ddd" << std::endl;
+            }
+        } else {
+            // Z축 충돌 처리
+            if (character2Direction.z > 0.0f && character2.max.z > bar.min.z) {
+                character2Position.z -= overlapZ; // 뒤로 밀림
+                std::cout << "ddd" << std::endl;
+            } else if (character2Direction.z < 0.0f && character2.min.z < bar.max.z) {
+                character2Position.z += overlapZ; // 앞으로 밀림
+                std::cout << "ddd" << std::endl;
+            }
+        }
+    }
+}
+
 
     // 이동 처리
     character1Position += character1Direction;
