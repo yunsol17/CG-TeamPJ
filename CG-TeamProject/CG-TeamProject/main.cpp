@@ -54,6 +54,7 @@ struct AABB {
         min = newMin;
         max = newMax;
     }
+
 };
 
 // 맵
@@ -92,7 +93,7 @@ GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
 
-GLfloat moveSpeed = 0.5f;
+GLfloat moveSpeed = 0.2f;
 GLfloat character1RotationAngle = 0.0f;
 GLfloat character2RotationAngle = 0.0f;
 GLfloat character1ArmLegSwingAngle = 0.0f;
@@ -100,8 +101,8 @@ GLfloat character2ArmLegSwingAngle = 0.0f;
 GLfloat maxSwingAngle = 30.0f;
 GLfloat character1JumpSpeed = 0.3f;
 GLfloat character2JumpSpeed = 0.3f;
-GLfloat gravity = 0.01f;
-GLfloat realGravity = 0.1f;
+GLfloat gravity = 0.015f;
+GLfloat realGravity = 0.7f;
 GLfloat BongMove = 0.1f; // 이동 속도
 GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
 GLfloat obstacleRotation = 0.0f;
@@ -118,6 +119,10 @@ glm::mat4 character2ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character2Direction = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 character2Position = glm::vec3(5.0f, 0.0f, -5.0f);
 glm::vec3 character2InitialPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
+glm::vec3 initialCharacter1Position = glm::vec3(0.0f, 0.0f, 0.0f); // 캐릭터 1 초기 위치
+glm::vec3 initialCharacter2Position = glm::vec3(10.0f, 0.0f, 0.0f); // 캐릭터 2 초기 위치
+
 
 glm::mat4 bong1ModelMatrix = glm::mat4(1.0f);
 glm::mat4 bong2ModelMatrix = glm::mat4(1.0f);
@@ -290,10 +295,10 @@ void InitPart(const std::string& filePath, Model& model, GLuint& vao, GLuint* vb
 
 // 맵
 void InitBottom() {
-    InitPart("Map/bottom.obj", modelBottom, vaoBottom, vboBottom, glm::vec3(0.0f, 0.0f, 1.0f));
+    InitPart("Map/bottom.obj", modelBottom, vaoBottom, vboBottom, glm::vec3(0.482f, 0.424f, 0.761f));
 }
 void InitArrowAndPillar() {
-    InitPart("Map/arrowAndPillar.obj", modelArrowAndPillar, vaoArrowAndPillar, vboArrowAndPillar, glm::vec3(0.0f, 1.0f, 0.0f));
+    InitPart("Map/arrowAndPillar.obj", modelArrowAndPillar, vaoArrowAndPillar, vboArrowAndPillar, glm::vec3(0.49f, 0.0f, 0.871f));
 }
 void InitEndPoint() {
     InitPart("Map/endPoint.obj", modelEndPoint, vaoEndPoint, vboEndPoint, glm::vec3(1.0f, 0.0f, 1.0f));
@@ -304,7 +309,7 @@ void InitPoint() {
 // 맵
 AABB map1 = {
     glm::vec3(-22.5f, 0.0f, -80.0f), // min
-    glm::vec3(22.5f,  0.0f,  3.0f)   // max
+    glm::vec3(22.5f,  0.3f,  3.0f)   // max
 };
 AABB map2 = {
     glm::vec3(-18.0f, -2.3f, -121.0f), // min
@@ -511,23 +516,23 @@ AABB leftBar5 = {
     glm::vec3(13.02f, 3.65f, -61.72f)
 };
 AABB middleBar1 = {
-    glm::vec3(-17.17f, 2.51f, -62.86f), 
+    glm::vec3(-17.17f, 3.51f, -62.86f), 
     glm::vec3(-12.89f, 3.64f, -61.72f)
 };
 AABB middleBar2 = {
-    glm::vec3(-9.67f, 2.51f, -62.86f),   
+    glm::vec3(-9.67f, 3.51f, -62.86f),
     glm::vec3(-5.39f, 3.64f, -61.72f)
 };
 AABB middleBar3 = {
-    glm::vec3(-2.17f, 2.51f, -62.86f),  
+    glm::vec3(-2.17f, 3.51f, -62.86f),
     glm::vec3(2.11f, 3.64f, -61.72f)   
 };
 AABB middleBar4 = {
-    glm::vec3(5.33f, 2.51f, -62.86f),   
+    glm::vec3(5.33f, 3.51f, -62.86f),
     glm::vec3(9.61f, 3.64f, -61.72f)  
 };
 AABB middleBar5 = {
-    glm::vec3(12.83f, 2.51f, -62.86f),
+    glm::vec3(12.83f, 3.51f, -62.86f),
     glm::vec3(17.11f, 3.64f, -61.72f)
 };
 AABB rightBar1 = {
@@ -1120,14 +1125,6 @@ void DrawCharacter1(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelCharacter1RightLeg.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    //checkbox
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glm::mat4 Character1CheckBox = finalCharacter1ModelMatrix;
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character1CheckBox));
-    glBindVertexArray(vaoCharacter1CheckBox);
-    glDrawArrays(GL_QUADS, 0, 24);
-    glBindVertexArray(0);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 // 캐릭터2 그리기
@@ -1216,14 +1213,6 @@ void DrawCharacter2(GLuint shaderProgramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelCharacter2Face.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    //checkbox
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glm::mat4 Character2CheckBox = finalCharacter2ModelMatrix;
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(Character2CheckBox));
-    glBindVertexArray(vaoCharacter2CheckBox);
-    glDrawArrays(GL_QUADS, 0, 24);
-    glBindVertexArray(0);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 // 체크박스 그리기
@@ -1772,6 +1761,8 @@ GLvoid drawScene() {
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
     DrawObstacleVerticalFan(shaderProgramID, modelMatrixLocation);
+    DrawObstacleJumpbar(shaderProgramID, modelMatrixLocation);
+    DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
 
     // **뷰포트 2: 오른쪽 (캐릭터 2의 카메라)**
     glViewport(window_Width / 2, 0, window_Width / 2, window_Height); // 오른쪽 절반
@@ -1793,14 +1784,21 @@ GLvoid drawScene() {
         10000.0f
     );
     glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix2));
+    if (character1Position.y < -75.0f) {
+        character1Position = initialCharacter1Position;
+    }
 
+    if (character2Position.y < -75.0f) {
+        character2Position = initialCharacter2Position;
+    }
     DrawMap(shaderProgramID, modelMatrixLocation);
     DrawObstacleBong(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
     DrawObstacleVerticalFan(shaderProgramID, modelMatrixLocation);
-
+    DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
+    DrawObstacleJumpbar(shaderProgramID, modelMatrixLocation);
     glutSwapBuffers();
 }
 
@@ -2371,6 +2369,82 @@ GLvoid Timer(int value) {
     if (jumpBarRotationAngle >= 360.0f) {
         jumpBarRotationAngle -= 360.0f;
     }
+    AABB barbars[] = { barbar1, barbar2, barbar3 };
+    AABB barcenters[] = { barcenter1, barcenter2, barcenter3 };
+    // barbar1 AABB 업데이트
+    barbar1.updateRotatedAABB(
+        glm::vec3(-9.5f, 0.0f, -94.93f),  // 장애물의 중심 위치
+        glm::vec3(-0.3f, -0.36f, -0.5f), // 로컬 최소 오프셋
+        glm::vec3(0.3f, 0.04f, 0.5f),    // 로컬 최대 오프셋
+        jumpBarRotationAngle,            // 회전 각도
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    // barbar2 AABB 업데이트
+    barbar2.updateRotatedAABB(
+        glm::vec3(0.6f, 0.0f, -94.93f),  // 장애물의 중심 위치
+        glm::vec3(-0.3f, -0.36f, -0.5f), // 로컬 최소 오프셋
+        glm::vec3(0.3f, 0.04f, 0.5f),    // 로컬 최대 오프셋
+        -jumpBarRotationAngle,           // 회전 각도 (반대 방향)
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    // barbar3 AABB 업데이트
+    barbar3.updateRotatedAABB(
+        glm::vec3(10.5f, 0.0f, -94.93f), // 장애물의 중심 위치
+        glm::vec3(-0.3f, -0.36f, -0.5f), // 로컬 최소 오프셋
+        glm::vec3(0.3f, 0.04f, 0.5f),    // 로컬 최대 오프셋
+        jumpBarRotationAngle,            // 회전 각도
+        glm::vec3(0.0f, 1.0f, 0.0f)      // 회전 축
+    );
+
+    for (const auto& barcenter : barcenters) {
+        if (checkCollision(character1, barcenter)) {
+            float overlapX = std::min(character1.max.x, barcenter.max.x) - std::max(character1.min.x, barcenter.min.x);
+            float overlapZ = std::min(character1.max.z, barcenter.max.z) - std::max(character1.min.z, barcenter.min.z);
+
+            if (overlapX < overlapZ) { // X축에서 더 겹친 경우
+                if (character1Direction.x > 0.0f && character1.max.x > barcenter.min.x) {
+                    character1Direction.x = 0.0f; // 캐릭터가 오른쪽으로 이동 중이면 정지
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < barcenter.max.x) {
+                    character1Direction.x = 0.0f; // 캐릭터가 왼쪽으로 이동 중이면 정지
+                }
+            }
+            else { // Z축에서 더 겹친 경우
+                if (character1Direction.z > 0.0f && character1.max.z > barcenter.min.z) {
+                    character1Direction.z = 0.0f; // 캐릭터가 위쪽으로 이동 중이면 정지
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < barcenter.max.z) {
+                    character1Direction.z = 0.0f; // 캐릭터가 아래쪽으로 이동 중이면 정지
+                }
+            }
+        }
+    }
+    for (const auto& bar : barbars) {
+        if (checkCollision(character1, bar)) {
+            float overlapX = std::min(character1.max.x, bar.max.x) - std::max(character1.min.x, bar.min.x);
+            float overlapZ = std::min(character1.max.z, bar.max.z) - std::max(character1.min.z, bar.min.z);
+
+            if (overlapX < overlapZ) { // X축에서 더 겹친 경우
+                if (character1Direction.x > 0.0f && character1.max.x > bar.min.x) {
+                    character1Direction.x = 0.0f; // 오른쪽 이동 정지
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < bar.max.x) {
+                    character1Direction.x = 0.0f; // 왼쪽 이동 정지
+                }
+            }
+            else { // Z축에서 더 겹친 경우
+                if (character1Direction.z > 0.0f && character1.max.z > bar.min.z) {
+                    character1Direction.z = 0.0f; // 위쪽 이동 정지
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < bar.max.z) {
+                    character1Direction.z = 0.0f; // 아래쪽 이동 정지
+                }
+            }
+        }
+    }
+
 
     // 바와 캐릭터1 충돌 처리
     AABB bars[] = { leftBar1, leftBar2, leftBar3, leftBar4, leftBar5, middleBar1, middleBar2, middleBar3, middleBar4, middleBar5, rightBar1, rightBar2, rightBar3, rightBar4, rightBar5 };
@@ -2423,99 +2497,7 @@ GLvoid Timer(int value) {
         }
     }
 
-    // 장애물 AABB 업데이트
-    verticalFan1.updateRotatedAABB(
-        glm::vec3(-15.0f, 4.0f, -61.0f),  // 장애물의 중심 위치
-        glm::vec3(-2.33f, -3.39f, -0.46f), // 로컬 최소 오프셋
-        glm::vec3(2.33f, 3.39f, 0.46f),    // 로컬 최대 오프셋
-        obstacleRotation,                // 회전 각도
-        glm::vec3(0.0f, 0.0f, 1.0f)      // 회전 축
-    );
 
-    verticalFan2.updateRotatedAABB(
-        glm::vec3(-7.5f, 4.0f, -61.0f),  // 장애물의 중심 위치
-        glm::vec3(-2.33f, -3.39f, -0.46f), // 로컬 최소 오프셋
-        glm::vec3(2.33f, 3.39f, 0.46f),    // 로컬 최대 오프셋
-        obstacleRotation,                // 회전 각도
-        glm::vec3(0.0f, 0.0f, 1.0f)      // 회전 축
-    );
-
-    verticalFan3.updateRotatedAABB(
-        glm::vec3(0.0f, 4.0f, -61.0f),  // 장애물의 중심 위치
-        glm::vec3(-2.33f, -3.39f, -0.46f), // 로컬 최소 오프셋
-        glm::vec3(2.33f, 3.39f, 0.46f),    // 로컬 최대 오프셋
-        obstacleRotation,                // 회전 각도
-        glm::vec3(0.0f, 0.0f, 1.0f)      // 회전 축
-    );
-
-    verticalFan4.updateRotatedAABB(
-        glm::vec3(7.5f, 4.0f, -61.0f),  // 장애물의 중심 위치
-        glm::vec3(-2.33f, -3.39f, -0.46f), // 로컬 최소 오프셋
-        glm::vec3(2.33f, 3.39f, 0.46f),    // 로컬 최대 오프셋
-        obstacleRotation,                // 회전 각도
-        glm::vec3(0.0f, 0.0f, 1.0f)      // 회전 축
-    );
-
-    verticalFan5.updateRotatedAABB(
-        glm::vec3(15.0f, 4.0f, -61.0f),  // 장애물의 중심 위치
-        glm::vec3(-2.33f, -3.39f, -0.46f), // 로컬 최소 오프셋
-        glm::vec3(2.33f, 3.39f, 0.46f),    // 로컬 최대 오프셋
-        obstacleRotation,                // 회전 각도
-        glm::vec3(0.0f, 0.0f, 1.0f)      // 회전 축
-    );
-
-    // 장애물 AABB 배열 업데이트
-    AABB verticalFans[] = { verticalFan1, verticalFan2, verticalFan3, verticalFan4, verticalFan5 };
-
-    // 캐릭터1과 장애물 충돌 체크
-    for (const auto& verticalFan : verticalFans) {
-        if (checkCollision(character1, verticalFan)) {
-            float overlapX = std::min(character1.max.x, verticalFan.max.x) - std::max(character1.min.x, verticalFan.min.x);
-            float overlapZ = std::min(character1.max.z, verticalFan.max.z) - std::max(character1.min.z, verticalFan.min.z);
-
-            if (overlapX < overlapZ) {
-                if (character1Direction.x > 0.0f && character1.max.x > verticalFan.min.x) {
-                    character1Direction.x = 0.0f;
-                }
-                else if (character1Direction.x < 0.0f && character1.min.x < verticalFan.max.x) {
-                    character1Direction.x = 0.0f;
-                }
-            }
-            else {
-                if (character1Direction.z > 0.0f && character1.max.z > verticalFan.min.z) {
-                    character1Direction.z = 0.0f;
-                }
-                else if (character1Direction.z < 0.0f && character1.min.z < verticalFan.max.z) {
-                    character1Direction.z = 0.0f;
-                }
-            }
-        }
-    }
-
-    // 캐릭터2와 장애물 충돌 체크
-    for (const auto& verticalFan : verticalFans) {
-        if (checkCollision(character2, verticalFan)) {
-            float overlapX = std::min(character2.max.x, verticalFan.max.x) - std::max(character2.min.x, verticalFan.min.x);
-            float overlapZ = std::min(character2.max.z, verticalFan.max.z) - std::max(character2.min.z, verticalFan.min.z);
-
-            if (overlapX < overlapZ) {
-                if (character2Direction.x > 0.0f && character2.max.x > verticalFan.min.x) {
-                    character2Direction.x = 0.0f;
-                }
-                else if (character2Direction.x < 0.0f && character2.min.x < verticalFan.max.x) {
-                    character2Direction.x = 0.0f;
-                }
-            }
-            else {
-                if (character2Direction.z > 0.0f && character2.max.z > verticalFan.min.z) {
-                    character2Direction.z = 0.0f;
-                }
-                else if (character2Direction.z < 0.0f && character2.min.z < verticalFan.max.z) {
-                    character2Direction.z = 0.0f;
-                }
-            }
-        }
-    }
 
     // 이동 처리
     character1Position += character1Direction;
