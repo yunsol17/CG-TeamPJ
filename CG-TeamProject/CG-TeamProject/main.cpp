@@ -50,6 +50,11 @@ Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, 
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
 GLuint vaoCharacter1CheckBox, vboCharacter1CheckBox[2], vaoCharacter2CheckBox, vboCharacter2CheckBox[2];
 
+Model modelBongCheckBox1, modelBongCheckBox2, modelBongCheckBox3, modelBongCheckBox4, modelBongCheckBox5, modelBongCheckBox6;
+GLuint vaoBongCheckBox1, vaoBongCheckBox2, vaoBongCheckBox3, vaoBongCheckBox4, vaoBongCheckBox5, vaoBongCheckBox6;
+GLuint vboBongCheckBox1[2], vboBongCheckBox2[2], vboBongCheckBox3[2], vboBongCheckBox4[2], vboBongCheckBox5[2], vboBongCheckBox6[2];
+
+
 GLuint shaderProgramID;
 GLuint vertexShader;
 GLuint fragmentShader;
@@ -172,6 +177,7 @@ void InitCharacter2Face();
 // ºÀ
 void InitBong1();
 void InitBong2();
+
 // ¼¼·ÎÆÒ
 void InitHorizontalFanPink();
 void InitHorizontalFanPurple();
@@ -289,6 +295,21 @@ void InitBong1() {
 void InitBong2() {
     InitPart("bong/bonggroup2.obj", modelBong2, vaoBong2, vboBong2, glm::vec3(1.0f, 0.078f, 0.576f));
 }
+void InitBongCheckBoxPart(const std::string& filePath, Model& model, GLuint& vao, GLuint* vbo) {
+    InitPart(filePath, model, vao, vbo, glm::vec3(1.0f, 0.0f, 0.0f)); // »¡°£»ö
+}
+GLuint vaoBongCheckBox[6];
+GLuint vboBongCheckBox[6][2];
+void InitAllBongCheckBoxes() {
+    InitBongCheckBoxPart("bong/bongcheckbox1.obj", modelBongCheckBox1, vaoBongCheckBox1, vboBongCheckBox1);
+    InitBongCheckBoxPart("bong/bongcheckbox2.obj", modelBongCheckBox2, vaoBongCheckBox2, vboBongCheckBox2);
+    InitBongCheckBoxPart("bong/bongcheckbox3.obj", modelBongCheckBox3, vaoBongCheckBox3, vboBongCheckBox3);
+    InitBongCheckBoxPart("bong/bongcheckbox4.obj", modelBongCheckBox4, vaoBongCheckBox4, vboBongCheckBox4);
+    InitBongCheckBoxPart("bong/bongcheckbox5.obj", modelBongCheckBox5, vaoBongCheckBox5, vboBongCheckBox5);
+    InitBongCheckBoxPart("bong/bongcheckbox6.obj", modelBongCheckBox6, vaoBongCheckBox6, vboBongCheckBox6);
+}
+
+
 // °¡·ÎÆÒ
 void InitHorizontalFanPink() {
     InitPart("horizontalFan/pink.obj", modelHorizontalFanPink, vaoHorizontalFanPink, vboHorizontalFanPink, glm::vec3(1.0f, 0.7f, 0.75f));
@@ -319,28 +340,28 @@ void InitJumpbarbargroup2() {
 
 // ºÀ
 AABB bong1 = {
-    glm::vec3(-15.74f + BongGroup1Position.x, 0.0f, -33.25f), // min
-    glm::vec3(-13.74f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
+    glm::vec3(-15.74f , 0.0f, -33.25f), // min
+    glm::vec3(-13.74f,  3.6f,  -31.25f)  // max
 };
 AABB bong2 = {
-    glm::vec3(-9.47f + BongGroup2Position.x, 0.0f, -33.25f), // min
-    glm::vec3(-7.47f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
+    glm::vec3(-9.47f, 0.0f, -33.25f), // min
+    glm::vec3(-7.47f ,  3.6f,  -31.25f)  // max
 };
 AABB bong3 = {
     glm::vec3(-3.169f + BongGroup1Position.x, 0.0f, -33.25f), // min
     glm::vec3(-1.169f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
 };
 AABB bong4 = {
-    glm::vec3(3.045f + BongGroup2Position.x, 0.0f, -33.25f), // min
-    glm::vec3(5.045f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
+    glm::vec3(3.045f , 0.0f, -33.25f), // min
+    glm::vec3(5.045f,  3.6f,  -31.25f)  // max
 };
 AABB bong5 = {
-    glm::vec3(9.27f + BongGroup1Position.x, 0.0f, -33.25f), // min
-    glm::vec3(11.27f + BongGroup1Position.x,  3.6f,  -31.25f)  // max
+    glm::vec3(9.27f , 0.0f, -33.25f), // min
+    glm::vec3(11.27f ,  3.6f,  -31.25f)  // max
 };
 AABB bong6 = {
-    glm::vec3(14.945f + BongGroup2Position.x, 0.0f, -33.25f), // min
-    glm::vec3(16.945f + BongGroup2Position.x,  3.6f,  -31.25f)  // max
+    glm::vec3(14.945f , 0.0f, -33.25f), // min
+    glm::vec3(16.945f ,  3.6f,  -31.25f)  // max
 };
 
 // ¹®
@@ -383,11 +404,17 @@ AABB barcenter3 = {
     glm::vec3(11.23f, 0.76f,  -93.73f)   // max
 };
 AABB barbar1 = {
-    glm::vec3(-9.775f, -0.19, -94.325f), // min
-    glm::vec3(11.23f,0.2f,  -89.977f)   // max
+    glm::vec3(-9.8f, -0.36f, -94.457f), // min
+    glm::vec3(-9.4f,0.0399f,  -88.457f)   // max
 };
-
-
+AABB barbar2 = {
+    glm::vec3(0.155f, -0.36f, -94.457f), // min
+    glm::vec3(0.555f,0.0399f,  -88.457f)   // max
+};
+AABB barbar3 = {
+    glm::vec3(10.43f, -0.36f, -94.457f), // min
+    glm::vec3(10.83f,0.0399f,  -88.457f)   // max
+};
 
 
 // Ä³¸¯ÅÍ1
@@ -1098,6 +1125,58 @@ void DrawObstacleBong(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelBong2.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+void DrawBongCheckBoxes(GLuint shaderProgramID, GLint modelMatrixLocation) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // ºÀ 1 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox1ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox1ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox1);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox1.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºÀ 2 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox2ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox2ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox2);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºÀ 3 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox3ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox3ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox3);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox3.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºÀ 4 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox4ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox4ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox4);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox4.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºÀ 5 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox5ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup1Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox5ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox5);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox5.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // ºÀ 6 Ã¼Å©¹Ú½º
+    glm::mat4 bongCheckBox6ModelMatrix = glm::translate(glm::mat4(1.0f), BongGroup2Position);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(bongCheckBox6ModelMatrix));
+
+    glBindVertexArray(vaoBongCheckBox6);
+    glDrawElements(GL_TRIANGLES, modelBongCheckBox6.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
 void DrawObstacleHorizontalFan(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glm::mat4 HorizontalFanPink1ModelMatrix = glm::mat4(1.0f);
     HorizontalFanPink1ModelMatrix = glm::translate(HorizontalFanPink1ModelMatrix, glm::vec3(0.0f, 0.0f, -140.0f));
@@ -1253,6 +1332,8 @@ void main(int argc, char** argv) {
     //Àå¾Ö¹°
     InitBong1();
     InitBong2();
+    InitAllBongCheckBoxes();
+
     InitHorizontalFanPink();
     InitHorizontalFanPurple();
     InitDoorOut();
@@ -1373,6 +1454,7 @@ GLvoid drawScene() {
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
     DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
     DrawObstacleJumpbar(shaderProgramID, modelMatrixLocation);
+    DrawBongCheckBoxes(shaderProgramID, modelMatrixLocation);
 
     glutSwapBuffers();
 }
@@ -1614,9 +1696,64 @@ GLvoid Timer(int value) {
         }
     }
 
-    // ÀÌµ¿ Ã³¸®
-    character1Position += character1Direction;
-    character2Position += character2Direction;
+
+
+
+    // ºÀ°ú Ä³¸¯ÅÍ1 Ãæµ¹ Ã³¸®
+    AABB bongs[] = { bong1, bong2, bong3, bong4, bong5, bong6 };
+    for (const auto& bong : bongs) {
+        if (checkCollision(character1, bong)) {
+            float overlapbX = std::min(character1.max.x, bong.max.x) - std::max(character1.min.x, bong.min.x);
+            float overlapbZ = std::min(character1.max.z, bong.max.z) - std::max(character1.min.z, bong.min.z);
+
+            if (overlapbX < overlapbZ) {
+                if (character1Direction.x > 0.0f && character1.max.x > bong.min.x) {
+                    character1Direction.x = 0.0f;
+                    std::cout << "ddddd" << std::endl;
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < bong.max.x) {
+                    character1Direction.x = 0.0f;
+                    std::cout << "ddddd" << std::endl;
+                }
+            }
+            else {
+                if (character1Direction.z > 0.0f && character1.max.z > bong.min.z) {
+                    character1Direction.z = 0.0f;
+                    std::cout << "ddddd" << std::endl;
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < bong.max.z) {
+                    character1Direction.z = 0.0f;
+                    std::cout << "ddddd" << std::endl;
+                }
+            }
+        }
+    }
+
+    // ºÀ°ú Ä³¸¯ÅÍ2 Ãæµ¹ Ã³¸®
+    for (const auto& bong : bongs) {
+        if (checkCollision(character2, bong)) {
+            float overlapX = std::min(character2.max.x, bong.max.x) - std::max(character2.min.x, bong.min.x);
+            float overlapZ = std::min(character2.max.z, bong.max.z) - std::max(character2.min.z, bong.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character2Direction.x > 0.0f && character2.max.x > bong.min.x) {
+                    character2Direction.x = 0.0f;
+                }
+                else if (character2Direction.x < 0.0f && character2.min.x < bong.max.x) {
+                    character2Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character2Direction.z > 0.0f && character2.max.z > bong.min.z) {
+                    character2Direction.z = 0.0f;
+                }
+                else if (character2Direction.z < 0.0f && character2.min.z < bong.max.z) {
+                    character2Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
 
     //ºÀ ¿òÁ÷ÀÌ±â
     BongGroup1Position.x += BongGroup1Direction.x * BongMove;
@@ -1640,6 +1777,13 @@ GLvoid Timer(int value) {
     if (isObstacleRotate) {
         obstacleRotation += 2.0f;
     }
+    bong1.update(BongGroup1Position, glm::vec3(-15.74f, 0.0f, -33.25f), glm::vec3(-13.74f, 3.6f, -31.25f));
+    bong2.update(BongGroup2Position, glm::vec3(-9.47f, 0.0f, -33.25f), glm::vec3(-7.47f, 3.6f, -31.25f));
+    bong3.update(BongGroup1Position, glm::vec3(-3.169f, 0.0f, -33.25f), glm::vec3(-1.169f, 3.6f, -31.25f));
+    bong4.update(BongGroup2Position, glm::vec3(3.045f, 0.0f, -33.25f), glm::vec3(5.045f, 3.6f, -31.25f));
+    bong5.update(BongGroup1Position, glm::vec3(9.27f, 0.0f, -33.25f), glm::vec3(11.27f, 3.6f, -31.25f));
+    bong6.update(BongGroup2Position, glm::vec3(14.945f, 0.0f, -33.25f), glm::vec3(16.945f, 3.6f, -31.25f));
+
 
     // ¹®Â¦ ¿òÁ÷ÀÌ±â
     LeftdoorGroupPosition.x += LeftdoorGroupDirection.x * DoorMove;
@@ -1659,6 +1803,9 @@ GLvoid Timer(int value) {
         RightdoorGroupDirection.x = 1;
     }
 
+    // ÀÌµ¿ Ã³¸®
+    character1Position += character1Direction;
+    character2Position += character2Direction;
     // È­¸é °»½Å
     glutPostRedisplay();
     glutTimerFunc(16, Timer, 0);
