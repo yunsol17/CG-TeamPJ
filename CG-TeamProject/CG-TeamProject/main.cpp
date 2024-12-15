@@ -421,7 +421,22 @@ AABB rightdoor3 = {
     glm::vec3(6.294f, -0.76f, -159.129f), // min
     glm::vec3(8.322f,  2.4f,  -158.53f)   // max
 };
-
+AABB outdoor1 = {
+    glm::vec3(-9.546f, -0.6f,-160.437f), // min
+    glm::vec3(-8.346f,  2.6, -158.4f)   // max
+};
+AABB outdoor2 = {
+    glm::vec3 ( - 4.344f, -0.6f,-160.437f), // min
+    glm::vec3(-2.144f,  2.6, -158.4f)   // max
+};
+AABB outdoor3 = {
+    glm::vec3(2.004f, -0.6f,-160.437f), // min
+    glm::vec3(4.304f,  2.6, -158.4f)   // max
+};
+AABB outdoor4 = {
+    glm::vec3(8.295f, -0.6f,-160.437f), // min
+    glm::vec3(9.495f,  2.6, -158.4f)   // max
+};
 //점프바
 AABB barcenter1 = {
     glm::vec3(-10.2f, 0.0f, -94.93f), // min
@@ -1965,6 +1980,56 @@ GLvoid Timer(int value) {
             }
         }
     }
+    AABB outdoors[] = { outdoor1, outdoor2, outdoor3, outdoor4 };
+    for (const auto& outdoor : outdoors) {
+        if (checkCollision(character1, outdoor)) {
+            float overlapX = std::min(character1.max.x, outdoor.max.x) - std::max(character1.min.x, outdoor.min.x);
+            float overlapZ = std::min(character1.max.z, outdoor.max.z) - std::max(character1.min.z, outdoor.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character1Direction.x > 0.0f && character1.max.x > outdoor.min.x) {
+                    character1Direction.x = 0.0f;
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < outdoor.max.x) {
+                    character1Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character1Direction.z > 0.0f && character1.max.z > outdoor.min.z) {
+                    character1Direction.z = 0.0f;
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < outdoor.max.z) {
+                    character1Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
+    for (const auto& outdoor : outdoors) {
+        if (checkCollision(character2, outdoor)) {
+            float overlapX = std::min(character2.max.x, outdoor.max.x) - std::max(character2.min.x, outdoor.min.x);
+            float overlapZ = std::min(character2.max.z, outdoor.max.z) - std::max(character2.min.z, outdoor.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character2Direction.x > 0.0f && character2.max.x > outdoor.min.x) {
+                    character2Direction.x = 0.0f;
+                }
+                else if (character2Direction.x < 0.0f && character2.min.x < outdoor.max.x) {
+                    character2Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character2Direction.z > 0.0f && character2.max.z > outdoor.min.z) {
+                    character2Direction.z = 0.0f;
+                }
+                else if (character2Direction.z < 0.0f && character2.min.z < outdoor.max.z) {
+                    character2Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
+
 
     // 장애물 AABB 업데이트
     horizontalFan1.updateRotatedAABB(
