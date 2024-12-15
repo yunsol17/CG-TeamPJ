@@ -1709,21 +1709,17 @@ GLvoid Timer(int value) {
             if (overlapbX < overlapbZ) {
                 if (character1Direction.x > 0.0f && character1.max.x > bong.min.x) {
                     character1Direction.x = 0.0f;
-                    std::cout << "ddddd" << std::endl;
                 }
                 else if (character1Direction.x < 0.0f && character1.min.x < bong.max.x) {
                     character1Direction.x = 0.0f;
-                    std::cout << "ddddd" << std::endl;
                 }
             }
             else {
                 if (character1Direction.z > 0.0f && character1.max.z > bong.min.z) {
                     character1Direction.z = 0.0f;
-                    std::cout << "ddddd" << std::endl;
                 }
                 else if (character1Direction.z < 0.0f && character1.min.z < bong.max.z) {
                     character1Direction.z = 0.0f;
-                    std::cout << "ddddd" << std::endl;
                 }
             }
         }
@@ -1787,14 +1783,12 @@ GLvoid Timer(int value) {
 
     // 문짝 움직이기
     LeftdoorGroupPosition.x += LeftdoorGroupDirection.x * DoorMove;
-
     if (LeftdoorGroupPosition.x >= 0.0) {
         LeftdoorGroupDirection.x = -1; // 왼쪽으로 이동
     }
     else if (LeftdoorGroupPosition.x <= -MaxDoorMove) {
         LeftdoorGroupDirection.x = 1;  // 오른쪽으로 이동
     }
-
     RightdoorGroupPosition.x += RightdoorGroupDirection.x * DoorMove;
     if (RightdoorGroupPosition.x >= MaxDoorMove) {
         RightdoorGroupDirection.x = -1;
@@ -1802,10 +1796,116 @@ GLvoid Timer(int value) {
     else if (RightdoorGroupPosition.x <= -0.0) {
         RightdoorGroupDirection.x = 1;
     }
+    leftdoor1.update(LeftdoorGroupPosition, glm::vec3(-8.475f, -0.76f, -159.129f), glm::vec3(-6.4f, 2.4f, -158.53f));
+    leftdoor2.update(LeftdoorGroupPosition, glm::vec3(-2.168f, -0.76f, -159.129f), glm::vec3(-0.09f, 2.4f, -158.53f));
+    leftdoor3.update(LeftdoorGroupPosition, glm::vec3(4.227f, -0.76f, -159.129f), glm::vec3(6.297f, 2.4f, -158.53f));
+    rightdoor1.update(RightdoorGroupPosition, glm::vec3(6.408f, -0.76f, -159.129f), glm::vec3(4.38f, 2.4f, -158.53f));
+    rightdoor2.update(RightdoorGroupPosition, glm::vec3(-0.1f, -0.76f, -159.129f), glm::vec3(1.926f, 2.4f, -158.53f));
+    rightdoor3.update(RightdoorGroupPosition, glm::vec3(6.294f, -0.76f, -159.129f), glm::vec3(8.322f, 2.4f, -158.53f));
+    AABB leftDoors[] = { leftdoor1, leftdoor2, leftdoor3 };
+    AABB rightDoors[] = { rightdoor1, rightdoor2, rightdoor3 };
+
+    // 캐릭터1과 문짝 충돌 처리
+    for (const auto& door : leftDoors) {
+        if (checkCollision(character1, door)) {
+            float overlapX = std::min(character1.max.x, door.max.x) - std::max(character1.min.x, door.min.x);
+            float overlapZ = std::min(character1.max.z, door.max.z) - std::max(character1.min.z, door.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character1Direction.x > 0.0f && character1.max.x > door.min.x) {
+                    character1Direction.x = 0.0f;
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < door.max.x) {
+                    character1Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character1Direction.z > 0.0f && character1.max.z > door.min.z) {
+                    character1Direction.z = 0.0f;
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < door.max.z) {
+                    character1Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+    for (const auto& door : rightDoors) {
+        if (checkCollision(character1, door)) {
+            float overlapX = std::min(character1.max.x, door.max.x) - std::max(character1.min.x, door.min.x);
+            float overlapZ = std::min(character1.max.z, door.max.z) - std::max(character1.min.z, door.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character1Direction.x > 0.0f && character1.max.x > door.min.x) {
+                    character1Direction.x = 0.0f;
+                }
+                else if (character1Direction.x < 0.0f && character1.min.x < door.max.x) {
+                    character1Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character1Direction.z > 0.0f && character1.max.z > door.min.z) {
+                    character1Direction.z = 0.0f;
+                }
+                else if (character1Direction.z < 0.0f && character1.min.z < door.max.z) {
+                    character1Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+    // 캐릭터2와 문짝 충돌 처리
+    for (const auto& door : leftDoors) {
+        if (checkCollision(character2, door)) {
+            float overlapX = std::min(character2.max.x, door.max.x) - std::max(character2.min.x, door.min.x);
+            float overlapZ = std::min(character2.max.z, door.max.z) - std::max(character2.min.z, door.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character2Direction.x > 0.0f && character2.max.x > door.min.x) {
+                    character2Direction.x = 0.0f;
+                }
+                else if (character2Direction.x < 0.0f && character2.min.x < door.max.x) {
+                    character2Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character2Direction.z > 0.0f && character2.max.z > door.min.z) {
+                    character2Direction.z = 0.0f;
+                }
+                else if (character2Direction.z < 0.0f && character2.min.z < door.max.z) {
+                    character2Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+    for (const auto& door : rightDoors) {
+        if (checkCollision(character2, door)) {
+            float overlapX = std::min(character2.max.x, door.max.x) - std::max(character2.min.x, door.min.x);
+            float overlapZ = std::min(character2.max.z, door.max.z) - std::max(character2.min.z, door.min.z);
+
+            if (overlapX < overlapZ) {
+                if (character2Direction.x > 0.0f && character2.max.x > door.min.x) {
+                    character2Direction.x = 0.0f;
+                }
+                else if (character2Direction.x < 0.0f && character2.min.x < door.max.x) {
+                    character2Direction.x = 0.0f;
+                }
+            }
+            else {
+                if (character2Direction.z > 0.0f && character2.max.z > door.min.z) {
+                    character2Direction.z = 0.0f;
+                }
+                else if (character2Direction.z < 0.0f && character2.min.z < door.max.z) {
+                    character2Direction.z = 0.0f;
+                }
+            }
+        }
+    }
+
+
 
     // 이동 처리
     character1Position += character1Direction;
     character2Position += character2Direction;
+
     // 화면 갱신
     glutPostRedisplay();
     glutTimerFunc(16, Timer, 0);
