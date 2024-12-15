@@ -369,6 +369,27 @@ AABB rightdoor3 = {
     glm::vec3(8.322f,  2.4f,  -158.53f)   // max
 };
 
+//점프바
+AABB barcenter1 = {
+    glm::vec3(-10.2f, 0.0f, -94.93f), // min
+    glm::vec3(-9.0f, 0.76f,  -93.73f)   // max
+};
+AABB barcenter2 = {
+    glm::vec3(-0.29f, 0.0f, -94.93f), // min
+    glm::vec3(0.9f, 0.76f,  -93.73f)   // max
+};
+AABB barcenter3 = {
+    glm::vec3(10.03f, 0.0f, -94.93f), // min
+    glm::vec3(11.23f, 0.76f,  -93.73f)   // max
+};
+AABB barbar1 = {
+    glm::vec3(-9.775f, -0.19, -94.325f), // min
+    glm::vec3(11.23f,0.2f,  -89.977f)   // max
+};
+
+
+
+
 // 캐릭터1
 void InitCharacter1Body() {
     InitPart("Character1/body.obj", modelCharacter1Body, vaoCharacter1Body, vboCharacter1Body, glm::vec3(1.0f, 1.0f, 0.0f));
