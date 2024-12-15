@@ -76,9 +76,9 @@ GLuint vboCharacter2Acc[2], vboCharacter2Body[2], vboCharacter2Clothes[2], vboCh
 Model modelCharacter2Acc, modelCharacter2Body, modelCharacter2Hair, modelCharacter2Clothes, modelCharacter2LeftLeg, modelCharacter2RightLeg, modelCharacter2LeftArm, modelCharacter2RightArm, modelCharacter2Eye, modelCharacter2Face;
 
 //장애물
-GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple, vaoDoorOut, vaoLeftdoor, vaoRightdoor, vaoJumpBarCenter, vaoJumpBarbargroup1, vaoJumpBarbargroup2;
-GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2], vboDoorOut[2], vboLeftdoor[2], vboRightdoor[2],vboJumpBarCenter[2], vboJumpBarbargroup1[2], vboJumpBarbargroup2[2];
-Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, modelDoorOut, modelLeftdoor, modelRightdoor, modelJumpBarCenter, modelJumpBarbargroup1, modelJumpBarbargroup2;
+GLuint vaoBong1, vaoBong2, vaoHorizontalFanPink, vaoHorizontalFanPurple, vaoDoorOut, vaoLeftdoor, vaoRightdoor, vaoJumpBarCenter, vaoJumpBarbargroup1, vaoJumpBarbargroup2, vaoJumpBarbargroup3;
+GLuint vboBong1[2], vboBong2[2], vboHorizontalFanPink[2], vboHorizontalFanPurple[2], vboDoorOut[2], vboLeftdoor[2], vboRightdoor[2],vboJumpBarCenter[2], vboJumpBarbargroup1[2], vboJumpBarbargroup2[2], vboJumpBarbargroup3[2];
+Model modelBong1, modelBong2, modelHorizontalFanPink, modelHorizontalFanPurple, modelDoorOut, modelLeftdoor, modelRightdoor, modelJumpBarCenter, modelJumpBarbargroup1, modelJumpBarbargroup2, modelJumpBarbargroup3;
 
 //checkbox
 GLuint vaoCheckBoxMap1, vboCheckBoxMap1[2], vaoCheckBoxMap2, vboCheckBoxMap2[2], vaoCheckBoxMap3, vboCheckBoxMap3[2], vaoCheckBoxMap4, vboCheckBoxMap4[2], vaoCheckBoxMap5, vboCheckBoxMap5[2];
@@ -107,6 +107,7 @@ GLfloat MaxBongMove = 1.6f; // 최대 이동 거리
 GLfloat obstacleRotation = 0.0f;
 GLfloat DoorMove = 0.05f;
 GLfloat MaxDoorMove = 1.7f;
+GLfloat jumpBarRotationAngle = 0.0f;
 
 glm::mat4 character1ModelMatrix = glm::mat4(1.0f);
 glm::vec3 character1Direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -364,6 +365,9 @@ void InitJumpbarbargroup1() {
 }
 void InitJumpbarbargroup2() {
     InitPart("jumpBong/bargroup2.obj", modelJumpBarbargroup2, vaoJumpBarbargroup2, vboJumpBarbargroup2, glm::vec3(0.576f, 0.078f, 1.0f));
+}
+void InitJumpbarbar3() {
+    InitPart("jumpBong/bar3.obj", modelJumpBarbargroup3, vaoJumpBarbargroup3, vboJumpBarbargroup3, glm::vec3(0.576f, 0.078f, 1.0f));
 }
 
 // 봉
@@ -1313,7 +1317,11 @@ void DrawObstacleJumpbar(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glDrawElements(GL_TRIANGLES, modelJumpBarCenter.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
+    // 첫 번째 바 회전
     glm::mat4 JumpBarbargroup1ModelMatrix = glm::mat4(1.0f);
+    JumpBarbargroup1ModelMatrix = glm::translate(JumpBarbargroup1ModelMatrix, glm::vec3(-9.5f, 0.0f, -94.93f)); // 센터로 이동
+    JumpBarbargroup1ModelMatrix = glm::rotate(JumpBarbargroup1ModelMatrix, glm::radians(jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // Y축 회전
+    JumpBarbargroup1ModelMatrix = glm::translate(JumpBarbargroup1ModelMatrix, glm::vec3(9.5f, 0.0f, 94.93f)); // 원래 위치로 이동
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarbargroup1ModelMatrix));
 
     glBindVertexArray(vaoJumpBarbargroup1);
@@ -1321,10 +1329,23 @@ void DrawObstacleJumpbar(GLuint shaderPRogramID, GLint modelMatrixLocation) {
     glBindVertexArray(0);
 
     glm::mat4 JumpBarbargroup2ModelMatrix = glm::mat4(1.0f);
+    JumpBarbargroup2ModelMatrix = glm::translate(JumpBarbargroup2ModelMatrix, glm::vec3(0.6f, 0.0f, -94.93f)); // 센터로 이동
+    JumpBarbargroup2ModelMatrix = glm::rotate(JumpBarbargroup2ModelMatrix, glm::radians(-jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // 반대 방향 회전
+    JumpBarbargroup2ModelMatrix = glm::translate(JumpBarbargroup2ModelMatrix, glm::vec3(-0.6f, 0.0f, 94.93f)); // 원래 위치로 이동
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarbargroup2ModelMatrix));
 
     glBindVertexArray(vaoJumpBarbargroup2);
     glDrawElements(GL_TRIANGLES, modelJumpBarbargroup2.faces.size() * 3, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    glm::mat4 JumpBarbargroup3ModelMatrix = glm::mat4(1.0f);
+    JumpBarbargroup3ModelMatrix = glm::translate(JumpBarbargroup3ModelMatrix, glm::vec3(10.5f, 0.0f, -94.93f)); // 센터로 이동
+    JumpBarbargroup3ModelMatrix = glm::rotate(JumpBarbargroup3ModelMatrix, glm::radians(jumpBarRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // 반대 방향 회전
+    JumpBarbargroup3ModelMatrix = glm::translate(JumpBarbargroup3ModelMatrix, glm::vec3(-10.5f, 0.0f, 94.93f)); // 원래 위치로 이동
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(JumpBarbargroup3ModelMatrix));
+
+    glBindVertexArray(vaoJumpBarbargroup3);
+    glDrawElements(GL_TRIANGLES, modelJumpBarbargroup3.faces.size() * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -1391,6 +1412,7 @@ void main(int argc, char** argv) {
     InitJumpbarCenter();
     InitJumpbarbargroup1();
     InitJumpbarbargroup2();
+    InitJumpbarbar3();
 
     glutDisplayFunc(drawScene);
     glutReshapeFunc(Reshape);
@@ -2020,6 +2042,12 @@ GLvoid Timer(int value) {
                 }
             }
         }
+    }
+
+    // 점프바 회전
+    jumpBarRotationAngle += 2.0f;
+    if (jumpBarRotationAngle >= 360.0f) {
+        jumpBarRotationAngle -= 360.0f;
     }
 
     // 이동 처리
