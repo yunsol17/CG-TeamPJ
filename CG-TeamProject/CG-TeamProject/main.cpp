@@ -1742,43 +1742,63 @@ GLvoid drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(shaderProgramID);
 
-    // 카메라 위치 계산
-    glm::vec3 cameraPosition = character1Position + glm::vec3(0.0f, 10.0f, 15.0f);
-    glm::vec3 cameraTarget = character1Position;
+    // **뷰포트 1: 왼쪽 (캐릭터 1의 카메라)**
+    glViewport(0, 0, window_Width / 2, window_Height); // 왼쪽 절반
+    glm::vec3 camera1Position = character1Position + glm::vec3(0.0f, 10.0f, 15.0f);
+    glm::vec3 camera1Target = character1Position;
 
-    // 뷰 변환
-    glm::mat4 viewMatrix = glm::lookAt(
-        cameraPosition,  // 카메라 위치
-        cameraTarget,    // 카메라가 바라보는 지점
-        glm::vec3(0.0f, 1.0f, 0.0f) // 카메라 상향 벡터
+    glm::mat4 viewMatrix1 = glm::lookAt(
+        camera1Position,  // 카메라 1 위치
+        camera1Target,    // 카메라 1 바라보는 지점
+        glm::vec3(0.0f, 1.0f, 0.0f) // 상향 벡터
     );
 
-    // 뷰 행렬을 셰이더에 전달
     GLint viewMatrixLocation = glGetUniformLocation(shaderProgramID, "viewTransform");
-    glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+    glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix1));
 
-    // 투영 변환
-    glm::mat4 projectionMatrix = glm::perspective(
+    glm::mat4 projectionMatrix1 = glm::perspective(
         glm::radians(45.0f),
-        (float)window_Width / (float)window_Height,
+        (float)(window_Width / 2) / (float)window_Height, // 좌우 절반의 종횡비
         0.1f,
         10000.0f
     );
-
     GLint projMatrixLocation = glGetUniformLocation(shaderProgramID, "projectionTransform");
-    glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix1));
 
     GLint modelMatrixLocation = glGetUniformLocation(shaderProgramID, "modelTransform");
+    DrawMap(shaderProgramID, modelMatrixLocation);
+    DrawObstacleBong(shaderProgramID, modelMatrixLocation);
+    DrawCharacter1(shaderProgramID, modelMatrixLocation);
+    DrawCharacter2(shaderProgramID, modelMatrixLocation);
+    DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
+    DrawObstacleVerticalFan(shaderProgramID, modelMatrixLocation);
+
+    // **뷰포트 2: 오른쪽 (캐릭터 2의 카메라)**
+    glViewport(window_Width / 2, 0, window_Width / 2, window_Height); // 오른쪽 절반
+    glm::vec3 camera2Position = character2Position + glm::vec3(0.0f, 10.0f, 15.0f);
+    glm::vec3 camera2Target = character2Position;
+
+    glm::mat4 viewMatrix2 = glm::lookAt(
+        camera2Position,  // 카메라 2 위치
+        camera2Target,    // 카메라 2 바라보는 지점
+        glm::vec3(0.0f, 1.0f, 0.0f) // 상향 벡터
+    );
+
+    glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix2));
+
+    glm::mat4 projectionMatrix2 = glm::perspective(
+        glm::radians(45.0f),
+        (float)(window_Width / 2) / (float)window_Height, // 좌우 절반의 종횡비
+        0.1f,
+        10000.0f
+    );
+    glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix2));
 
     DrawMap(shaderProgramID, modelMatrixLocation);
     DrawObstacleBong(shaderProgramID, modelMatrixLocation);
     DrawCharacter1(shaderProgramID, modelMatrixLocation);
     DrawCharacter2(shaderProgramID, modelMatrixLocation);
-    DrawMapCheckBox(shaderProgramID, modelMatrixLocation);
     DrawObstacleHorizontalFan(shaderProgramID, modelMatrixLocation);
-    DrawObstacleDoor(shaderProgramID, modelMatrixLocation);
-    DrawObstacleJumpbar(shaderProgramID, modelMatrixLocation);
-    DrawBongCheckBoxes(shaderProgramID, modelMatrixLocation);
     DrawObstacleVerticalFan(shaderProgramID, modelMatrixLocation);
 
     glutSwapBuffers();
